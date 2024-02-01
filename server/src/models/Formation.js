@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize'
 import { sequelize } from '../database/database.js'
-import { Groups } from './Groups.js'
+import { Group } from './Group.js'
 
 /**
  * Tabla formación
@@ -29,6 +29,6 @@ export const Formation = sequelize.define('formations', {
   }
 })
 
-Formation.hasMany(Groups, { foreignKey: 'formationId', sourceKey: 'id' })
+Formation.hasMany(Group, { foreignKey: 'formationId', sourceKey: 'id' })
 
-Groups.belongsTo(Formation, { foreignKey: 'formationId', targetId: 'id' })
+Group.belongsTo(Formation, { foreignKey: 'formationId', targetId: 'id' })

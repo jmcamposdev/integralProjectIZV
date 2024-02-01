@@ -17,7 +17,7 @@ import { sequelize } from '../database/database.js'
  * o turno: tarde
  */
 
-export const Groups = sequelize.define('groups', {
+export const Group = sequelize.define('groups', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
