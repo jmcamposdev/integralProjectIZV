@@ -1,8 +1,9 @@
 import app from './app.js'
 import { sequelize } from './database/database.js'
 
-// Tables
+// Tables Models
 import './models/Formations.js'
+import './models/Groups.js'
 
 /**
  * Main function to start the server
