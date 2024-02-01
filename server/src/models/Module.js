@@ -38,6 +38,7 @@ export const Module = sequelize.define('modules', {
     type: DataTypes.INTEGER
   },
   specialty: {
-    type: DataTypes.STRING
+    type: DataTypes.ENUM,
+    values: ['FP', 'Secundaria']
   }
 })

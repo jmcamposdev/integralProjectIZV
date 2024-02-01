@@ -30,6 +30,7 @@ export const Professor = sequelize.define('professors', {
     type: DataTypes.STRING
   },
   specialty: {
-    type: DataTypes.STRING
+    type: DataTypes.ENUM,
+    values: ['FP', 'Secundaria']
   }
 })
