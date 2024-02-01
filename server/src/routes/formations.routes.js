@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { getFormations, createFormation, updateFormation, deleteFormation, getFormation, getFormationGroups } from '../controllers/formations.controller.js'
+import { getFormations, createFormation, updateFormation, deleteFormation, getFormation, getFormationGroups, getFormationsModules } from '../controllers/formations.controller.js'
 
 const router = Router()
 
@@ -11,5 +11,6 @@ router.get('/formations/:id', getFormation)
 
 // Relation between formations and groups routes
 router.get('/formations/:id/groups', getFormationGroups)
+router.get('/formations/:id/modules', getFormationsModules)
 
 export default router

@@ -1,5 +1,6 @@
 import { Formation } from '../models/Formation.js'
 import { Group } from '../models/Group.js'
+import { Module } from '../models/Module.js'
 
 /**
  * Get all formations from database
@@ -117,5 +118,13 @@ export const getFormationGroups = (req, res) => {
 
   Group.findAll({ where: { formationId: id } })
     .then(groups => res.json(groups))
+    .catch(err => res.status(500).json({ message: err.message }))
+}
+
+export const getFormationsModules = (req, res) => {
+  const { id } = req.params
+
+  Module.findAll({ where: { formationId: id } })
+    .then(modules => res.json(modules))
     .catch(err => res.status(500).json({ message: err.message }))
 }
