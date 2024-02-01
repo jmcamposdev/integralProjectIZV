@@ -56,6 +56,15 @@ export const createModule = (req, res) => {
     .catch((err) => res.status(500).json({ message: err.message }))
 }
 
+/**
+ * Update one module from database by id
+ * Only will update same fields that as the database model
+ * - If the module exists, update it and send it in the response
+ * - If the module doesn't exist, send a 404 status code and a message
+ * - If there's an error, send it
+ * @param {*} req The request object from Express
+ * @param {*} res The response object from Express
+ */
 export const updateModule = (req, res) => {
   const { id } = req.params
 
