@@ -15,7 +15,7 @@ import { Groups } from './Groups.js'
  * • denominación: Curso Especialización de Ciberseguridad
  * • siglas: CIBER
  */
-export const Formations = sequelize.define('formations', {
+export const Formation = sequelize.define('formations', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -29,6 +29,6 @@ export const Formations = sequelize.define('formations', {
   }
 })
 
-Formations.hasMany(Groups, { foreignKey: 'formationId', sourceKey: 'id' })
+Formation.hasMany(Groups, { foreignKey: 'formationId', sourceKey: 'id' })
 
-Groups.belongsTo(Formations, { foreignKey: 'formationId', targetId: 'id' })
+Groups.belongsTo(Formation, { foreignKey: 'formationId', targetId: 'id' })
