@@ -43,15 +43,15 @@ export const getModule = (req, res) => {
  */
 export const createModule = (req, res) => {
   // Destructuring the request body to get the values of the fields
-  const { denomination, acronym, course, hours, specialty } = req.body
+  const { denomination, acronym, course, hours, specialty, formationId } = req.body
 
   // Validate the request body
-  if (!denomination || !acronym || !course || !hours || !specialty) {
+  if (!denomination || !acronym || !course || !hours || !specialty || !formationId) {
     return res.status(400).json({ msg: 'Please send denomination, acronym, course, hours and specialty' })
   }
 
   // Create the module
-  Module.create({ denomination, acronym, course, hours, specialty })
+  Module.create({ denomination, acronym, course, hours, specialty, formationId })
     .then((module) => res.json(module))
     .catch((err) => res.status(500).json({ message: err.message }))
 }
