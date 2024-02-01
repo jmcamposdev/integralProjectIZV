@@ -1,4 +1,5 @@
 import { Formation } from '../models/Formation.js'
+import { Group } from '../models/Group.js'
 
 /**
  * Get all formations from database
@@ -109,4 +110,12 @@ export const deleteFormation = (req, res) => {
       res.json({ message: 'Formation deleted successfully' })
     })
     .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
+}
+
+export const getFormationGroups = (req, res) => {
+  const { id } = req.params
+
+  Group.findAll({ where: { formationId: id } })
+    .then(groups => res.json(groups))
+    .catch(err => res.status(500).json({ message: err.message }))
 }
