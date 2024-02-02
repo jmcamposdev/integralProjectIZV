@@ -1,15 +1,23 @@
 import express, { Router } from 'express'
 import morgan from 'morgan'
+import dotenv from 'dotenv'
+
+// Import routes
 import formationsRoutes from './routes/formations.routes.js'
 import groupsRoutes from './routes/groups.routes.js'
 import professorsRoutes from './routes/professors.routes.js'
 import modulesRoutes from './routes/modules.routes.js'
 import lessonsRoutes from './routes/lessons.routes.js'
 import authRoutes from './routes/auth.routes.js'
-import dotenv from 'dotenv'
+
+// InitialSetup
+import * as initialSetup from './libs/initialSetup.js'
 
 // Create Express app
 const app = express()
+
+// Init all Data
+initialSetup.createRoles()
 
 // Middlewares
 app.use(express.json()) // Parse JSON bodies (as sent by API clients)
