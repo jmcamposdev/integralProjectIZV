@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize'
 import { sequelize } from '../database/database.js'
+import { Lesson } from './Lesson.js'
 
 /**
  * Tabla profesor
@@ -34,3 +35,7 @@ export const Professor = sequelize.define('professors', {
     values: ['FP', 'Secundaria']
   }
 })
+
+// Relation 1:N between Professors and Lessons
+Professor.hasMany(Lesson, { foreignKey: 'professorId', sourceKey: 'id' })
+Lesson.belongsTo(Professor, { foreignKey: 'professorId', targetId: 'id' })

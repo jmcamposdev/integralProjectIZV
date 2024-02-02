@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize'
 import { sequelize } from '../database/database.js'
+import { Lesson } from './Lesson.js'
 
 /**
  * Tabla grupo
@@ -36,3 +37,7 @@ export const Group = sequelize.define('groups', {
     type: DataTypes.BOOLEAN
   }
 })
+
+// Relation 1:N between Groups and Lessons
+Group.hasMany(Lesson, { foreignKey: { name: 'groupId', allowNull: false }, sourceKey: 'id' })
+Lesson.belongsTo(Group, { foreignKey: { name: 'groupId', allowNull: false }, targetId: 'id' })

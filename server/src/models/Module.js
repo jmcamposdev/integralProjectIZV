@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize'
 import { sequelize } from '../database/database.js'
+import { Lesson } from './Lesson.js'
 
 /**
  * Tabla módulo
@@ -42,3 +43,7 @@ export const Module = sequelize.define('modules', {
     values: ['FP', 'Secundaria']
   }
 })
+
+// Relation 1:N between Modules and Lessons
+Module.hasMany(Lesson, { foreignKey: { name: 'moduleId', allowNull: false }, sourceKey: 'id' })
+Lesson.belongsTo(Module, { foreignKey: { name: 'moduleId', allowNull: false }, targetId: 'id' })
