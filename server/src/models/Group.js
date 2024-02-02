@@ -28,7 +28,7 @@ export const Group = sequelize.define('groups', {
     type: DataTypes.STRING
   },
   course: {
-    type: DataTypes.STRING
+    type: DataTypes.INTEGER
   },
   denomination: {
     type: DataTypes.STRING
