@@ -30,7 +30,6 @@ export const User = sequelize.define('user', {
  * @returns {String} The encrypted password
  */
 User.encryptPassword = (password) => {
-  console.log('encryptPassword', password)
   return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
 }
 
