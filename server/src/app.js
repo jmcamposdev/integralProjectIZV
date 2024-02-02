@@ -1,4 +1,5 @@
 import express, { Router } from 'express'
+import morgan from 'morgan'
 import formationsRoutes from './routes/formations.routes.js'
 import groupsRoutes from './routes/groups.routes.js'
 import professorsRoutes from './routes/professors.routes.js'
@@ -9,6 +10,7 @@ const app = express()
 
 // Middlewares
 app.use(express.json()) // Parse JSON bodies (as sent by API clients)
+app.use(morgan('dev')) // Log requests to the console
 
 // Routes
 
