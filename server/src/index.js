@@ -1,6 +1,5 @@
 import app from './app.js'
 import { sequelize } from './database/database.js'
-// import { createFormationsData, createGroupsData, createModulesData, createProfessorsData } from './database/insertData.js'
 
 /**
  * Main function to start the server
@@ -8,12 +7,7 @@ import { sequelize } from './database/database.js'
  */
 async function main () {
   try {
-    await sequelize.sync({ force: false })
-    // Add data to the database
-    // createFormationsData()
-    // createGroupsData()
-    // createModulesData()
-    // createProfessorsData()
+    await sequelize.sync({ force: true })
     // Start the server listening on port 3001
     app.listen(3001, () => {
       // Know that the server is running
