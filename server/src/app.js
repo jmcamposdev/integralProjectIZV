@@ -9,6 +9,7 @@ import professorsRoutes from './routes/professors.routes.js'
 import modulesRoutes from './routes/modules.routes.js'
 import lessonsRoutes from './routes/lessons.routes.js'
 import authRoutes from './routes/auth.routes.js'
+import userRoutes from './routes/user.routes.js'
 
 // InitialSetup
 import * as initialSetup from './libs/initialSetup.js'
@@ -38,6 +39,7 @@ apiV1Routes.use(professorsRoutes)
 apiV1Routes.use(modulesRoutes)
 apiV1Routes.use(lessonsRoutes)
 apiV1Routes.use(authRoutes)
+apiV1Routes.use(userRoutes)
 
 // Mount API v1 routes
 app.use('/api/v1', apiV1Routes)
