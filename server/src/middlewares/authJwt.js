@@ -44,9 +44,12 @@ export const verifyToken = async (req, res, next) => {
     if (error.name === 'TokenExpiredError') {
       // Manage the error if the token has expired
       res.status(401).json({ message: 'Token has expired' })
+    } else if (error.name === 'JsonWebTokenError') {
+      // Manage the error if the token is invalid
+      res.status(401).json({ message: 'Invalid token' })
     } else {
-      // Manage other errors
-      res.status(401).json({ message: 'Unauthorized' })
+      // If there's another error, send it
+      res.status(500).json({ message: error.message })
     }
   }
 }
