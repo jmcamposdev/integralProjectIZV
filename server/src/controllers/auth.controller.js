@@ -21,7 +21,7 @@ export const signUp = async (req, res) => {
       username,
       email,
       password: User.encryptPassword(password), // Encrypt the password
-      roleId: ROLES.user
+      roleId: ROLES.USER // Set the default role
     })
 
     // Save the new user in the database

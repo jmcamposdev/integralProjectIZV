@@ -4,8 +4,8 @@ import { User } from './User.js'
 
 // Define all Roles types
 export const ROLES = {
-  user: 1,
-  admin: 2
+  USER: 1,
+  ADMIN: 2
 }
 
 // Define the Role model
