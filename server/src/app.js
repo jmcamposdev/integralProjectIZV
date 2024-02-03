@@ -12,6 +12,7 @@ import authRoutes from './routes/auth.routes.js'
 
 // InitialSetup
 import * as initialSetup from './libs/initialSetup.js'
+import { handleJsonSyntaxError } from './middlewares/index.js'
 
 // Create Express app
 const app = express()
@@ -21,6 +22,7 @@ initialSetup.createRoles()
 
 // Middlewares
 app.use(express.json()) // Parse JSON bodies (as sent by API clients)
+app.use(handleJsonSyntaxError) // Verify JSON
 app.use(morgan('dev')) // Log requests to the console
 dotenv.config() // Enable Environment Variables
 
