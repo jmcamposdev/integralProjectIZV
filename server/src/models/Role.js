@@ -3,7 +3,10 @@ import { sequelize } from '../database/database.js'
 import { User } from './User.js'
 
 // Define all Roles types
-export const ROLES = ['user', 'admin', 'moderator']
+export const ROLES = {
+  user: 1,
+  admin: 2
+}
 
 // Define the Role model
 export const Role = sequelize.define('role', {
