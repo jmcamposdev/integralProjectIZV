@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { createLesson, deleteLesson, getLesson, getLessons, updateLesson } from '../controllers/lessons.controller.js'
+import { authJwt } from '../middlewares/index.js'
 
 /**
  * ----------------------------------------------
@@ -12,9 +13,9 @@ import { createLesson, deleteLesson, getLesson, getLessons, updateLesson } from 
 const router = Router()
 
 router.get('/lessons', getLessons) // Get all lessons
-router.post('/lessons', createLesson) // Create a new lesson
-router.put('/lessons/:id', updateLesson) // Update a lesson
-router.delete('/lessons/:id', deleteLesson) // Delete a lesson
+router.post('/lessons', [authJwt.verifyToken, authJwt.isAdmin], createLesson) // Create a new lesson
+router.put('/lessons/:id', [authJwt.verifyToken, authJwt.isAdmin], updateLesson) // Update a lesson
+router.delete('/lessons/:id', [authJwt.verifyToken, authJwt.isAdmin], deleteLesson) // Delete a lesson
 router.get('/lessons/:id', getLesson) // Get a lesson by id
 
 // Export router to use it in the app

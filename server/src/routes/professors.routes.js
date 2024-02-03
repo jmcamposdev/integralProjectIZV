@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { createProfessor, deleteProfessor, getProfessor, getProfessors, updateProfessor } from '../controllers/professors.controller.js'
+import { authJwt } from '../middlewares/index.js'
 
 /**
  * ----------------------------------------------
@@ -12,9 +13,9 @@ import { createProfessor, deleteProfessor, getProfessor, getProfessors, updatePr
 const router = Router()
 
 router.get('/professors', getProfessors) // Get all professors
-router.post('/professors', createProfessor) // Create a new professor
-router.put('/professors/:id', updateProfessor) // Update a professor
-router.delete('/professors/:id', deleteProfessor) // Delete a professor
+router.post('/professors', [authJwt.verifyToken, authJwt.isAdmin], createProfessor) // Create a new professor
+router.put('/professors/:id', [authJwt.verifyToken, authJwt.isAdmin], updateProfessor) // Update a professor
+router.delete('/professors/:id', [authJwt.verifyToken, authJwt.isAdmin], deleteProfessor) // Delete a professor
 router.get('/professors/:id', getProfessor) // Get a professor by id
 
 // Export router to use it in the app

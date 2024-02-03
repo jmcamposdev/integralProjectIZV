@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { createModule, deleteModule, getModule, getModules, updateModule } from '../controllers/modules.controller.js'
+import { authJwt } from '../middlewares/index.js'
 
 /**
  * ----------------------------------------------
@@ -12,9 +13,9 @@ import { createModule, deleteModule, getModule, getModules, updateModule } from 
 const router = Router()
 
 router.get('/modules', getModules) // Get all modules
-router.post('/modules', createModule) // Create a new module
-router.put('/modules/:id', updateModule) // Update a module
-router.delete('/modules/:id', deleteModule) // Delete a module
+router.post('/modules', [authJwt.verifyToken, authJwt.isAdmin], createModule) // Create a new module
+router.put('/modules/:id', [authJwt.verifyToken, authJwt.isAdmin], updateModule) // Update a module
+router.delete('/modules/:id', [authJwt.verifyToken, authJwt.isAdmin], deleteModule) // Delete a module
 router.get('/modules/:id', getModule) // Get a module by id
 
 // Export router to use it in the app
