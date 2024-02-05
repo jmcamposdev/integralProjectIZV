@@ -1,4 +1,4 @@
-import { ROLES } from '../models/Role.js'
+import { ROLES, Role } from '../models/Role.js'
 import { User } from '../models/User.js'
 import jwt from 'jsonwebtoken'
 
@@ -26,9 +26,10 @@ export const signUp = async (req, res) => {
 
     // Save the new user in the database
     const user = await newUser.save()
+    const role = await Role.findOne({ where: { id: user.roleId } })
 
     // Generate the token
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user.id, role: role.name }, process.env.JWT_SECRET, {
       expiresIn: 86400 // 24 hours
     })
 
@@ -48,9 +49,11 @@ export const signIn = async (req, res) => {
   try {
     // Find the user in the database
     const userId = req.userId
+    const roleId = req.roleId
+    const role = await Role.findOne({ where: { id: roleId } })
 
     // Generate the token
-    const token = jwt.sign({ id: userId }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: userId, role: role.name }, process.env.JWT_SECRET, {
       expiresIn: 86400 // 24 hours
     })
 

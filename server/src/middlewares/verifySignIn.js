@@ -51,6 +51,7 @@ export const authenticateUser = async (req, res, next) => {
 
     // Attach the user id to the request object to use in the method signIn to generate the token
     req.userId = user.id
+    req.roleId = user.roleId
 
     next() // Call the next middleware
   } catch (error) {
