@@ -19,7 +19,9 @@ export const Professor = sequelize.define('professors', {
     autoIncrement: true
   },
   senecaUser: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
   },
   name: {
     type: DataTypes.STRING
@@ -32,7 +34,7 @@ export const Professor = sequelize.define('professors', {
   },
   specialty: {
     type: DataTypes.ENUM,
-    values: ['FP', 'Secundaria']
+    values: ['FP', 'Secondary']
   }
 })
 
