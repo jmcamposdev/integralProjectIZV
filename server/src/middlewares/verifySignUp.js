@@ -17,10 +17,10 @@ import { User } from '../models/User.js'
  */
 export const verifyNecessaryFields = (req, res, next) => {
   // Get the username, email and password from the request body
-  const { username, email, password } = req.body
+  const { name, email, password } = req.body
 
   // If the fields are undefined, null or empty, send a 400 status code and a message
-  if (!username?.trim() || !email?.trim() || !password?.trim()) {
+  if (!name?.trim() || !email?.trim() || !password?.trim()) {
     res.status(400).json({ message: 'The fields username, email or password are required' })
     return
   }
@@ -37,7 +37,7 @@ export const verifyNecessaryFields = (req, res, next) => {
  */
 export const checkDuplicateUsernameOrEmail = async (req, res, next) => {
   // Get the username and email from the request body
-  const { username, email } = req.body
+  const { name, email } = req.body
 
   // Find the user in the database
   const foundEmail = await User.findOne({ where: { email } })
@@ -49,11 +49,11 @@ export const checkDuplicateUsernameOrEmail = async (req, res, next) => {
   }
 
   // Find the user in the database
-  const foundUsername = await User.findOne({ where: { username } })
+  const foundUsername = await User.findOne({ where: { name } })
 
   // If the username is already in use, send a 400 status code and a message
   if (foundUsername) {
-    res.status(400).json({ message: 'Username already in use' })
+    res.status(400).json({ message: 'Name already in use' })
     return
   }
 

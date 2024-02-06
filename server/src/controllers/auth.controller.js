@@ -13,12 +13,12 @@ import jwt from 'jsonwebtoken'
  */
 export const signUp = async (req, res) => {
   // Get the username, email and password from the request body
-  const { username, email, password } = req.body
+  const { name, email, password } = req.body
 
   try {
     // Create the new user Object
     const newUser = new User({
-      username,
+      name,
       email,
       password: User.encryptPassword(password), // Encrypt the password
       roleId: ROLES.USER // Set the default role
@@ -29,7 +29,7 @@ export const signUp = async (req, res) => {
     const role = await Role.findOne({ where: { id: user.roleId } })
 
     // Generate the token
-    const token = jwt.sign({ id: user.id, role: role.name }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: user.id, role: role.name, name, email }, process.env.JWT_SECRET, {
       expiresIn: 86400 // 24 hours
     })
 
@@ -51,9 +51,11 @@ export const signIn = async (req, res) => {
     const userId = req.userId
     const roleId = req.roleId
     const role = await Role.findOne({ where: { id: roleId } })
+    const email = req.email
+    const name = req.name
 
     // Generate the token
-    const token = jwt.sign({ id: userId, role: role.name }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: userId, role: role.name, name, email }, process.env.JWT_SECRET, {
       expiresIn: 86400 // 24 hours
     })
 
