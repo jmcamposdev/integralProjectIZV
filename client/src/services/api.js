@@ -58,6 +58,24 @@ const api = {
       console.error('Error deleting data:', error)
       throw error
     }
+  },
+
+  put: async (endpoint, body) => {
+    try {
+      const response = await fetch(`${BASE_URL}/${endpoint}`, {
+        method: 'PUT',
+        // Pass the token in the Authorization header
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token // Añade el token al encabezado
+        },
+        body: JSON.stringify(body)
+      })
+      return api.handleResponse(response)
+    } catch (error) {
+      console.error('Error updating data:', error)
+      throw error
+    }
   }
 
 }
