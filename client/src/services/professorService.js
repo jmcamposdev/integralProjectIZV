@@ -11,6 +11,16 @@ const professorService = {
     }
   },
 
+  createProfessor: async (professor) => {
+    try {
+      const newProfessor = await api.post('professors', professor)
+      return newProfessor
+    } catch (error) {
+      console.error('Error creating professor:', error.message)
+      throw error
+    }
+  },
+
   deleteProfessor: async (id) => {
     try {
       await api.delete(`professors/${id}`)
