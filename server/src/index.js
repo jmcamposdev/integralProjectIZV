@@ -7,7 +7,7 @@ import { sequelize } from './database/database.js'
  */
 async function main () {
   try {
-    await sequelize.sync({ force: true })
+    await sequelize.sync({ force: false }) // If force is true, all tables are dropped and recreated
     // Start the server listening on port 3001
     app.listen(3001, () => {
       // Know that the server is running
