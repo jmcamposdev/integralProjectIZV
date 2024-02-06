@@ -1,12 +1,14 @@
 import useAuth from '../hooks/useAuth'
 
 const BASE_URL = 'http://localhost:3001/api/v1'
+const { token } = useAuth()
 
 const api = {
   handleResponse: async (response) => {
     const data = await response.json()
 
     if (!response.ok) {
+      console.log(data)
       throw new Error(data.message || 'Error de la API')
     }
 
@@ -27,8 +29,10 @@ const api = {
     try {
       const response = await fetch(`${BASE_URL}/${endpoint}`, {
         method: 'POST',
+        // Pass the token in the Authorization header
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'x-access-token': token // Añade el token al encabezado
         },
         body: JSON.stringify(body)
       })
@@ -40,7 +44,6 @@ const api = {
   },
 
   delete: async (endpoint) => {
-    const { token } = useAuth()
     try {
       const response = await fetch(`${BASE_URL}/${endpoint}`, {
         method: 'DELETE',
