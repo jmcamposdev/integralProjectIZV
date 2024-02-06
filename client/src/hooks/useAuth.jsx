@@ -11,6 +11,7 @@ const useAuth = () => {
   let isLogged = false
   let email = null
   let name = null
+  let token = null
 
   // If the cookie is available, decode the token and check if it is expired
   if (cookie) {
@@ -27,10 +28,11 @@ const useAuth = () => {
       isLogged = true
       email = decoded?.email
       name = decoded?.name
+      token = cookie
     }
   }
 
-  return { name, email, isAdmin, isUser, role, isLogged }
+  return { name, email, isAdmin, isUser, role, isLogged, token }
 }
 
 export default useAuth
