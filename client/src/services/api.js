@@ -1,3 +1,5 @@
+import useAuth from '../hooks/useAuth'
+
 const BASE_URL = 'http://localhost:3001/api/v1'
 
 const api = {
@@ -35,7 +37,26 @@ const api = {
       console.error('Error posting data:', error)
       throw error
     }
+  },
+
+  delete: async (endpoint) => {
+    const { token } = useAuth()
+    try {
+      const response = await fetch(`${BASE_URL}/${endpoint}`, {
+        method: 'DELETE',
+        // Pass the token in the Authorization header
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token // Añade el token al encabezado
+        }
+      })
+      return api.handleResponse(response)
+    } catch (error) {
+      console.error('Error deleting data:', error)
+      throw error
+    }
   }
+
 }
 
 export default api
