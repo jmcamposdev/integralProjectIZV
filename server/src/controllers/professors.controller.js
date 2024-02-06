@@ -68,6 +68,21 @@ export const createProfessor = (req, res) => {
     })
   }
 
+  // Validate if the senecaUser already exists
+  Professor.findOne({ where: { senecaUser } })
+    .then(professor => {
+      // If the professor exists, send a 400 status code and a message
+      if (professor) {
+        return res.status(400).json({ message: 'Already exists a professor with that senecaUser' })
+      }
+    })
+    .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
+
+  // Validate that the Specialty are valid
+  if (specialty !== 'FP' && specialty !== 'Secondary') {
+    return res.status(400).json({ message: 'Specialty must be FP or Secondary' })
+  }
+
   // Create the professor
   Professor.create({
     senecaUser,
