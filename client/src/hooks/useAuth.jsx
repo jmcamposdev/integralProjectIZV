@@ -9,6 +9,8 @@ const useAuth = () => {
   let isUser = null
   let role = null
   let isLogged = false
+  let email = null
+  let name = null
 
   // If the cookie is available, decode the token and check if it is expired
   if (cookie) {
@@ -23,10 +25,12 @@ const useAuth = () => {
       isUser = decoded?.role === 'user' // Check if the user is a user
       role = decoded?.role // Get the user's role
       isLogged = true
+      email = decoded?.email
+      name = decoded?.name
     }
   }
 
-  return { isAdmin, isUser, role, isLogged }
+  return { name, email, isAdmin, isUser, role, isLogged }
 }
 
 export default useAuth

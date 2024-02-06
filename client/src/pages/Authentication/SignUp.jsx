@@ -5,11 +5,12 @@ import Logo from '../../images/logo/logo.svg'
 import Header from '../../components/Header'
 import ErrorAlert from '../../components/Alerts/ErrorAlert'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
+import { ROLES } from '../../config/roles'
 
 const SignUp = () => {
   // Use state
   const [inputs, setInputs] = useState({
-    username: '',
+    name: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -34,7 +35,7 @@ const SignUp = () => {
     e.preventDefault() // Prevent the default form submission
 
     // Check that any of the input fields is empty
-    if (!inputs.username || !inputs.email || !inputs.password || !inputs.confirmPassword) {
+    if (!inputs.name || !inputs.email || !inputs.password || !inputs.confirmPassword) {
       setError('All fields are required')
       return
     }
@@ -71,7 +72,7 @@ const SignUp = () => {
           token: data.token,
           type: 'Bearer'
         },
-        userState: { email: inputs.email }
+        userState: { email: inputs.email, name: inputs.name, role: ROLES.USER }
       })
       // Redirect the user to the Dashboard
       navigate('/dashboard')
@@ -240,7 +241,7 @@ const SignUp = () => {
                       placeholder='Enter your full name'
                       className='w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
                       required
-                      name='username'
+                      name='name'
                       onChange={handleInputsChange}
                     />
 

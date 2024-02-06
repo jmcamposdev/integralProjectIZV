@@ -58,7 +58,7 @@ const SignIn = () => {
           token: data.token,
           type: 'Bearer'
         },
-        userState: { email: inputs.email }
+        userState: { email: inputs.email, name: inputs.name, role: data.role }
       })
       // Redirect the user to the Dashboard
       navigate('/dashboard')
