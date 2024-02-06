@@ -2,7 +2,7 @@ import useSignOut from 'react-auth-kit/hooks/useSignOut'
 import useAuth from '../../hooks/useAuth'
 
 const Welcome = () => {
-  const { isLogged } = useAuth()
+  const { name, isLogged } = useAuth()
   const signOut = useSignOut()
 
   const handleSignOut = () => {
@@ -16,6 +16,7 @@ const Welcome = () => {
         <p className='text-gray-500'>A Tailwind CSS Admin Dashboard Template</p>
         {/* Button to Sign In or Sing Up */}
         <div className='flex justify-center mt-6'>
+          {isLogged && (<p className='text-gray-500'>Welcome back! {name}</p>)}
           {isLogged
             ? (
               <button
@@ -47,7 +48,7 @@ const Welcome = () => {
           {!isLogged
             ? (
               <a
-                href='/register'
+                href='/signup'
                 className='bg-gray-200 text-gray-700 px-4 py-2 ml-2 rounded-md hover:bg-gray-300'
               >
                 Sign Up
