@@ -15,7 +15,7 @@ import Settings from './pages/Settings'
 import Tables from './pages/Tables'
 import Alerts from './pages/UiElements/Alerts'
 import Buttons from './pages/UiElements/Buttons'
-import ProfessorIndex from './pages/Professor/ProfessorIndex'
+import ProfessorIndex from './pages/Dashboard/Professor/ProfessorIndex'
 import RequireAuth from './features/auth/RequireAuth'
 import { ROLES } from './config/roles'
 import Welcome from './pages/Welcome/Welcome'
@@ -50,6 +50,7 @@ function App () {
           }
           />
 
+          {/* START DASHBOARD ROUTES */}
           <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN, ROLES.USER]} />}>
             <Route
               path='/dashboard'
@@ -60,7 +61,17 @@ function App () {
                 </>
             }
             />
+            <Route
+              path='/dashboard/professor'
+              element={
+                <>
+                  <PageTitle title='Professor' />
+                  <ProfessorIndex />
+                </>
+            }
+            />
           </Route>
+          {/* END DASHBOARD ROUTES */}
 
           <Route
             path='/login'
@@ -93,17 +104,6 @@ function App () {
               </>
           }
           />
-          <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
-            <Route
-              path='/professor'
-              element={
-                <>
-                  <PageTitle title='Professor' />
-                  <ProfessorIndex />
-                </>
-            }
-            />
-          </Route>
 
           <Route
             path='/profile'
