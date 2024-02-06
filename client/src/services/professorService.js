@@ -9,6 +9,15 @@ const professorService = {
       console.error('Error getting professors:', error.message)
       throw error
     }
+  },
+
+  deleteProfessor: async (id) => {
+    try {
+      await api.delete(`professors/${id}`)
+    } catch (error) {
+      console.error('Error deleting professor:', error.message)
+      throw error
+    }
   }
 }
 
