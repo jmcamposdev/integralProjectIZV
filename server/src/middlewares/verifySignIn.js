@@ -45,7 +45,7 @@ export const authenticateUser = async (req, res, next) => {
 
     // If the user does not exist, or the password is incorrect, send a 400 status code and a message
     if (!user || !User.comparePassword(password, user.password)) {
-      res.status(400).json({ message: 'Email or password is incorrect' })
+      res.status(400).json({ message: 'Incorrect email/password' })
       return
     }
 
