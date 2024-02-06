@@ -53,29 +53,29 @@ export const createLesson = async (req, res) => {
 
   // Validate the request body
   if (!groupId || !moduleId || !hours) {
-    return res.status(400).json({ msg: 'Please send groupId, moduleId, professorId or hours' })
+    return res.status(400).json({ message: 'Please send groupId, moduleId, professorId or hours' })
   }
 
   // Validate that the ids exist in the database
   const group = await Group.findOne({ where: { id: groupId } })
   if (!group) {
-    return res.status(400).json({ msg: 'Group not found' })
+    return res.status(400).json({ message: 'Group not found' })
   }
   const selectedModule = await Module.findOne({ where: { id: moduleId } })
   if (!selectedModule) {
-    return res.status(400).json({ msg: 'Module not found' })
+    return res.status(400).json({ message: 'Module not found' })
   }
 
   // Validate that the group course is the same as the module course
   if (group.course !== selectedModule.course) {
-    return res.status(400).json({ msg: 'The group course is not the same as the module course' })
+    return res.status(400).json({ message: 'The group course is not the same as the module course' })
   }
 
   // The professor can be null if there's no professor assigned to the lesson
   if (professorId) {
     const professor = await Professor.findOne({ where: { id: professorId } })
     if (!professor) {
-      return res.status(400).json({ msg: 'Professor not found' })
+      return res.status(400).json({ message: 'Professor not found' })
     }
   }
 
@@ -101,19 +101,19 @@ export const updateLesson = async (req, res) => {
   if (groupId) {
     const group = await Group.findOne({ where: { id: groupId } })
     if (!group) {
-      return res.status(400).json({ msg: 'Group not found' })
+      return res.status(400).json({ message: 'Group not found' })
     }
   }
   if (moduleId) {
     const selectedModule = await Module.findOne({ where: { id: moduleId } })
     if (!selectedModule) {
-      return res.status(400).json({ msg: 'Module not found' })
+      return res.status(400).json({ message: 'Module not found' })
     }
   }
   if (professorId) {
     const professor = await Professor.findOne({ where: { id: professorId } })
     if (!professor) {
-      return res.status(400).json({ msg: 'Professor not found' })
+      return res.status(400).json({ message: 'Professor not found' })
     }
   }
 

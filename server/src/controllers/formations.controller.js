@@ -50,7 +50,7 @@ export const createFormation = (req, res) => {
 
   // Validate the request body
   if (!denomination || !acronym) {
-    return res.status(400).json({ msg: 'Please send denomination and acronym' })
+    return res.status(400).json({ message: 'Please send denomination and acronym' })
   }
 
   // Create the formation
@@ -73,7 +73,7 @@ export const updateFormation = (req, res) => {
 
   // Validate the request body
   if (!denomination || !acronym) {
-    return res.status(400).json({ msg: 'Please send denomination and acronym' })
+    return res.status(400).json({ message: 'Please send denomination and acronym' })
   }
 
   // Update if the formation exists but if it doesn't exist send a 404 status code

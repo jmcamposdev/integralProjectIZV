@@ -64,7 +64,7 @@ export const createProfessor = (req, res) => {
   // Validate the request body
   if (!senecaUser || !name || !firstSurname || !lastSurname || !specialty) {
     return res.status(400).json({
-      msg: 'Please send senecaUser, name, firstSurname, lastSurname and specialty'
+      message: 'Please send senecaUser, name, firstSurname, lastSurname and specialty'
     })
   }
 

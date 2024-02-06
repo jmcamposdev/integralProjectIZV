@@ -49,7 +49,7 @@ export const createGroup = (req, res) => {
 
   // Validate the request body
   if (!schoolYear || !course || !denomination || typeof isMorning !== 'boolean' || !formationId) {
-    return res.status(400).json({ msg: 'Please send schoolYear, course, denomination, formationId and isMorning' })
+    return res.status(400).json({ message: 'Please send schoolYear, course, denomination, formationId and isMorning' })
   }
 
   // Create the group

@@ -47,7 +47,7 @@ export const createModule = (req, res) => {
 
   // Validate the request body
   if (!denomination || !acronym || !course || !hours || !specialty || !formationId) {
-    return res.status(400).json({ msg: 'Please send denomination, acronym, course, hours or specialty' })
+    return res.status(400).json({ message: 'Please send denomination, acronym, course, hours or specialty' })
   }
 
   // Create the module
