@@ -1,6 +1,7 @@
 import express, { Router } from 'express'
 import morgan from 'morgan'
 import dotenv from 'dotenv'
+import cors from 'cors'
 
 // Import routes
 import formationsRoutes from './routes/formations.routes.js'
@@ -23,6 +24,7 @@ initialSetup.createRoles()
 
 // Middlewares
 app.use(express.json()) // Parse JSON bodies (as sent by API clients)
+app.use(cors()) // Enable CORS for all routes
 app.use(handleJsonSyntaxError) // Verify JSON
 app.use(morgan('dev')) // Log requests to the console
 dotenv.config() // Enable Environment Variables
