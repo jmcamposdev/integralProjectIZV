@@ -1,10 +1,28 @@
 import { useEffect, useState } from 'react'
 import professorService from '../../services/professorService'
+import ConfirmModal from '../Modals/ConfirmModal'
+import ErrorAlert from '../Alerts/ErrorAlert'
 
 const ProfessorList = () => {
+  const [error, setError] = useState(null) // Save the error message if there is one
   const [professors, setProfessors] = useState([]) // Save all professors from the database
   const [professorIdToDelete, setProfessorIdToDelete] = useState(null) // Save the professor Id to delete
   const [viewDeleteModal, setViewDeleteModal] = useState(false) // Show or hide the delete modal
+  const [viewCreateModal, setViewCreateModal] = useState(false) // Show or hide the create modal
+  const [createInputs, setCreateInputs] = useState({
+    senecaUser: '',
+    name: '',
+    firstSurname: '',
+    lastSurname: '',
+    specialty: ''
+  }) // Save the inputs from the create modal
+
+  const handleCreateInputs = (event) => {
+    setCreateInputs({
+      ...createInputs,
+      [event.target.name]: event.target.value
+    })
+  }
 
   /**
    * This only runs once when the component mounts
@@ -71,11 +89,41 @@ const ProfessorList = () => {
    *  Create Professor Logic
    * ------------------------------------------------------------------------
    */
+  const handleShowCreateModal = () => {
+    setViewCreateModal(true)
+  }
+
+  const handleCloseCreateModal = () => {
+    setViewCreateModal(false)
+  }
+
+  const handleCreateProfessor = async (event) => {
+    event.preventDefault()
+
+    try {
+      const professor = await professorService.createProfessor(createInputs)
+      setProfessors([...professors, professor])
+      handleCloseCreateModal()
+    } catch (error) {
+      handleCloseCreateModal()
+      setError(error.message)
+      console.error('Error creating professor:', error.message)
+    }
+    // Reset the inputs
+    setCreateInputs({
+      senecaUser: '',
+      name: '',
+      firstSurname: '',
+      lastSurname: '',
+      specialty: ''
+    })
+  }
 
   return (
     <>
       {/* <!-- ===== Start of Professor Table ===== --> */}
-      <div className='rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1'>
+      <div className='rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-6'>
+        {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
         <h4 className='mb-6 text-xl font-semibold text-black dark:text-white'>
           Professors List
         </h4>
@@ -107,13 +155,13 @@ const ProfessorList = () => {
         </div>
         {professors.length <= 0
           ? (
-            <div className='text-center'>Loading...</div>
+            <div className='text-center p-10'>No professors found</div>
             )
           : (
               professors.map((professor) => (
                 <div
                   className='grid grid-cols-2 sm:grid-cols-4 '
-                  key={professor.id}
+                  key={professor.senecaUser}
                 >
                   <div className='p-2.5 xl:p-5'>
                     <p className='text-black dark:text-white'>{professor.name}</p>
@@ -135,79 +183,116 @@ const ProfessorList = () => {
                 </div>
 
               )))}
+        <button
+          onClick={handleShowCreateModal}
+          className='mt-8 flex ml-auto w-max items-center justify-center gap-2.5 rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10'
+        >
+          <span>
+            <svg xmlns='http://www.w3.org/2000/svg' width='24px' height='24px' viewBox='0 0 24 24'><path fill='currentColor' d='M11 13H5v-2h6V5h2v6h6v2h-6v6h-2z' /></svg>
+          </span>Add Professor
+        </button>
       </div>
       {/* <!-- ===== Start of Delete Modal ===== --> */}
-      <div
-        id='popup-modal'
-        tabIndex={-1}
-        className={`${!viewDeleteModal && 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full`}
-      >
-        <div className='absolute top-0 right-0 bottom-0 left-0 bg-black bg-opacity-50' />
-        <div className='relative p-4 w-full max-w-md'>
-          <div className='relative bg-white rounded-lg shadow dark:bg-gray-700'>
-            <button
-              onClick={handleCloseDeleteModal}
-              type='button'
-              className='absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white'
-              data-modal-hide='popup-modal'
-            >
-              <svg
-                className='w-3 h-3'
-                aria-hidden='true'
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 14 14'
-              >
-                <path
-                  stroke='currentColor'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6'
-                />
+      <ConfirmModal show={viewDeleteModal} handleClose={handleCloseDeleteModal} handleConfirm={handleDeleteProfessor} message='Are you sure you want to delete this professor?' />
+      {/* <!-- ===== End of Professor Table ===== --> */}
+
+      {/* <!-- ===== Start of Add Professor Modal ===== --> */}
+      <div id='crud-modal' tabIndex='-1' aria-hidden='true' className={`${!viewCreateModal && 'hidden'} fixed top-0 left-0 flex items-center justify-center w-full h-full bg-black bg-opacity-50 dark:bg-white dark:bg-opacity-50`}>
+        <div className='bg-white dark:bg-boxdark-2 rounded-lg shadow-md max-w-md w-full'>
+          <div className='flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600'>
+            <h3 className='text-lg font-semibold text-gray-900 dark:text-white'>
+              Create New Product
+            </h3>
+            <button onClick={handleCloseCreateModal} type='button' className='text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white' data-modal-toggle='crud-modal'>
+              <svg className='w-3 h-3' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 14 14'>
+                <path stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='2' d='m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6' />
               </svg>
               <span className='sr-only'>Close modal</span>
             </button>
-            <div className='p-4 md:p-5 text-center'>
-              <svg
-                className='mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200'
-                aria-hidden='true'
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 20 20'
-              >
-                <path
-                  stroke='currentColor'
-                  strokeLinecap='round'
-                  strokeLinejoin='round'
-                  strokeWidth={2}
-                  d='M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z'
-                />
-              </svg>
-              <h3 className='mb-5 text-lg font-normal text-gray-500 dark:text-gray-400'>
-                Are you sure you want to delete this product?
-              </h3>
-              <button
-                onClick={handleDeleteProfessor}
-                data-modal-hide='popup-modal'
-                type='button'
-                className='text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2'
-              >
-                Yes, I'm sure
-              </button>
-              <button
-                onClick={handleCloseDeleteModal}
-                data-modal-hide='popup-modal'
-                type='button'
-                className='text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600'
-              >
-                No, cancel
-              </button>
-            </div>
           </div>
+          <form onSubmit={handleCreateProfessor} className='p-4 md:p-5'>
+            <div className='grid gap-4 mb-4 grid-cols-2'>
+              <div className='col-span-2'>
+                <label htmlFor='senecaUser' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Seneca User</label>
+                <input
+                  onChange={handleCreateInputs}
+                  type='text'
+                  name='senecaUser'
+                  id='senecaUser'
+                  value={createInputs.senecaUser}
+                  required
+                  placeholder='Enter Seneca User'
+                  className='w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                />
+              </div>
+              <div className='col-span-2'>
+                <label htmlFor='name' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Name</label>
+                <input
+                  onChange={handleCreateInputs}
+                  type='text'
+                  name='name'
+                  id='name'
+                  value={createInputs.name}
+                  className='w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                  placeholder='Enter Name'
+                  required
+                />
+              </div>
+              <div className='col-span-2'>
+                <label htmlFor='firstSurname' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>First Surname</label>
+                <input
+                  onChange={handleCreateInputs}
+                  type='text'
+                  name='firstSurname'
+                  id='firstSurname'
+                  value={createInputs.firstSurname}
+                  className='w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                  placeholder='Enter First Surname'
+                  required
+                />
+              </div>
+              <div className='col-span-2'>
+                <label htmlFor='lastSurname' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Last Surname</label>
+                <input
+                  onChange={handleCreateInputs}
+                  type='text'
+                  name='lastSurname'
+                  id='lastSurname'
+                  value={createInputs.lastSurname}
+                  className='w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                  placeholder='Enter Last Surname'
+                  required
+                />
+              </div>
+              <div className='col-span-2'>
+                <label htmlFor='specialty' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>Specialty</label>
+                <select
+                  onChange={handleCreateInputs}
+                  id='specialty'
+                  name='specialty'
+                  className='w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                  defaultValue={createInputs.specialty}
+                >
+                  <option value='' disabled>Select Specialty</option>
+                  <option value='FP'>FP</option>
+                  <option value='Secundaria'>Secundaria</option>
+                </select>
+              </div>
+            </div>
+            <button
+              type='submit'
+              className='w-full flex justify-center text-white items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
+            >
+              <svg className='me-1 -ms-1 w-5 h-5' fill='currentColor' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'>
+                <path fillRule='evenodd' d='M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z' clipRule='evenodd' />
+              </svg>
+              Add new professor
+            </button>
+          </form>
         </div>
       </div>
-      {/* <!-- ===== End of Professor Table ===== --> */}
+
+      {/* <!-- ===== End of Add Professor Modal ===== --> */}
     </>
   )
 }
