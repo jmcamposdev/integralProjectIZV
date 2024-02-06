@@ -275,7 +275,7 @@ const ProfessorList = () => {
                 >
                   <option value='' disabled>Select Specialty</option>
                   <option value='FP'>FP</option>
-                  <option value='Secundaria'>Secundaria</option>
+                  <option value='Secondary'>Secondary</option>
                 </select>
               </div>
             </div>
