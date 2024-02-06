@@ -51,8 +51,7 @@ export const getProfessor = (req, res) => {
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const createProfessor = (req, res) => {
-  // Destructuring the required fields from the request body
+export const createProfessor = async (req, res) => {
   const {
     senecaUser,
     name,
@@ -61,40 +60,38 @@ export const createProfessor = (req, res) => {
     specialty
   } = req.body
 
-  // Validate the request body
   if (!senecaUser || !name || !firstSurname || !lastSurname || !specialty) {
     return res.status(400).json({
       message: 'Please send senecaUser, name, firstSurname, lastSurname and specialty'
     })
   }
 
-  // Validate if the senecaUser already exists
-  Professor.findOne({ where: { senecaUser } })
-    .then(professor => {
-      // If the professor exists, send a 400 status code and a message
-      if (professor) {
-        return res.status(400).json({ message: 'Already exists a professor with that senecaUser' })
-      }
+  try {
+    // Validate if the senecaUser already exists
+    const existingProfessor = await Professor.findOne({ where: { senecaUser } })
+
+    if (existingProfessor) {
+      return res.status(400).json({ message: 'Already exists a professor with that senecaUser' })
+    }
+
+    // Validate that the Specialty is valid
+    if (specialty !== 'FP' && specialty !== 'Secondary') {
+      return res.status(400).json({ message: 'Specialty must be FP or Secondary' })
+    }
+
+    // Create the professor
+    const createdProfessor = await Professor.create({
+      senecaUser,
+      name,
+      firstSurname,
+      lastSurname,
+      specialty
     })
-    .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
 
-  // Validate that the Specialty are valid
-  if (specialty !== 'FP' && specialty !== 'Secondary') {
-    return res.status(400).json({ message: 'Specialty must be FP or Secondary' })
+    res.json(createdProfessor)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
   }
-
-  // Create the professor
-  Professor.create({
-    senecaUser,
-    name,
-    firstSurname,
-    lastSurname,
-    specialty
-  })
-    .then(professor => res.json(professor)) // Send the created professor in the response
-    .catch(err => res.status(500).json({ // If there's an error, send it
-      message: err.message
-    }))
 }
 
 export const updateProfessor = (req, res) => {
