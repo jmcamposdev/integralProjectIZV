@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize'
 import { Professor } from '../models/Professor.js'
+import { Lesson } from '../models/Lesson.js'
 
 /**
  * Get all professors from database
@@ -138,18 +139,28 @@ export const updateProfessor = async (req, res) => {
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const deleteProfessor = (req, res) => {
-  const { id } = req.params
+export const deleteProfessor = async (req, res) => {
+  try {
+    const { id } = req.params
 
-  // Delete the professor but if there's an error, send it
-  Professor.destroy({ where: { id } })
-    .then(professor => {
-      // If the professor doesn't exist, send a 404 status code and a message
-      if (!professor) {
-        return res.status(404).json({ message: 'Professor not found' })
-      }
-      // Send the professor in the response as JSON
-      res.json({ message: 'Professor deleted successfully' })
-    })
-    .catch(err => res.status(500).json({ message: err.message }))
+    // Check if the professor has assigned lessons
+    const hasLessons = await Lesson.findOne({ where: { professorId: id } })
+    if (hasLessons) {
+      return res.status(400).json({ message: 'Cannot delete professor with assigned lessons' })
+    }
+
+    // Delete the professor
+    const deletedRows = await Professor.destroy({ where: { id } })
+
+    // If no rows were deleted, the professor was not found
+    if (deletedRows === 0) {
+      return res.status(404).json({ message: 'Professor not found' })
+    }
+
+    // Send success message
+    res.json({ message: 'Professor deleted successfully' })
+  } catch (error) {
+    // If there's an error, send it
+    res.status(500).json({ message: error.message })
+  }
 }
