@@ -1,3 +1,4 @@
+import { Sequelize } from 'sequelize'
 import { Professor } from '../models/Professor.js'
 
 /**
@@ -94,25 +95,39 @@ export const createProfessor = async (req, res) => {
   }
 }
 
-export const updateProfessor = (req, res) => {
-  const { id } = req.params // Destructuring the id from the request parameters
+export const updateProfessor = async (req, res) => {
+  const { id } = req.params
 
-  // Get the professor from database
-  Professor.findOne({ where: { id } })
-    .then(professor => {
-      // If the professor doesn't exist, send a 404 status code and a message
-      if (!professor) {
-        return res.status(404).json({ message: 'Professor not found' })
+  try {
+    // Validate that there doesn't exist a professor with the same senecaUser
+    const existingProfessor = await Professor.findOne({
+      where: {
+        senecaUser: req.body.senecaUser,
+        id: { [Sequelize.Op.ne]: req.body.id }
       }
-
-      // Update the professor only with the fields sent in the request body
-      // If the field doesn't exist we don't update it
-      professor.set(req.body)
-      professor.save()
-        .then(professor => res.json(professor)) // Send the updated professor in the response
-        .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
     })
-    .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
+
+    if (existingProfessor) {
+      return res.status(400).json({ message: 'Already exists a professor with that senecaUser' })
+    }
+
+    // Get the professor from the database
+    const professor = await Professor.findOne({ where: { id } })
+
+    // If the professor doesn't exist, send a 404 status code and a message
+    if (!professor) {
+      return res.status(404).json({ message: 'Professor not found' })
+    }
+
+    // Update the professor only with the fields sent in the request body
+    // If the field doesn't exist, we don't update it
+    professor.set(req.body)
+    await professor.save()
+
+    res.json(professor) // Send the updated professor in the response
+  } catch (err) {
+    res.status(500).json({ message: err.message }) // If there's an error, send it
+  }
 }
 
 /**
