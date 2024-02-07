@@ -21,6 +21,16 @@ const professorService = {
     }
   },
 
+  updateProfessor: async (professor) => {
+    try {
+      const updatedProfessor = await api.put(`professors/${professor.id}`, professor)
+      return updatedProfessor
+    } catch (error) {
+      console.error('Error updating professor:', error.message)
+      throw error
+    }
+  },
+
   deleteProfessor: async (id) => {
     try {
       await api.delete(`professors/${id}`)
