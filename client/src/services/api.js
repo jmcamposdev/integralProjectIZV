@@ -1,7 +1,6 @@
 import useAuth from '../hooks/useAuth'
 
 const BASE_URL = 'http://localhost:3001/api/v1'
-const { token } = useAuth()
 
 const api = {
   handleResponse: async (response) => {
@@ -26,6 +25,7 @@ const api = {
   },
 
   post: async (endpoint, body) => {
+    const { token } = useAuth()
     try {
       const response = await fetch(`${BASE_URL}/${endpoint}`, {
         method: 'POST',
@@ -44,6 +44,7 @@ const api = {
   },
 
   delete: async (endpoint) => {
+    const { token } = useAuth()
     try {
       const response = await fetch(`${BASE_URL}/${endpoint}`, {
         method: 'DELETE',
@@ -61,6 +62,7 @@ const api = {
   },
 
   put: async (endpoint, body) => {
+    const { token } = useAuth()
     try {
       const response = await fetch(`${BASE_URL}/${endpoint}`, {
         method: 'PUT',
