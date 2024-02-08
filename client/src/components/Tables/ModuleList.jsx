@@ -156,12 +156,10 @@ const ModuleList = () => {
   const handleCreateModule = async (event) => {
     event.preventDefault()
     try {
-      console.log(modulesInputs)
       // Create the module in the database
       const savedModule = await moduleService.createModule(modulesInputs)
       // Save the module in the state
       setModules([...modules, savedModule])
-      console.log('Saved Modules', [...modules, savedModule])
       // Hide the create modal
       setViewCreateModal(false)
     } catch (error) {
