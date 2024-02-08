@@ -59,9 +59,9 @@ export const createModule = async (req, res) => {
     }
 
     // Create the module
-    const module = await Module.create({ denomination, acronym, course, hours, specialty, formationId })
+    const saveModule = await Module.create({ denomination, acronym, course, hours, specialty, formationId })
     // Send the module in the response
-    res.json(module)
+    res.json(saveModule)
   } catch (err) {
     res.status(500).json({ message: err.message })
   }
