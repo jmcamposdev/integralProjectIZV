@@ -49,9 +49,12 @@ const FormationList = () => {
   useEffect(() => {
     async function getFormations () {
       try {
+        // Fetch the formations from the server
         const formations = await formationService.getAllFormations()
+        // Save the formations in the state
         setFormations(formations)
       } catch (error) {
+        // If there's an error, set the error message
         setError(error.message)
       }
     }
@@ -71,9 +74,10 @@ const FormationList = () => {
    * and hides it if it is null
    */
   useEffect(() => {
+    // If the formationIdToDelete is not null, show the delete modal
     if (formationIdToDelete) {
       setViewDeleteModal(true)
-    } else {
+    } else { // If the formationIdToDelete is null, hide the delete modal
       setViewDeleteModal(false)
     }
   }, [formationIdToDelete])
@@ -85,29 +89,45 @@ const FormationList = () => {
    */
   const handleDeleteFormation = async () => {
     try {
+      // Delete the formation using the formationIdToDelete
       await formationService.deleteFormation(formationIdToDelete)
+      // Update the state to remove the deleted formation from the list
       setFormations(formations.filter((formation) => formation.id !== formationIdToDelete))
+      // Hide the modal active the useEffect to hide the delete modal
       setFormationIdToDelete(null)
     } catch (error) {
+      // If there's an error, set the error message
       console.error('Error deleting formation:', error.message)
     }
   }
 
   /**
    * ------------------------------------------------------------------------
-   *  Create Formation Logic (Modal)
+   *  Create|Update Formation Logic (Modal)
    * ------------------------------------------------------------------------
    */
 
+  /**
+   * This runs when the viewCreateModal changes
+   * It resets the formationInputs when the create modal is closed
+   * and hides the update modal when the create modal is closed
+   */
   useEffect(() => {
-    if (viewCreateModal) {
-      resetFormationInputs()
-    } else {
+    // If the create modal is closed, reset the formationInputs
+    if (!viewCreateModal) {
       setViewUpdateModal(false)
+      // If the update modal is closed, reset the formationInputs
+    } else if (!viewUpdateModal) {
       resetFormationInputs()
     }
   }, [viewCreateModal])
 
+  /**
+   * This function creates a new formation
+   * and updates the state to add the new formation to the list
+   * It also hides the create modal
+   * @param {Event} event The event object
+   */
   const handleCreateFormation = async (event) => {
     event.preventDefault()
 
@@ -121,6 +141,40 @@ const FormationList = () => {
     // Hide the modal
     setViewCreateModal(false)
   }
+
+  /**
+   * This function updates a formation
+   * and updates the state to replace the old formation with the updated formation
+   * It also hides the update modal
+   * @param {Event} event The event object
+   */
+  const handleUpdateFormation = async (event) => {
+    event.preventDefault() // Prevent the default form submission
+
+    try {
+      // Update the formation
+      const updatedFormation = await formationService.updateFormation(formationInputs)
+      // Update the state to replace the old formation with the updated formation
+      setFormations(formations.map((formation) => (formation.id === updatedFormation.id ? updatedFormation : formation)))
+    } catch (error) {
+      // If there's an error, set the error message
+      setError(error.message)
+    }
+
+    // Hide the modal
+    setViewCreateModal(false)
+  }
+
+  /**
+   * This function shows the create modal and sets the formationInputs to the formation to update
+   * @param {Object} formation The formation to update
+   */
+  const handleUpdateClick = (formation) => {
+    setViewUpdateModal(true) // Show the update modal
+    setViewCreateModal(true) // Show the create modal and active the useEffect to reset the formationInputs
+    setFormationInputs(formation) // Set the formationInputs to the formation to update
+  }
+
   return (
     <>
       {/* <!-- ===== Start of Formation Table ===== --> */}
@@ -176,15 +230,7 @@ const FormationList = () => {
                             <i className='icon-[material-symbols-light--delete-outline-rounded] fill-current duration-300 ease-in-out hover:text-red-500' style={{ fontSize: '27px' }} />
                           </button>
 
-                          <button onClick={() => {
-                            setViewUpdateModal(true)
-                            setFormationInputs({
-                              denomination: formation.denomination,
-                              acronym: formation.acronym
-                            })
-                            setViewCreateModal(true)
-                          }}
-                          >
+                          <button onClick={() => handleUpdateClick(formation)}>
                             <i className='icon-[lucide--edit] ml-6 fill-current duration-300 ease-in-out hover:text-meta-3' style={{ fontSize: '20px' }} />
                           </button>
                         </>
@@ -218,7 +264,7 @@ const FormationList = () => {
       {/* <!-- ===== Start of Create|Update Formation Modal ===== --> */}
       {isAdmin && (
         <FormModal
-          isOpen={viewCreateModal} onClose={() => setViewCreateModal(false)} onSubmit={handleCreateFormation} title='Create Professor' submitText='Add new Formation' formFields={[
+          isOpen={viewCreateModal} onClose={() => setViewCreateModal(false)} onSubmit={viewUpdateModal ? handleUpdateFormation : handleCreateFormation} title={viewUpdateModal ? 'Update Formation' : 'Create Formation'} submitText={viewUpdateModal ? 'Update Formation' : 'Add new Professor'} formFields={[
             {
               colSpan: 2,
               label: 'Denomination',
