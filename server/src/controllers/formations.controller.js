@@ -97,20 +97,35 @@ export const updateFormation = async (req, res) => {
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const deleteFormation = (req, res) => {
-  const { id } = req.params // Destructuring the id from the request parameters
+export const deleteFormation = async (req, res) => {
+  try {
+    const { id } = req.params // Destructuring the id from the request parameters
 
-  // Delete the project but if it doesn't exist send a 404 status code
-  Formation.destroy({ where: { id } })
-    .then(formation => {
-      // If the formation doesn't exist, send a 404 status code
-      if (!formation) {
-        return res.status(404).json({ message: 'Formation not found' })
-      }
-      // Send a success message in the response
-      res.json({ message: 'Formation deleted successfully' })
-    })
-    .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
+    // Don't delete if the formation has groups or modules
+    const groups = await Group.findAll({ where: { formationId: id } })
+    if (groups.length > 0) {
+      return res.status(400).json({ message: 'The current formation has groups please delete them first' })
+    }
+
+    const modules = await Module.findAll({ where: { formationId: id } })
+    if (modules.length > 0) {
+      return res.status(400).json({ message: 'The current formation has modules please delete them first' })
+    }
+
+    // Delete the formation
+    const deletedFormationCount = await Formation.destroy({ where: { id } })
+
+    // If no formation was deleted, send a 404 status code
+    if (deletedFormationCount === 0) {
+      return res.status(404).json({ message: 'Formation not found' })
+    }
+
+    // Send a success message in the response
+    res.json({ message: 'Formation deleted successfully' })
+  } catch (err) {
+    // If there's an error, send it
+    res.status(500).json({ message: err.message })
+  }
 }
 
 export const getFormationGroups = (req, res) => {
