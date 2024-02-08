@@ -19,6 +19,7 @@ import ProfessorIndex from './pages/Dashboard/Professor/ProfessorIndex'
 import RequireAuth from './features/auth/RequireAuth'
 import { ROLES } from './config/roles'
 import Welcome from './pages/Welcome/Welcome'
+import FormationIndex from './pages/Dashboard/Formation/FormationIndex'
 
 function App () {
   const [loading, setLoading] = useState(true)
@@ -67,6 +68,15 @@ function App () {
                 <>
                   <PageTitle title='Professor' />
                   <ProfessorIndex />
+                </>
+            }
+            />
+            <Route
+              path='/dashboard/formation'
+              element={
+                <>
+                  <PageTitle title='Formation' />
+                  <FormationIndex />
                 </>
             }
             />
