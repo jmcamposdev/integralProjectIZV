@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import useAuth from '../../hooks/useAuth'
 import formationService from '../../services/formationService'
 import ErrorAlert from '../Alerts/ErrorAlert'
+import ConfirmModal from '../Modals/ConfirmModal'
 
 const FormationList = () => {
   const { isAdmin } = useAuth() // Check if the user is an admin
@@ -48,7 +49,6 @@ const FormationList = () => {
     async function getFormations () {
       try {
         const formations = await formationService.getAllFormations()
-        console.log(formations)
         setFormations(formations)
       } catch (error) {
         setError(error.message)
@@ -57,6 +57,40 @@ const FormationList = () => {
 
     getFormations()
   }, [])
+
+  /**
+   * ------------------------------------------------------------------------
+   *  Delete Formation Logic
+   * ------------------------------------------------------------------------
+   */
+
+  /**
+   * This runs when the formationIdToDelete changes
+   * It shows the delete modal if the formationIdToDelete is not null
+   * and hides it if it is null
+   */
+  useEffect(() => {
+    if (formationIdToDelete) {
+      setViewDeleteModal(true)
+    } else {
+      setViewDeleteModal(false)
+    }
+  }, [formationIdToDelete])
+
+  /**
+   * This function deletes a formation from the database
+   * and updates the state to remove the deleted formation from the list
+   * It also hides the delete modal
+   */
+  const handleDeleteFormation = async () => {
+    try {
+      await formationService.deleteFormation(formationIdToDelete)
+      setFormations(formations.filter((formation) => formation.id !== formationIdToDelete))
+      setFormationIdToDelete(null)
+    } catch (error) {
+      console.error('Error deleting formation:', error.message)
+    }
+  }
 
   const handleShowCreateModal = () => {
     setViewCreateModal(true)
@@ -111,6 +145,7 @@ const FormationList = () => {
                     {
                       isAdmin && (
                         <>
+                          {/* Delete Formation Modal */}
                           <button onClick={() => setFormationIdToDelete(formation.id)}>
                             <i className='icon-[material-symbols-light--delete-outline-rounded] fill-current duration-300 ease-in-out hover:text-red-500' style={{ fontSize: '27px' }} />
                           </button>
@@ -149,6 +184,9 @@ const FormationList = () => {
 
       </div>
       {/* <!-- ===== End of Formation Table ===== --> */}
+
+      {/* <!-- ===== Start of Delete Modal ===== --> */}
+      {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={() => (setFormationIdToDelete(null))} handleConfirm={handleDeleteFormation} message='Are you sure you want to delete this formation?' />)}
     </>
   )
 }
