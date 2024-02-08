@@ -184,7 +184,7 @@ const FormationList = () => {
           Formations List
         </h4>
         <div className='flex flex-col'>
-          <div className={`grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-${isAdmin ? '3' : '2'}`}>
+          <div className={`grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 ${isAdmin ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
             <div className='p-2.5 xl:p-5'>
               <h5 className='text-sm font-medium uppercase xsm:text-base'>
                 Denomination
