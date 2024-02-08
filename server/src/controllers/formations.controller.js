@@ -67,26 +67,26 @@ export const createFormation = (req, res) => {
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const updateFormation = (req, res) => {
+export const updateFormation = async (req, res) => {
   const { id } = req.params // Destructuring the id from the request parameters
-  const { denomination, acronym } = req.body // Destructuring the request body to get the values of the fields
 
-  // Validate the request body
-  if (!denomination || !acronym) {
-    return res.status(400).json({ message: 'Please send denomination and acronym' })
+  try {
+    // Get the formation from database
+    const formation = await Formation.findOne({ where: { id } })
+
+    if (!formation) {
+      return res.status(404).json({ message: 'Formation not found' })
+    }
+
+    // Update the formation with the new values from the request body
+    formation.set(req.body)
+    await formation.save()
+
+    // Send the updated formation in the response
+    res.json(formation)
+  } catch (err) {
+    res.status(500).json({ message: err.message }) // If there's an error, send it
   }
-
-  // Update if the formation exists but if it doesn't exist send a 404 status code
-  Formation.update({ denomination, acronym }, { where: { id } })
-    .then(formation => {
-      // If the formation doesn't exist, send a 404 status code
-      if (!formation[0]) {
-        return res.status(404).json({ message: 'Formation not found' })
-      }
-      // Send the updated formation in the response
-      res.json({ id, denomination, acronym })
-    })
-    .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
 }
 
 /**
