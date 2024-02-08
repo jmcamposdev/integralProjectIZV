@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import useAuth from '../../hooks/useAuth'
 import moduleService from '../../services/moduleService'
 import ErrorAlert from '../Alerts/ErrorAlert'
+import ConfirmModal from '../Modals/ConfirmModal'
 
 const ModuleList = () => {
   const { isAdmin } = useAuth()
@@ -218,6 +219,10 @@ const ModuleList = () => {
 
       </div>
       {/* <!-- ===== End of Module Table ===== --> */}
+
+      {/* <!-- ===== Start of Delete Modal ===== --> */}
+      {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={() => (setModuleIdToDelete(null))} handleConfirm={handleDeleteModule} message='Are you sure you want to delete this module?' />)}
+      {/* <!-- ===== End of Delete Modal ===== --> */}
     </>
   )
 }
