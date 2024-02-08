@@ -139,9 +139,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item Professor --> */}
               <li>
                 <NavLink
-                  to='/dashboard/professor'
+                  to='/dashboard/professors'
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('professor') &&
+                    pathname.includes('professors') &&
                     'bg-graydark dark:bg-meta-4'
                   }`}
                 >
@@ -154,9 +154,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
               {/* <!-- Menu Item Formation --> */}
               <li>
                 <NavLink
-                  to='/dashboard/formation'
+                  to='/dashboard/formations'
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('formation') &&
+                    pathname.includes('formations') &&
                     'bg-graydark dark:bg-meta-4'
                   }`}
                 >
@@ -165,6 +165,21 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 </NavLink>
               </li>
               {/* <!-- Menu Item Formation --> */}
+
+              {/* <!-- Menu Item Module --> */}
+              <li>
+                <NavLink
+                  to='/dashboard/modules'
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('modules') &&
+                    'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <i class='icon-[heroicons--book-open]' style={{ fontSize: '18px' }} />
+                  Modules
+                </NavLink>
+              </li>
+              {/* <!-- Menu Item Module --> */}
 
               {/* <!-- Menu Item Calendar --> */}
               <li>
