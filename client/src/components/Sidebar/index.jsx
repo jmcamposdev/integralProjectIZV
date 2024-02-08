@@ -175,7 +175,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     'bg-graydark dark:bg-meta-4'
                   }`}
                 >
-                  <i class='icon-[heroicons--book-open]' style={{ fontSize: '18px' }} />
+                  <i className='icon-[heroicons--book-open]' style={{ fontSize: '18px' }} />
                   Modules
                 </NavLink>
               </li>
