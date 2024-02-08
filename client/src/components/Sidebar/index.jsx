@@ -145,7 +145,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     'bg-graydark dark:bg-meta-4'
                   }`}
                 >
-                  <i class='icon-[lucide--user]' style={{ fontSize: '18px' }} />
+                  <i className='icon-[lucide--user]' style={{ fontSize: '18px' }} />
                   Professor
                 </NavLink>
               </li>
@@ -156,11 +156,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 <NavLink
                   to='/dashboard/formation'
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('professor') &&
+                    pathname.includes('formation') &&
                     'bg-graydark dark:bg-meta-4'
                   }`}
                 >
-                  <i class='icon-[cil--education]' style={{ fontSize: '18px' }} />
+                  <i className='icon-[cil--education]' style={{ fontSize: '18px' }} />
                   Formation
                 </NavLink>
               </li>
