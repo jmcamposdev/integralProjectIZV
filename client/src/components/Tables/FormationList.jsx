@@ -3,6 +3,7 @@ import useAuth from '../../hooks/useAuth'
 import formationService from '../../services/formationService'
 import ErrorAlert from '../Alerts/ErrorAlert'
 import ConfirmModal from '../Modals/ConfirmModal'
+import FormModal from '../Modals/FormModal'
 
 const FormationList = () => {
   const { isAdmin } = useAuth() // Check if the user is an admin
@@ -92,8 +93,33 @@ const FormationList = () => {
     }
   }
 
-  const handleShowCreateModal = () => {
-    setViewCreateModal(true)
+  /**
+   * ------------------------------------------------------------------------
+   *  Create Formation Logic (Modal)
+   * ------------------------------------------------------------------------
+   */
+
+  useEffect(() => {
+    if (viewCreateModal) {
+      resetFormationInputs()
+    } else {
+      setViewUpdateModal(false)
+      resetFormationInputs()
+    }
+  }, [viewCreateModal])
+
+  const handleCreateFormation = async (event) => {
+    event.preventDefault()
+
+    try {
+      const newFormation = await formationService.createFormation(formationInputs)
+      setFormations([...formations, newFormation])
+    } catch (error) {
+      setError(error.message)
+    }
+
+    // Hide the modal
+    setViewCreateModal(false)
   }
   return (
     <>
@@ -172,7 +198,7 @@ const FormationList = () => {
         {// Only show the add formation button if the user is an admin
           isAdmin && (
             <button
-              onClick={handleShowCreateModal}
+              onClick={() => setViewCreateModal(true)}
               className='mt-8 flex ml-auto w-max items-center justify-center gap-2.5 rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10'
             >
               <span>
@@ -187,6 +213,33 @@ const FormationList = () => {
 
       {/* <!-- ===== Start of Delete Modal ===== --> */}
       {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={() => (setFormationIdToDelete(null))} handleConfirm={handleDeleteFormation} message='Are you sure you want to delete this formation?' />)}
+      {/* <!-- ===== End of Delete Modal ===== --> */}
+
+      {/* <!-- ===== Start of Create|Update Formation Modal ===== --> */}
+      {isAdmin && (
+        <FormModal
+          isOpen={viewCreateModal} onClose={() => setViewCreateModal(false)} onSubmit={handleCreateFormation} title='Create Professor' submitText='Add new Formation' formFields={[
+            {
+              colSpan: 2,
+              label: 'Denomination',
+              type: 'text',
+              name: 'denomination',
+              value: formationInputs.denomination,
+              handleInputsChange: handleFormationInputs,
+              required: true
+            },
+            {
+              colSpan: 2,
+              label: 'Acronym',
+              type: 'text',
+              name: 'acronym',
+              value: formationInputs.acronym,
+              handleInputsChange: handleFormationInputs,
+              required: true
+            }
+          ]}
+        />
+      )}
     </>
   )
 }
