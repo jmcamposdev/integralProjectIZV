@@ -190,7 +190,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     'bg-graydark dark:bg-meta-4'
                   }`}
                 >
-                  <i class='icon-[tabler--users-group]' style={{ fontSize: '18px' }} />
+                  <i className='icon-[tabler--users-group]' style={{ fontSize: '18px' }} />
                   Groups
                 </NavLink>
               </li>
