@@ -40,7 +40,7 @@ export const Module = sequelize.define('modules', {
   },
   specialty: {
     type: DataTypes.ENUM,
-    values: ['FP', 'Secundaria']
+    values: ['FP', 'Secondary']
   }
 })
 
