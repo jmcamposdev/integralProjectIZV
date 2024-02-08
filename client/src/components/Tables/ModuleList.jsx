@@ -4,6 +4,7 @@ import moduleService from '../../services/moduleService'
 import ErrorAlert from '../Alerts/ErrorAlert'
 import ConfirmModal from '../Modals/ConfirmModal'
 import formationService from '../../services/formationService'
+import FormModal from '../Modals/FormModal'
 
 const ModuleList = () => {
   const { isAdmin } = useAuth()
@@ -20,7 +21,7 @@ const ModuleList = () => {
     course: '',
     hours: '',
     specialty: '',
-    modulesId: '',
+    formationId: '',
     id: ''
   }) // Save the inputs from the create modal
 
@@ -34,7 +35,7 @@ const ModuleList = () => {
       course: '',
       hours: '',
       specialty: '',
-      modulesId: '',
+      formationId: '',
       id: ''
     })
   }
@@ -44,6 +45,15 @@ const ModuleList = () => {
    * @param {Event} e The event object
    */
   const handleModuleInputs = (e) => {
+    // If the input is a number, save it as a number
+    if (e.target.name === 'formationId' || e.target.name === 'hours' || e.target.name === 'course') {
+      setModulesInputs({
+        ...modulesInputs,
+        [e.target.name]: Number(e.target.value)
+      })
+      return
+    }
+    // Save the input in the state
     setModulesInputs({
       ...modulesInputs,
       [e.target.name]: e.target.value
@@ -143,18 +153,24 @@ const ModuleList = () => {
     }
   }, [viewCreateModal])
 
-  const handleCreateModule = async () => {
+  const handleCreateModule = async (event) => {
+    event.preventDefault()
     try {
+      console.log(modulesInputs)
       // Create the module in the database
       const savedModule = await moduleService.createModule(modulesInputs)
       // Save the module in the state
       setModules([...modules, savedModule])
+      console.log('Saved Modules', [...modules, savedModule])
       // Hide the create modal
       setViewCreateModal(false)
     } catch (error) {
       // If there's an error, save the error message in the state
       setError(error.message)
     }
+
+    // Hide the modal
+    setViewCreateModal(false)
   }
 
   return (
@@ -166,7 +182,7 @@ const ModuleList = () => {
           Modules List
         </h4>
         <div className='flex flex-col'>
-          <div className={`grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-${isAdmin ? '7' : '6'}`}>
+          <div className={`grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 ${isAdmin ? 'sm:grid-cols-7' : 'sm:grid-cols-6'}`}>
             <div className='p-2.5 xl:p-5'>
               <h5 className='text-sm font-medium uppercase xsm:text-base'>
                 Denomination
@@ -276,6 +292,77 @@ const ModuleList = () => {
       {/* <!-- ===== Start of Delete Modal ===== --> */}
       {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={() => (setModuleIdToDelete(null))} handleConfirm={handleDeleteModule} message='Are you sure you want to delete this module?' />)}
       {/* <!-- ===== End of Delete Modal ===== --> */}
+
+      {/* <!-- ===== Start of Create|Update Modal ===== --> */}
+      {isAdmin && (
+        <FormModal
+          isOpen={viewCreateModal} onClose={() => setViewCreateModal(false)} onSubmit={handleCreateModule} title='Create Module' submitText='Add new Module' formFields={[
+            {
+              colSpan: 2,
+              label: 'Denomination',
+              type: 'text',
+              name: 'denomination',
+              value: modulesInputs.denomination,
+              handleInputsChange: handleModuleInputs,
+              required: true
+            },
+            {
+              colSpan: 2,
+              label: 'Acronym',
+              type: 'text',
+              name: 'acronym',
+              value: modulesInputs.acronym,
+              handleInputsChange: handleModuleInputs,
+              required: true
+            },
+            {
+              colSpan: 2,
+              label: 'Course',
+              type: 'number',
+              name: 'course',
+              value: modulesInputs.course,
+              handleInputsChange: handleModuleInputs,
+              required: true
+            },
+            {
+              colSpan: 2,
+              label: 'Hours',
+              type: 'number',
+              name: 'hours',
+              value: modulesInputs.hours,
+              handleInputsChange: handleModuleInputs,
+              required: true
+            },
+            {
+              colSpan: 2,
+              label: 'Specialty',
+              type: 'select',
+              name: 'specialty',
+              value: modulesInputs.specialty,
+              handleInputsChange: handleModuleInputs,
+              options: [
+                { value: '', label: 'Select Specialty' },
+                { value: 'FP', label: 'FP' },
+                { value: 'Secondary', label: 'Secondary' }
+              ],
+              disabled: viewUpdateModal
+            },
+            {
+              colSpan: 2,
+              label: 'Formation',
+              type: 'select',
+              name: 'formationId',
+              value: modulesInputs.formationId,
+              handleInputsChange: handleModuleInputs,
+              options: [
+                { value: '', label: 'Select Formation' },
+                ...formations.map((formation) => ({ value: formation.id, label: formation.acronym }))
+              ],
+              required: true
+            }
+          ]}
+        />
+      )}
     </>
   )
 }
