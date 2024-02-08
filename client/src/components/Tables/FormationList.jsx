@@ -97,7 +97,7 @@ const FormationList = () => {
       setFormationIdToDelete(null)
     } catch (error) {
       // If there's an error, set the error message
-      console.error('Error deleting formation:', error.message)
+      setError(error.message)
     }
   }
 
