@@ -171,6 +171,37 @@ const ModuleList = () => {
     setViewCreateModal(false)
   }
 
+  /**
+   * This function updates a module
+   * and updates the module in the modules state
+   * It also hides the update modal
+   * @param {Event} event The event object
+   */
+  const handleUpdateModule = async (event) => {
+    event.preventDefault()
+    try {
+      // Update the module in the database
+      const updatedModule = await moduleService.updateModule(modulesInputs)
+      // Save the module in the state
+      setModules(modules.map((currentModule) => (currentModule.id === updatedModule.id ? updatedModule : currentModule)))
+    } catch (error) {
+      // If there's an error, save the error message in the state
+      setError(error.message)
+    }
+    // Hide the update modal
+    setViewCreateModal(false)
+  }
+
+  /**
+   * This function shows the create modal and sets the formationInputs to the formation to update
+   * @param {Object} formation The formation to update
+   */
+  const handleUpdateClick = (module) => {
+    setViewUpdateModal(true) // Show the update modal
+    setViewCreateModal(true) // Show the create modal and active the useEffect to reset the formationInputs
+    setModulesInputs(module) // Set the formationInputs to the formation to update
+  }
+
   return (
     <>
       {/* <!-- ===== Start of Module Table ===== --> */}
@@ -294,7 +325,7 @@ const ModuleList = () => {
       {/* <!-- ===== Start of Create|Update Modal ===== --> */}
       {isAdmin && (
         <FormModal
-          isOpen={viewCreateModal} onClose={() => setViewCreateModal(false)} onSubmit={handleCreateModule} title='Create Module' submitText='Add new Module' formFields={[
+          isOpen={viewCreateModal} onClose={() => setViewCreateModal(false)} onSubmit={viewUpdateModal ? handleUpdateModule : handleCreateModule} title={viewUpdateModal ? 'Update Module' : 'Create Module'} submitText={viewUpdateModal ? 'Update Module' : 'Add new Module'} formFields={[
             {
               colSpan: 2,
               label: 'Denomination',
