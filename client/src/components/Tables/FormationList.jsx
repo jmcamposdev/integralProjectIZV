@@ -93,12 +93,12 @@ const FormationList = () => {
       await formationService.deleteFormation(formationIdToDelete)
       // Update the state to remove the deleted formation from the list
       setFormations(formations.filter((formation) => formation.id !== formationIdToDelete))
-      // Hide the modal active the useEffect to hide the delete modal
-      setFormationIdToDelete(null)
     } catch (error) {
       // If there's an error, set the error message
       setError(error.message)
     }
+    // Hide the modal active the useEffect to hide the delete modal
+    setFormationIdToDelete(null)
   }
 
   /**
