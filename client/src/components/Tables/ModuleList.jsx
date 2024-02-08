@@ -3,11 +3,13 @@ import useAuth from '../../hooks/useAuth'
 import moduleService from '../../services/moduleService'
 import ErrorAlert from '../Alerts/ErrorAlert'
 import ConfirmModal from '../Modals/ConfirmModal'
+import formationService from '../../services/formationService'
 
 const ModuleList = () => {
   const { isAdmin } = useAuth()
   const [error, setError] = useState(null) // Save the error message
   const [modules, setModules] = useState([]) // Save the modules
+  const [formations, setFormations] = useState([]) // Save the formations
   const [moduleIdToDelete, setModuleIdToDelete] = useState(null) // Save the modules id to delete
   const [viewDeleteModal, setViewDeleteModal] = useState(false) // Show or hide the delete modal
   const [viewCreateModal, setViewCreateModal] = useState(false) // Show or hide the create modal
@@ -65,6 +67,20 @@ const ModuleList = () => {
         setError(error.message)
       }
     }
+
+    async function getFormations () {
+      try {
+        // Fetch the formations from the server
+        const formations = await formationService.getAllFormations()
+        // Save the formations in the state
+        setFormations(formations)
+      } catch (error) {
+        // If there's an error, set the error message
+        setError(error.message)
+      }
+    }
+
+    getFormations()
     getModules()
   }, [])
 
@@ -100,6 +116,41 @@ const ModuleList = () => {
       setModules(modules.filter((module) => module.id !== moduleIdToDelete))
       // Hide the delete modal
       setModuleIdToDelete(null)
+    } catch (error) {
+      // If there's an error, save the error message in the state
+      setError(error.message)
+    }
+  }
+
+  /**
+   * ------------------------------------------------------------------------
+   *  Create|Update Module Logic (Modal)
+   * ------------------------------------------------------------------------
+   */
+
+  /**
+   * This runs when the viewCreateModal changes
+   * It resets the moduleInputs when the create modal is closed
+   * and hides the update modal when the create modal is closed
+   */
+  useEffect(() => {
+    // If the create modal is closed, reset the moduleInputs
+    if (!viewCreateModal) {
+      setViewUpdateModal(false)
+      // If the update modal is closed, reset the moduleInputs
+    } else if (!viewUpdateModal) {
+      resetModuleInputs()
+    }
+  }, [viewCreateModal])
+
+  const handleCreateModule = async () => {
+    try {
+      // Create the module in the database
+      const savedModule = await moduleService.createModule(modulesInputs)
+      // Save the module in the state
+      setModules([...modules, savedModule])
+      // Hide the create modal
+      setViewCreateModal(false)
     } catch (error) {
       // If there's an error, save the error message in the state
       setError(error.message)
@@ -182,7 +233,9 @@ const ModuleList = () => {
                     <p className='text-black dark:text-white'>{modules.specialty}</p>
                   </div>
                   <div className='p-2.5 text-center xl:p-5'>
-                    <p className='text-black dark:text-white'>{modules.formationId}</p>
+                    <p className='text-black dark:text-white'>
+                      {formations.find((formation) => formation.id === modules.formationId)?.acronym}
+                    </p>
                   </div>
                   <div className='p-2.5 text-center xl:p-5 flex align-center justify-center'>
                     {
