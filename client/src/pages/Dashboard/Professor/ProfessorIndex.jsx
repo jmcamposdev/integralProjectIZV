@@ -1,6 +1,6 @@
 import Breadcrumb from '../../../components/Breadcrumbs/Breadcrumb'
 import DefaultLayout from '../../../layout/DefaultLayout'
-import ProfessorList from '../../../components/Professor/ProfessorList'
+import ProfessorList from '../../../components/Tables/ProfessorList'
 
 const ProfessorIndex = () => {
   return (
