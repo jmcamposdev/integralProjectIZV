@@ -21,6 +21,7 @@ import { ROLES } from './config/roles'
 import Welcome from './pages/Welcome/Welcome'
 import FormationIndex from './pages/Dashboard/Formation/FormationIndex'
 import ModuleIndex from './pages/Dashboard/Module/ModuleIndex'
+import GroupIndex from './pages/Dashboard/Group/GroupIndex'
 
 function App () {
   const [loading, setLoading] = useState(true)
@@ -87,6 +88,15 @@ function App () {
                 <>
                   <PageTitle title='Formation' />
                   <ModuleIndex />
+                </>
+            }
+            />
+            <Route
+              path='/dashboard/groups'
+              element={
+                <>
+                  <PageTitle title='Groups' />
+                  <GroupIndex />
                 </>
             }
             />
