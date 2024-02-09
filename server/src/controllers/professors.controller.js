@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize'
-import { Professor } from '../models/Professor.js'
+import { Professor, professorExists, professorFieldsValidation } from '../models/Professor.js'
 import { Lesson } from '../models/Lesson.js'
 
 /**
@@ -65,25 +65,17 @@ export const createProfessor = async (req, res) => {
     specialty
   } = req.body
 
-  if (!senecaUser || !name || !firstSurname || !lastSurname || !specialty) {
-    return res.status(400).json({
-      message: 'Please send senecaUser, name, firstSurname, lastSurname and specialty'
-    })
+  // Validate that all fields are not empty
+  if (!professorFieldsValidation(senecaUser, name, firstSurname, lastSurname, specialty)) {
+    return res.status(400).json({ message: 'All fields are required' })
+  }
+
+  // Validate that there doesn't exist a professor with the same senecaUser
+  if (professorExists(senecaUser)) {
+    return res.status(400).json({ message: 'Already exists a professor with that senecaUser' })
   }
 
   try {
-    // Validate if the senecaUser already exists
-    const existingProfessor = await Professor.findOne({ where: { senecaUser } })
-
-    if (existingProfessor) {
-      return res.status(400).json({ message: 'Already exists a professor with that senecaUser' })
-    }
-
-    // Validate that the Specialty is valid
-    if (specialty !== 'FP' && specialty !== 'Secondary') {
-      return res.status(400).json({ message: 'Specialty must be FP or Secondary' })
-    }
-
     // Create the professor
     const createdProfessor = await Professor.create({
       senecaUser,
