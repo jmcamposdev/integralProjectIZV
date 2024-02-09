@@ -3,13 +3,14 @@ import useAuth from '../../hooks/useAuth'
 import formationService from '../../services/formationService'
 import groupService from '../../services/groupService'
 import ErrorAlert from '../Alerts/ErrorAlert'
+import ConfirmModal from '../Modals/ConfirmModal'
 
 const GroupList = () => {
   const { isAdmin } = useAuth()
   const [error, setError] = useState(null) // Save the error message
   const [groups, setGroups] = useState([]) // Save the groups
   const [formations, setFormations] = useState([]) // Save the formations
-  const [GroupIdToDelete, setGroupIdToDelete] = useState(null) // Save the groups id to delete
+  const [groupIdToDelete, setGroupIdToDelete] = useState(null) // Save the groups id to delete
   const [viewDeleteModal, setViewDeleteModal] = useState(false) // Show or hide the delete modal
   const [viewCreateModal, setViewCreateModal] = useState(false) // Show or hide the create modal
   const [viewUpdateModal, setViewUpdateModal] = useState(false) // Show or hide the update modal
@@ -93,6 +94,61 @@ const GroupList = () => {
     getGroups()
   }, [])
 
+  /**
+   * ------------------------------------------------------------------------
+   *  Delete Group Logic
+   * ------------------------------------------------------------------------
+   */
+
+  /**
+   * This runs when the moduleIdToDelete changes
+   * If the moduleIdToDelete is not null, show the delete modal
+   * If the moduleIdToDelete is null, hide the delete modal
+   */
+  useEffect(() => {
+    // If the moduleIdToDelete is not null, show the delete modal
+    if (groupIdToDelete) {
+      setViewDeleteModal(true)
+    } else { // If the moduleIdToDelete is null, hide the delete modal
+      setViewDeleteModal(false)
+    }
+  }, [groupIdToDelete])
+
+  const handleDeleteGroup = async () => {
+    try {
+      // Delete the group from the database
+      await groupService.deleteGroup(groupIdToDelete)
+      // Remove the group from the state
+      setGroups(groups.filter(group => group.id !== groupIdToDelete))
+      // Reset the moduleIdToDelete
+      setGroupIdToDelete(null)
+    } catch (error) {
+      // If there's an error, save the error message in the state
+      setError(error.message)
+    }
+  }
+
+  /**
+   * ------------------------------------------------------------------------
+   *  Create|Update Group Logic (Modal)
+   * ------------------------------------------------------------------------
+   */
+
+  /**
+   * This runs when the viewCreateModal changes
+   * It resets the groupInputs when the create modal is closed
+   * and hides the update modal when the create modal is closed
+   */
+  useEffect(() => {
+    // If the create modal is closed, reset the moduleInputs
+    if (!viewCreateModal) {
+      setViewUpdateModal(false)
+      // If the update modal is closed, reset the moduleInputs
+    } else if (!viewUpdateModal) {
+      resetGroupInputs()
+    }
+  }, [viewCreateModal])
+
   return (
     <>
       {/* <!-- ===== Start of Group Table ===== --> */}
@@ -163,18 +219,18 @@ const GroupList = () => {
                     <p className='text-black dark:text-white'>{group.schoolYear}</p>
                   </div>
                   <div className='p-2.5 text-center xl:p-5'>
-                    <p className='text-black dark:text-white'>{groups.isMorning ? 'Morning' : 'Afternoon'}</p>
+                    <p className='text-black dark:text-white'>{group.isMorning ? 'Morning' : 'Afternoon'}</p>
                   </div>
                   <div className='p-2.5 text-center xl:p-5 flex align-center justify-center'>
                     {
                       isAdmin && (
                         <>
                           {/* Delete Modules Modal */}
-                          <button onClick={() => setGroupIdToDelete(groups.id)}>
+                          <button onClick={() => setGroupIdToDelete(group.id)}>
                             <i className='icon-[material-symbols-light--delete-outline-rounded] fill-current duration-300 ease-in-out hover:text-red-500' style={{ fontSize: '27px' }} />
                           </button>
 
-                          <button onClick={() => handleUpdateClick(groups)}>
+                          <button onClick={() => handleUpdateClick(group)}>
                             <i className='icon-[lucide--edit] ml-6 fill-current duration-300 ease-in-out hover:text-meta-3' style={{ fontSize: '20px' }} />
                           </button>
                         </>
@@ -200,6 +256,10 @@ const GroupList = () => {
 
       </div>
       {/* <!-- ===== End of Module Table ===== --> */}
+
+      {/* <!-- ===== Start of Delete Modal ===== --> */}
+      {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={() => (setGroupIdToDelete(null))} handleConfirm={handleDeleteGroup} message='Are you sure you want to delete this group?' />)}
+      {/* <!-- ===== End of Delete Modal ===== --> */}
     </>
   )
 }
