@@ -35,7 +35,7 @@ const FormModal = ({ isOpen, onClose, onSubmit, title, submitText, formFields })
                             <option key={i} value={option.value} disabled={option.disabled}>{option.label}</option>
                           ))}
                         </select>
-                        <span class='absolute top-1/2 right-4 z-30 -translate-y-1/2 icon-[ep--arrow-down]' style={{ fontSize: '22px' }} />
+                        <span className='absolute top-1/2 right-4 z-30 -translate-y-1/2 icon-[ep--arrow-down]' style={{ fontSize: '22px' }} />
                       </div>
 
                       )
