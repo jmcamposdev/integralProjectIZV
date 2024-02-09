@@ -1,6 +1,5 @@
 import { Sequelize } from 'sequelize'
-import { Professor, professorExists, professorFieldsValidation } from '../models/Professor.js'
-import { Lesson } from '../models/Lesson.js'
+import { Professor, professorExists, professorFieldsValidation, professorHasLessons } from '../models/Professor.js'
 
 /**
  * Get all professors from database
@@ -71,7 +70,7 @@ export const createProfessor = async (req, res) => {
   }
 
   // Validate that there doesn't exist a professor with the same senecaUser
-  if (professorExists(senecaUser)) {
+  if (await professorExists(senecaUser)) {
     return res.status(400).json({ message: 'Already exists a professor with that senecaUser' })
   }
 
@@ -135,23 +134,21 @@ export const updateProfessor = async (req, res) => {
  * @param {*} res The response object from Express
  */
 export const deleteProfessor = async (req, res) => {
+  // Destructuring the id from the request parameters
+  const { id } = req.params
+
+  // Validate if the professor has assigned lessons before deleting it
+  if (await professorHasLessons(id)) {
+    return res.status(400).json({ message: 'Cannot delete professor with assigned lessons, delete the lessons first' })
+  }
+
   try {
-    const { id } = req.params
-
-    // Check if the professor has assigned lessons
-    const hasLessons = await Lesson.findOne({ where: { professorId: id } })
-    if (hasLessons) {
-      return res.status(400).json({ message: 'Cannot delete professor with assigned lessons' })
-    }
-
     // Delete the professor
-    const deletedRows = await Professor.destroy({ where: { id } })
-
+    const deletedProfessor = await Professor.destroy({ where: { id } })
     // If no rows were deleted, the professor was not found
-    if (deletedRows === 0) {
+    if (deletedProfessor === 0) {
       return res.status(404).json({ message: 'Professor not found' })
     }
-
     // Send success message
     res.json({ message: 'Professor deleted successfully' })
   } catch (error) {
