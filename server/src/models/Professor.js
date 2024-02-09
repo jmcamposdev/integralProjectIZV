@@ -65,6 +65,19 @@ export const professorFieldsValidation = (senecaUser, name, firstSurname, lastSu
  * @returns {boolean}
  */
 export const professorExists = async (senecaUser) => {
-  const professor = await Professor.findOne({ where: { senecaUser } })
-  return professor !== null
+  try {
+    const professor = await Professor.findOne({ where: { senecaUser } })
+    return professor !== null
+  } catch (err) {
+    return false
+  }
+}
+
+export const professorHasLessons = async (professorId) => {
+  try {
+    const lessons = await Lesson.findAll({ where: { professorId } })
+    return lessons.length > 0
+  } catch (err) {
+    return false
+  }
 }
