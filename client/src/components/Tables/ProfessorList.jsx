@@ -4,9 +4,11 @@ import ConfirmModal from '../Modals/ConfirmModal'
 import ErrorAlert from '../Alerts/ErrorAlert'
 import useAuth from '../../hooks/useAuth'
 import FormModal from '../Modals/FormModal'
+import TableRowLoading from '../Loading/TableRowLoading'
 
 const ProfessorList = () => {
   const { isAdmin } = useAuth()
+  const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null) // Save the error message if there is one
   const [professors, setProfessors] = useState([]) // Save all professors from the database
   const [professorIdToDelete, setProfessorIdToDelete] = useState(null) // Save the professor Id to delete
@@ -50,6 +52,7 @@ const ProfessorList = () => {
       try {
         const professors = await professorService.getAllProfessors()
         setProfessors(professors)
+        setIsLoading(false)
       } catch (error) {
         console.error('Error getting professors:', error.message)
       }
@@ -211,23 +214,27 @@ const ProfessorList = () => {
           </div>
 
         </div>
-        {professors.length <= 0
+        {isLoading
           ? (
-            <div className='text-center p-10'>No professors found</div>
+            <TableRowLoading columns={isAdmin ? 4 : 3} rows={3} />
             )
-          : (
-              professors.map((professor) => (
-                <div className={`grid grid-cols-2 sm:grid-cols-${isAdmin ? '4' : '3'}`} key={professor.id}>
-                  <div className='p-2.5 xl:p-5'>
-                    <p className='text-black dark:text-white'>{professor.firstSurname} {professor.lastSurname}, {professor.name}</p>
-                  </div>
-                  <div className='p-2.5 text-center xl:p-5'>
-                    <p className='text-black dark:text-white'>{professor.senecaUser}</p>
-                  </div>
-                  <div className='p-2.5 text-center xl:p-5'>
-                    <p className='text-black dark:text-white'>{professor.specialty}</p>
-                  </div>
-                  {
+          : professors.length <= 0
+            ? (
+              <div className='text-center p-10'>No professors yet...</div>
+              )
+            : (
+                professors.map((professor) => (
+                  <div className={`grid grid-cols-2 sm:grid-cols-${isAdmin ? '4' : '3'}`} key={professor.id}>
+                    <div className='p-2.5 xl:p-5'>
+                      <p className='text-black dark:text-white'>{professor.firstSurname} {professor.lastSurname}, {professor.name}</p>
+                    </div>
+                    <div className='p-2.5 text-center xl:p-5'>
+                      <p className='text-black dark:text-white'>{professor.senecaUser}</p>
+                    </div>
+                    <div className='p-2.5 text-center xl:p-5'>
+                      <p className='text-black dark:text-white'>{professor.specialty}</p>
+                    </div>
+                    {
                       isAdmin && (
                         <div className='p-2.5 text-center xl:p-5 flex align-center justify-center'>
                           <button onClick={() => setProfessorIdToDelete(professor.id)}>
@@ -253,9 +260,10 @@ const ProfessorList = () => {
                       )
                     }
 
-                </div>
+                  </div>
 
-              )))}
+                ))
+              )}
         {// Only show the add professor button if the user is an admin
           isAdmin && (
             <button
