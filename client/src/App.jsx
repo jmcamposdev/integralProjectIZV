@@ -22,6 +22,7 @@ import Welcome from './pages/Welcome/Welcome'
 import FormationIndex from './pages/Dashboard/Formation/FormationIndex'
 import ModuleIndex from './pages/Dashboard/Module/ModuleIndex'
 import GroupIndex from './pages/Dashboard/Group/GroupIndex'
+import LessonIndex from './pages/Dashboard/Lesson/LessonIndex'
 
 function App () {
   const [loading, setLoading] = useState(true)
@@ -97,6 +98,15 @@ function App () {
                 <>
                   <PageTitle title='Groups' />
                   <GroupIndex />
+                </>
+            }
+            />
+            <Route
+              path='/dashboard/lessons'
+              element={
+                <>
+                  <PageTitle title='Lessons' />
+                  <LessonIndex />
                 </>
             }
             />
