@@ -282,10 +282,9 @@ const ModuleList = () => {
                       {formations.find((formation) => formation.id === modules.formationId)?.acronym}
                     </p>
                   </div>
-                  <div className='p-2.5 text-center xl:p-5 flex align-center justify-center'>
-                    {
+                  {
                       isAdmin && (
-                        <>
+                        <div className='p-2.5 text-center xl:p-5 flex align-center justify-center'>
                           {/* Delete Modules Modal */}
                           <button onClick={() => setModuleIdToDelete(modules.id)}>
                             <i className='icon-[material-symbols-light--delete-outline-rounded] fill-current duration-300 ease-in-out hover:text-red-500' style={{ fontSize: '27px' }} />
@@ -294,11 +293,10 @@ const ModuleList = () => {
                           <button onClick={() => handleUpdateClick(modules)}>
                             <i className='icon-[lucide--edit] ml-6 fill-current duration-300 ease-in-out hover:text-meta-3' style={{ fontSize: '20px' }} />
                           </button>
-                        </>
+                        </div>
                       )
                     }
 
-                  </div>
                 </div>
 
               )))}

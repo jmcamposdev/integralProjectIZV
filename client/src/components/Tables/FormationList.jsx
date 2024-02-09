@@ -221,10 +221,9 @@ const FormationList = () => {
                   <div className='p-2.5 text-center xl:p-5'>
                     <p className='text-black dark:text-white'>{formation.acronym}</p>
                   </div>
-                  <div className='p-2.5 text-center xl:p-5 flex align-center justify-center'>
-                    {
+                  {
                       isAdmin && (
-                        <>
+                        <div className='p-2.5 text-center xl:p-5 flex align-center justify-center'>
                           {/* Delete Formation Modal */}
                           <button onClick={() => setFormationIdToDelete(formation.id)}>
                             <i className='icon-[material-symbols-light--delete-outline-rounded] fill-current duration-300 ease-in-out hover:text-red-500' style={{ fontSize: '27px' }} />
@@ -233,11 +232,10 @@ const FormationList = () => {
                           <button onClick={() => handleUpdateClick(formation)}>
                             <i className='icon-[lucide--edit] ml-6 fill-current duration-300 ease-in-out hover:text-meta-3' style={{ fontSize: '20px' }} />
                           </button>
-                        </>
+                        </div>
                       )
                     }
 
-                  </div>
                 </div>
 
               )))}
