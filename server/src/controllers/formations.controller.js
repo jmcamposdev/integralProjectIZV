@@ -1,4 +1,4 @@
-import { Formation } from '../models/Formation.js'
+import { Formation, formationFieldsValidation, formationHasGroups, formationHasModules } from '../models/Formation.js'
 import { Group } from '../models/Group.js'
 import { Module } from '../models/Module.js'
 
@@ -26,16 +26,21 @@ export const getFormations = async (req, res) => {
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const getFormation = (req, res) => {
-  const { id } = req.params // Destructuring the id from the request parameters
-  Formation.findOne({ where: { id } })
-    .then(formation => {
-      if (!formation) {
-        return res.status(404).json({ message: 'Formation not found' })
-      }
-      res.json(formation)
-    }) // Send the formation in the response as JSON
-    .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
+export const getFormation = async (req, res) => {
+  try {
+    const { id } = req.params // Destructuring the id from the request parameters
+    // Get the formation from database
+    const formation = await Formation.findOne({ where: { id } })
+
+    // If the formation doesn't exist, send a 404 status code and a message
+    if (!formation) {
+      return res.status(404).json({ message: 'Formation not found' })
+    }
+
+    res.json(formation) // Send the formation in the response as JSON
+  } catch (err) {
+    res.status(500).json({ message: err.message }) // If there's an error, send it
+  }
 }
 
 /**
@@ -46,19 +51,22 @@ export const getFormation = (req, res) => {
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const createFormation = (req, res) => {
+export const createFormation = async (req, res) => {
   // Destructuring the request body to get the values of the fields
   const { denomination, acronym } = req.body
 
   // Validate the request body
-  if (!denomination || !acronym) {
+  if (!formationFieldsValidation(denomination, acronym)) {
     return res.status(400).json({ message: 'Please send denomination and acronym' })
   }
 
-  // Create the formation
-  Formation.create({ denomination, acronym })
-    .then(formation => res.json(formation)) // Send the created formation in the response
-    .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
+  try {
+    // Create the formation
+    const formation = await Formation.create({ denomination, acronym })
+    res.json(formation) // Send the created formation in the response
+  } catch (err) {
+    res.status(500).json({ message: err.message }) // If there's an error, send it
+  }
 }
 
 /**
@@ -103,15 +111,12 @@ export const deleteFormation = async (req, res) => {
   try {
     const { id } = req.params // Destructuring the id from the request parameters
 
-    // Don't delete if the formation has groups or modules
-    const groups = await Group.findAll({ where: { formationId: id } })
-    if (groups.length > 0) {
-      return res.status(400).json({ message: 'The current formation has groups please delete them first' })
+    if (await formationHasGroups(id)) {
+      return res.status(400).json({ message: 'The formation has groups, please delete them first' })
     }
 
-    const modules = await Module.findAll({ where: { formationId: id } })
-    if (modules.length > 0) {
-      return res.status(400).json({ message: 'The current formation has modules please delete them first' })
+    if (await formationHasModules(id)) {
+      return res.status(400).json({ message: 'The formation has modules, please delete them first' })
     }
 
     // Delete the formation
@@ -130,18 +135,36 @@ export const deleteFormation = async (req, res) => {
   }
 }
 
-export const getFormationGroups = (req, res) => {
-  const { id } = req.params
+/**
+ * Get all groups from a formation
+ * @param {Object} req The request object from Express
+ * @param {Object} res The response object from Express
+ */
+export const getFormationGroups = async (req, res) => {
+  try {
+    const { id } = req.params
 
-  Group.findAll({ where: { formationId: id } })
-    .then(groups => res.json(groups))
-    .catch(err => res.status(500).json({ message: err.message }))
+    const groups = await Group.findAll({ where: { formationId: id } })
+
+    res.json(groups)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
 }
 
-export const getFormationsModules = (req, res) => {
-  const { id } = req.params
+/**
+ * Get all modules from a formation
+ * @param {Object} req The request object from Express
+ * @param {Object} res The response object from Express
+ */
+export const getFormationsModules = async (req, res) => {
+  try {
+    const { id } = req.params
 
-  Module.findAll({ where: { formationId: id } })
-    .then(modules => res.json(modules))
-    .catch(err => res.status(500).json({ message: err.message }))
+    const modules = await Module.findAll({ where: { formationId: id } })
+
+    res.json(modules)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
 }
