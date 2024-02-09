@@ -7,7 +7,7 @@ import ConfirmModal from '../Modals/ConfirmModal'
 import FormModal from '../Modals/FormModal'
 
 const GroupList = () => {
-  const { isAdmin } = useAuth()
+  const { isAdmin } = useAuth() // Get the user role
   const [error, setError] = useState(null) // Save the error message
   const [groups, setGroups] = useState([]) // Save the groups
   const [formations, setFormations] = useState([]) // Save the formations
@@ -50,11 +50,16 @@ const GroupList = () => {
       value = value === '' ? '' : parseInt(value)
     }
 
+    // If the name is letter or course, update the denomination with the new value
     if (name === 'letter' || name === 'course') {
+      // Destructure the letter and course from the groupInputs
       const letter = name === 'letter' ? value : groupInputs.letter
       const course = name === 'course' ? value : groupInputs.course
+      // Find the formation acronym from the formations
       const formationAcronym = formations.find((formation) => formation.id === groupInputs.formationId)?.acronym
+      // Create the denomination with the new values
       const denomination = `${course}${formationAcronym}${letter}`
+      // Set the groupInputs with the new denomination and the new value
       setGroupInputs({ ...groupInputs, [name]: value, denomination })
       return
     }
@@ -82,7 +87,6 @@ const GroupList = () => {
         groups.forEach(group => {
           group.letter = group.denomination.slice(-1)
         })
-        console.log(groups)
         // Save the groups in the state
         setGroups(groups)
       } catch (error) {
@@ -127,6 +131,11 @@ const GroupList = () => {
     }
   }, [groupIdToDelete])
 
+  /**
+   * This deletes a group from the database and the state
+   * Get the group id from the state and delete the group
+   * Then set the moduleIdToDelete to null
+   */
   const handleDeleteGroup = async () => {
     try {
       // Delete the group from the database
@@ -169,8 +178,6 @@ const GroupList = () => {
   const handleCreateGroup = async (event) => {
     event.preventDefault()
     try {
-      console.log(groupInputs)
-
       // Create the group in the database
       const group = await groupService.createGroup(groupInputs)
       // Add the group to the state
@@ -212,9 +219,9 @@ const GroupList = () => {
    * @returns {void}
   */
   const handleUpdateClick = (group) => {
-    setViewCreateModal(true)
-    setViewUpdateModal(true)
-    setGroupInputs(group)
+    setViewCreateModal(true) // Show the create modal
+    setViewUpdateModal(true) // Show the update modal
+    setGroupInputs(group) // Set the groupInputs with the group to update
   }
 
   return (
