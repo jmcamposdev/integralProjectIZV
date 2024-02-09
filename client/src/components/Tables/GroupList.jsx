@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react'
 import useAuth from '../../hooks/useAuth'
-import formationService from '../../services/formationService'
 import groupService from '../../services/groupService'
 import ErrorAlert from '../Alerts/ErrorAlert'
 import ConfirmModal from '../Modals/ConfirmModal'
 import FormModal from '../Modals/FormModal'
 
-const GroupList = () => {
+const GroupList = ({ formations }) => {
   const { isAdmin } = useAuth() // Get the user role
   const [error, setError] = useState(null) // Save the error message
   const [groups, setGroups] = useState([]) // Save the groups
-  const [formations, setFormations] = useState([]) // Save the formations
   const [groupIdToDelete, setGroupIdToDelete] = useState(null) // Save the groups id to delete
   const [viewDeleteModal, setViewDeleteModal] = useState(false) // Show or hide the delete modal
   const [viewCreateModal, setViewCreateModal] = useState(false) // Show or hide the create modal
@@ -94,20 +92,6 @@ const GroupList = () => {
         setError(error.message)
       }
     }
-
-    async function getFormations () {
-      try {
-        // Fetch the formations from the server
-        const formations = await formationService.getAllFormations()
-        // Save the formations in the state
-        setFormations(formations)
-      } catch (error) {
-        // If there's an error, set the error message
-        setError(error.message)
-      }
-    }
-
-    getFormations()
     getGroups()
   }, [])
 
