@@ -2,16 +2,6 @@ import { DataTypes } from 'sequelize'
 import { sequelize } from '../database/database.js'
 import { Lesson } from './Lesson.js'
 
-/**
- * Tabla profesor
- * Contiene los datos de cada profesor.
- * La tabla profesor que cuenta con los siguientes campos:
- * id, usuario de séneca, nombre, apellido1, apellido2, especialidad.
- * • usuario de séneca : combinación de 7 letras seguidas de 3 números sin espacio ni
- * guiones. Ejemplo: dfuebre452 pfrolop854
- * • especialidad: este campo sólo puede tener dos valores: "secundaria" o
- * "formación profesional"
- */
 export const Professor = sequelize.define('professors', {
   id: {
     type: DataTypes.INTEGER,
@@ -24,16 +14,20 @@ export const Professor = sequelize.define('professors', {
     unique: true
   },
   name: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    allowNull: false
   },
   firstSurname: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    allowNull: false
   },
   lastSurname: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    allowNull: false
   },
   specialty: {
     type: DataTypes.ENUM,
+    allowNull: false,
     values: ['FP', 'Secondary']
   }
 })
@@ -41,3 +35,36 @@ export const Professor = sequelize.define('professors', {
 // Relation 1:N between Professors and Lessons
 Professor.hasMany(Lesson, { foreignKey: 'professorId', sourceKey: 'id' })
 Lesson.belongsTo(Professor, { foreignKey: 'professorId', targetId: 'id' })
+
+/** ------------------------------------------------------
+ * Professor Validation
+ * ---------------------------------------------------- */
+
+/**
+ * All fields are required
+ * @param {string} senecaUser
+ * @param {string} name
+ * @param {string} firstSurname
+ * @param {string} lastSurname
+ * @param {string} specialty
+ * @returns {boolean} true if all fields are valid
+ */
+export const professorFieldsValidation = (senecaUser, name, firstSurname, lastSurname, specialty) => {
+  // Valid all the fields to be not null or empty and the specialty to be FP or Secondary
+  const validSenecaUser = senecaUser?.trim().length > 0
+  const validName = name?.trim().length > 0
+  const validFirstSurname = firstSurname?.trim().length > 0
+  const validLastSurname = lastSurname?.trim().length > 0
+  const validSpecialty = specialty === 'FP' || specialty === 'Secondary'
+  return validSenecaUser && validName && validFirstSurname && validLastSurname && validSpecialty
+}
+
+/**
+ * Validate if the professor exists
+ * @param {string} senecaUser
+ * @returns {boolean}
+ */
+export const professorExists = async (senecaUser) => {
+  const professor = await Professor.findOne({ where: { senecaUser } })
+  return professor !== null
+}
