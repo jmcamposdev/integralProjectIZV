@@ -27,24 +27,27 @@ export const getProfessors = async (req, res) => {
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const getProfessor = (req, res) => {
-  const { id } = req.params // Destructuring the id from the request parameters
+export const getProfessor = async (req, res) => {
+  try {
+    const { id } = req.params // Destructuring the id from the request parameters
 
-  // Get the professor from database
-  Professor.findOne({ where: { id } })
-    .then(professor => {
-      // If the professor doesn't exist, send a 404 status code and a message
-      if (!professor) {
-        return res.status(404).json({
-          message: 'Professor not found'
-        })
-      }
-      // Send the professor in the response as JSON
-      res.json(professor)
-    })
-    .catch(err => res.status(500).json({
+    // Get the professor from database
+    const professor = await Professor.findOne({ where: { id } })
+
+    // If the professor doesn't exist, send a 404 status code and a message
+    if (!professor) {
+      return res.status(404).json({
+        message: 'Professor not found'
+      })
+    }
+
+    // Send the professor in the response as JSON
+    res.json(professor)
+  } catch (err) {
+    res.status(500).json({
       message: err.message // If there's an error, send it
-    }))
+    })
+  }
 }
 
 /**
