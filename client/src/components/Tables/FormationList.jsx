@@ -4,9 +4,11 @@ import formationService from '../../services/formationService'
 import ErrorAlert from '../Alerts/ErrorAlert'
 import ConfirmModal from '../Modals/ConfirmModal'
 import FormModal from '../Modals/FormModal'
+import TableRowLoading from '../Loading/TableRowLoading'
 
 const FormationList = () => {
   const { isAdmin } = useAuth() // Check if the user is an admin
+  const [isLoading, setIsLoading] = useState(true) // Check if the data is loading
   const [error, setError] = useState(null) // Save the error message
   const [formations, setFormations] = useState([]) // Save the formations
   const [formationIdToDelete, setFormationIdToDelete] = useState(null) // Save the formation id to delete
@@ -53,6 +55,8 @@ const FormationList = () => {
         const formations = await formationService.getAllFormations()
         // Save the formations in the state
         setFormations(formations)
+        // Set the isLoading state to false
+        setIsLoading(false)
       } catch (error) {
         // If there's an error, set the error message
         setError(error.message)
@@ -208,20 +212,24 @@ const FormationList = () => {
           </div>
 
         </div>
-        {formations.length <= 0
+        {isLoading
           ? (
-            <div className='text-center p-10'>No formations yet...</div>
+            <TableRowLoading columns={isAdmin ? 3 : 2} rows={5} />
             )
-          : (
-              formations.map((formation) => (
-                <div className={`grid grid-cols-2 sm:grid-cols-${isAdmin ? '3' : '2'}`} key={formation.id}>
-                  <div className='p-2.5 xl:p-5'>
-                    <p className='text-black dark:text-white'>{formation.denomination}</p>
-                  </div>
-                  <div className='p-2.5 text-center xl:p-5'>
-                    <p className='text-black dark:text-white'>{formation.acronym}</p>
-                  </div>
-                  {
+          : formations.length <= 0
+            ? (
+              <div className='text-center p-10'>No formations yet...</div>
+              )
+            : (
+                formations.map((formation) => (
+                  <div className={`grid grid-cols-2 sm:grid-cols-${isAdmin ? '3' : '2'}`} key={formation.id}>
+                    <div className='p-2.5 xl:p-5'>
+                      <p className='text-black dark:text-white'>{formation.denomination}</p>
+                    </div>
+                    <div className='p-2.5 text-center xl:p-5'>
+                      <p className='text-black dark:text-white'>{formation.acronym}</p>
+                    </div>
+                    {
                       isAdmin && (
                         <div className='p-2.5 text-center xl:p-5 flex align-center justify-center'>
                           {/* Delete Formation Modal */}
@@ -236,9 +244,9 @@ const FormationList = () => {
                       )
                     }
 
-                </div>
+                  </div>
 
-              )))}
+                )))}
         {// Only show the add formation button if the user is an admin
           isAdmin && (
             <button
