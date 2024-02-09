@@ -9,12 +9,15 @@ import { Lesson } from '../models/Lesson.js'
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const getProfessors = (req, res) => {
-  Professor.findAll()
-    .then(professors => res.json(professors))
-    .catch(err => res.status(500).json({
+export const getProfessors = async (req, res) => {
+  try {
+    const professors = await Professor.findAll()
+    res.json(professors)
+  } catch (err) {
+    res.status(500).json({
       message: err.message
-    }))
+    })
+  }
 }
 
 /**
