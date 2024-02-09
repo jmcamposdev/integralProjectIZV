@@ -160,6 +160,39 @@ const GroupList = () => {
     setViewCreateModal(false)
   }
 
+  /**
+   * This updates a group and adds it to the state
+   * @param {Event} event The event object
+   */
+  const handleUpdateGroup = async (event) => {
+    event.preventDefault()
+    try {
+      // Create the group in the database
+      const updatedGroup = await groupService.updateGroup(groupInputs)
+      // Add the group to the state
+      setGroups(groups.map(group => (group.id === updatedGroup.id ? updatedGroup : group)))
+    } catch (error) {
+      // If there's an error, save the error message in the state
+      setError(error.message)
+    }
+
+    // Close the create modal
+    setViewCreateModal(false)
+  }
+
+  /**
+   * This runs when the user edits a group
+   * It shows the create modal and the update modal
+   * and sets the groupInputs with the group to update
+   * @param {Object} group The group to update
+   * @returns {void}
+  */
+  const handleUpdateClick = (group) => {
+    setViewCreateModal(true)
+    setViewUpdateModal(true)
+    setGroupInputs(group)
+  }
+
   return (
     <>
       {/* <!-- ===== Start of Group Table ===== --> */}
@@ -275,7 +308,7 @@ const GroupList = () => {
       {/* <!-- ===== Start of Create Modal ===== --> */}
       {isAdmin && (
         <FormModal
-          isOpen={viewCreateModal} onClose={() => setViewCreateModal(false)} onSubmit={handleCreateGroup} title='Create Group' submitText='Create' formFields={[
+          isOpen={viewCreateModal} onClose={() => setViewCreateModal(false)} onSubmit={viewUpdateModal ? handleUpdateGroup : handleCreateGroup} title={viewUpdateModal ? 'Update Group' : 'Create Group'} submitText={viewUpdateModal ? 'Update Group' : 'Add new Group'} formFields={[
             {
               label: 'School Year',
               type: 'text',
