@@ -4,6 +4,7 @@ import formationService from '../../services/formationService'
 import groupService from '../../services/groupService'
 import ErrorAlert from '../Alerts/ErrorAlert'
 import ConfirmModal from '../Modals/ConfirmModal'
+import FormModal from '../Modals/FormModal'
 
 const GroupList = () => {
   const { isAdmin } = useAuth()
@@ -14,7 +15,7 @@ const GroupList = () => {
   const [viewDeleteModal, setViewDeleteModal] = useState(false) // Show or hide the delete modal
   const [viewCreateModal, setViewCreateModal] = useState(false) // Show or hide the create modal
   const [viewUpdateModal, setViewUpdateModal] = useState(false) // Show or hide the update modal
-  const [GroupsInputs, setGroupsInputs] = useState({ // Save the inputs from the create modal and update modal
+  const [groupInputs, setGroupInputs] = useState({ // Save the inputs from the create modal and update modal
     schoolYear: '',
     formationId: '',
     course: '',
@@ -26,7 +27,7 @@ const GroupList = () => {
    * Reset the inputs from the create modal and update modal
    */
   const resetGroupInputs = () => {
-    setGroupsInputs({
+    setGroupInputs({
       schoolYear: '',
       formationId: '',
       course: '',
@@ -35,29 +36,19 @@ const GroupList = () => {
     })
   }
 
-  const handleGroupInputs = (e) => {
-    if (e.target.name === 'isMorning') {
-      setGroupsInputs({
-        ...GroupsInputs,
-        [e.target.name]: e.target.checked
-      })
-      return
+  /**
+   * Handle all the inputs from the create modal and update modal
+   * @param {Event} e The event object
+   */
+  const handleGroupInputs = async (e) => {
+    // Destructure the name, value, type, and checked from the event target
+    let { name, value, type, checked } = e.target
+    // If the name is formationId, parse the value to an integer
+    if (name === 'formationId') {
+      value = parseInt(value)
     }
-
-    if (e.target.name === 'formationId') {
-      const formation = formations.find(formation => formation.id === e.target.value)
-      setGroupsInputs({
-        ...GroupsInputs,
-        formationId: e.target.value,
-        course: formation.course,
-        denomination: formation.denomination
-      })
-      return
-    }
-    setGroupsInputs({
-      ...GroupsInputs,
-      [e.target.name]: e.target.value
-    })
+    // Set the groupInputs with the new value
+    setGroupInputs({ ...groupInputs, [name]: type === 'checkbox' ? checked : value })
   }
 
   /**
@@ -148,6 +139,26 @@ const GroupList = () => {
       resetGroupInputs()
     }
   }, [viewCreateModal])
+
+  /**
+   * This creates a new group and adds it to the state
+   * @param {Event} event The event object
+   */
+  const handleCreateGroup = async (event) => {
+    event.preventDefault()
+    try {
+      // Create the group in the database
+      const group = await groupService.createGroup(groupInputs)
+      // Add the group to the state
+      setGroups([...groups, group])
+    } catch (error) {
+      // If there's an error, save the error message in the state
+      setError(error.message)
+    }
+
+    // Close the create modal
+    setViewCreateModal(false)
+  }
 
   return (
     <>
@@ -260,6 +271,54 @@ const GroupList = () => {
       {/* <!-- ===== Start of Delete Modal ===== --> */}
       {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={() => (setGroupIdToDelete(null))} handleConfirm={handleDeleteGroup} message='Are you sure you want to delete this group?' />)}
       {/* <!-- ===== End of Delete Modal ===== --> */}
+
+      {/* <!-- ===== Start of Create Modal ===== --> */}
+      {isAdmin && (
+        <FormModal
+          isOpen={viewCreateModal} onClose={() => setViewCreateModal(false)} onSubmit={handleCreateGroup} title='Create Group' submitText='Create' formFields={[
+            {
+              label: 'School Year',
+              type: 'text',
+              name: 'schoolYear',
+              value: groupInputs.schoolYear,
+              handleInputsChange: handleGroupInputs
+            },
+            {
+              label: 'Formation',
+              type: 'select',
+              name: 'formationId',
+              value: groupInputs.formationId,
+              handleInputsChange: handleGroupInputs,
+              options: [
+                { value: '', label: 'Select Formation' },
+                ...formations.map((formation) => ({ value: formation.id, label: formation.acronym }))
+              ]
+            },
+            {
+              label: 'Course',
+              type: 'text',
+              name: 'course',
+              value: groupInputs.course,
+              handleInputsChange: handleGroupInputs,
+              disabled: true
+            },
+            {
+              label: 'Denomination',
+              type: 'text',
+              name: 'denomination',
+              value: groupInputs.denomination,
+              handleInputsChange: handleGroupInputs
+            },
+            {
+              label: 'Shift',
+              type: 'checkbox',
+              name: 'isMorning',
+              checked: groupInputs.isMorning,
+              handleInputsChange: handleGroupInputs
+            }
+          ]}
+        />
+      )}
     </>
   )
 }
