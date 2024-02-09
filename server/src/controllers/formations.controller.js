@@ -9,11 +9,13 @@ import { Module } from '../models/Module.js'
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const getFormations = (req, res) => {
-  // Get all formations from database
-  Formation.findAll()
-    .then(formations => res.json(formations))
-    .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
+export const getFormations = async (req, res) => {
+  try {
+    const formations = await Formation.findAll()
+    res.json(formations)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
 }
 
 /**
