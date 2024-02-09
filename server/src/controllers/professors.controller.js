@@ -109,6 +109,11 @@ export const updateProfessor = async (req, res) => {
       return res.status(400).json({ message: 'Already exists a professor with that senecaUser' })
     }
 
+    // If is defined the specialty, validate that the Professor has no assigned lessons
+    if (req.body.specialty && await professorHasLessons(id)) {
+      return res.status(400).json({ message: 'Cannot change the specialty of a professor with assigned lessons, delete the lessons first' })
+    }
+
     // Get the professor from the database
     const professor = await Professor.findOne({ where: { id } })
 
