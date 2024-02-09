@@ -38,6 +38,16 @@ const formationService = {
       console.error('Error deleting formation:', error.message)
       throw error
     }
+  },
+
+  getFormationModules: async (id) => {
+    try {
+      const modules = await api.get(`formations/${id}/modules`)
+      return modules
+    } catch (error) {
+      console.error('Error getting formation modules:', error.message)
+      throw error
+    }
   }
 }
 
