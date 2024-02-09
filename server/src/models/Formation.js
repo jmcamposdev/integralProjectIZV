@@ -37,3 +37,39 @@ Group.belongsTo(Formation, { foreignKey: 'formationId', targetId: 'id' })
 // Relation 1:N between Formation and Module
 Formation.hasMany(Module, { foreignKey: 'formationId', sourceKey: 'id' })
 Module.belongsTo(Formation, { foreignKey: 'formationId', targetId: 'id' })
+
+/** ------------------------------------------------------
+ * Formation Validation
+ * ---------------------------------------------------- */
+
+/**
+ * Validate that the fields are not null or empty
+ * @param {String} denomination The name of the formation
+ * @param {String} acronym The acronym of the formation
+ * @returns {Boolean} true if all fields are valid
+ */
+export const formationFieldsValidation = (denomination, acronym) => {
+  const validDenomination = denomination?.trim().length > 0
+  const validAcronym = acronym?.trim().length > 0
+  return validDenomination && validAcronym
+}
+
+/**
+ * Check if the formation has groups
+ * @param {Number} formationId The id of the formation
+ * @returns {Boolean} true if the formation has groups
+ */
+export const formationHasGroups = async (formationId) => {
+  const groups = await Group.findAll({ where: { formationId } })
+  return groups.length > 0
+}
+
+/**
+ * Check if the formation has modules
+ * @param {Number} formationId The id of the formation
+ * @returns {Boolean} true if the formation has modules
+ */
+export const formationHasModules = async (formationId) => {
+  const modules = await Module.findAll({ where: { formationId } })
+  return modules.length > 0
+}
