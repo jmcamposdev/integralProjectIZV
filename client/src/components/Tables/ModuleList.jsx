@@ -3,14 +3,12 @@ import useAuth from '../../hooks/useAuth'
 import moduleService from '../../services/moduleService'
 import ErrorAlert from '../Alerts/ErrorAlert'
 import ConfirmModal from '../Modals/ConfirmModal'
-import formationService from '../../services/formationService'
 import FormModal from '../Modals/FormModal'
 
-const ModuleList = () => {
+const ModuleList = ({ formations }) => {
   const { isAdmin } = useAuth()
   const [error, setError] = useState(null) // Save the error message
   const [modules, setModules] = useState([]) // Save the modules
-  const [formations, setFormations] = useState([]) // Save the formations
   const [moduleIdToDelete, setModuleIdToDelete] = useState(null) // Save the modules id to delete
   const [viewDeleteModal, setViewDeleteModal] = useState(false) // Show or hide the delete modal
   const [viewCreateModal, setViewCreateModal] = useState(false) // Show or hide the create modal
@@ -77,20 +75,6 @@ const ModuleList = () => {
         setError(error.message)
       }
     }
-
-    async function getFormations () {
-      try {
-        // Fetch the formations from the server
-        const formations = await formationService.getAllFormations()
-        // Save the formations in the state
-        setFormations(formations)
-      } catch (error) {
-        // If there's an error, set the error message
-        setError(error.message)
-      }
-    }
-
-    getFormations()
     getModules()
   }, [])
 
