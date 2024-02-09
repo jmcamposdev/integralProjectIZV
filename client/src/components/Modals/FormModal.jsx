@@ -22,18 +22,22 @@ const FormModal = ({ isOpen, onClose, onSubmit, title, submitText, formFields })
                   <label htmlFor={field.id} className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>{field.label}</label>
                   {field.type === 'select'
                     ? (
-                      <select
-                        onChange={field.handleInputsChange}
-                        id={field.id}
-                        name={field.name}
-                        className='w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
-                        value={field.value}
-                        disabled={field.disabled}
-                      >
-                        {field.options.map((option, i) => (
-                          <option key={i} value={option.value} disabled={option.disabled}>{option.label}</option>
-                        ))}
-                      </select>
+                      <div className='relative z-20 bg-transparent dark:bg-form-input'>
+                        <select
+                          onChange={field.handleInputsChange}
+                          id={field.id}
+                          name={field.name}
+                          className='relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary '
+                          value={field.value}
+                          disabled={field.disabled}
+                        >
+                          {field.options.map((option, i) => (
+                            <option key={i} value={option.value} disabled={option.disabled}>{option.label}</option>
+                          ))}
+                        </select>
+                        <span class='absolute top-1/2 right-4 z-30 -translate-y-1/2 icon-[ep--arrow-down]' style={{ fontSize: '22px' }} />
+                      </div>
+
                       )
                     : (
                       <input
