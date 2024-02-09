@@ -31,7 +31,7 @@ const FormModal = ({ isOpen, onClose, onSubmit, title, submitText, formFields })
                         disabled={field.disabled}
                       >
                         {field.options.map((option, i) => (
-                          <option key={i} value={option.value}>{option.label}</option>
+                          <option key={i} value={option.value} disabled={option.disabled}>{option.label}</option>
                         ))}
                       </select>
                       )
