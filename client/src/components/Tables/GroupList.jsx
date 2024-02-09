@@ -20,6 +20,7 @@ const GroupList = () => {
     formationId: '',
     course: '',
     denomination: '',
+    letter: '',
     isMorning: false
   }) // Save the inputs from the create modal
 
@@ -32,6 +33,7 @@ const GroupList = () => {
       formationId: '',
       course: '',
       denomination: '',
+      letter: '',
       isMorning: false
     })
   }
@@ -42,13 +44,28 @@ const GroupList = () => {
    */
   const handleGroupInputs = async (e) => {
     // Destructure the name, value, type, and checked from the event target
-    let { name, value, type, checked } = e.target
+    let { name, value } = e.target
     // If the name is formationId, parse the value to an integer
-    if (name === 'formationId') {
-      value = parseInt(value)
+    if (name === 'formationId' || name === 'course') {
+      value = value === '' ? '' : parseInt(value)
     }
+
+    if (name === 'letter' || name === 'course') {
+      const letter = name === 'letter' ? value : groupInputs.letter
+      const course = name === 'course' ? value : groupInputs.course
+      const formationAcronym = formations.find((formation) => formation.id === groupInputs.formationId)?.acronym
+      const denomination = `${course}${formationAcronym}${letter}`
+      setGroupInputs({ ...groupInputs, [name]: value, denomination })
+      return
+    }
+
+    // If the name is isMorning, convert the value to a boolean
+    if (name === 'isMorning') {
+      value = value === 'true'
+    }
+
     // Set the groupInputs with the new value
-    setGroupInputs({ ...groupInputs, [name]: type === 'checkbox' ? checked : value })
+    setGroupInputs({ ...groupInputs, [name]: value })
   }
 
   /**
@@ -61,6 +78,11 @@ const GroupList = () => {
       try {
         // Fetch all the groups from the database
         const groups = await groupService.getAllGroups()
+        // Add the letter to the groups
+        groups.forEach(group => {
+          group.letter = group.denomination.slice(-1)
+        })
+        console.log(groups)
         // Save the groups in the state
         setGroups(groups)
       } catch (error) {
@@ -147,6 +169,8 @@ const GroupList = () => {
   const handleCreateGroup = async (event) => {
     event.preventDefault()
     try {
+      console.log(groupInputs)
+
       // Create the group in the database
       const group = await groupService.createGroup(groupInputs)
       // Add the group to the state
@@ -314,7 +338,8 @@ const GroupList = () => {
               type: 'text',
               name: 'schoolYear',
               value: groupInputs.schoolYear,
-              handleInputsChange: handleGroupInputs
+              handleInputsChange: handleGroupInputs,
+              required: true
             },
             {
               label: 'Formation',
@@ -323,31 +348,44 @@ const GroupList = () => {
               value: groupInputs.formationId,
               handleInputsChange: handleGroupInputs,
               options: [
-                { value: '', label: 'Select Formation' },
+                { value: '', label: 'Select Formation', disabled: true },
                 ...formations.map((formation) => ({ value: formation.id, label: formation.acronym }))
-              ]
+              ],
+              required: true
             },
             {
               label: 'Course',
-              type: 'text',
+              type: 'number',
               name: 'course',
               value: groupInputs.course,
               handleInputsChange: handleGroupInputs,
-              disabled: true
+              required: true
             },
             {
-              label: 'Denomination',
-              type: 'text',
-              name: 'denomination',
-              value: groupInputs.denomination,
-              handleInputsChange: handleGroupInputs
+              label: 'Letter',
+              type: 'select',
+              name: 'letter',
+              value: groupInputs.letter,
+              handleInputsChange: handleGroupInputs,
+              options: [
+                { value: '', label: 'Select Letter', disabled: true },
+                { value: 'A', label: 'A' },
+                { value: 'B', label: 'B' },
+                { value: 'C', label: 'C' },
+                { value: 'D', label: 'D' }
+              ],
+              required: true
             },
             {
               label: 'Shift',
-              type: 'checkbox',
+              type: 'select',
               name: 'isMorning',
-              checked: groupInputs.isMorning,
-              handleInputsChange: handleGroupInputs
+              value: groupInputs.isMorning,
+              handleInputsChange: handleGroupInputs,
+              options: [
+                { value: false, label: 'Afternoon' },
+                { value: true, label: 'Morning' }
+              ]
             }
           ]}
         />
