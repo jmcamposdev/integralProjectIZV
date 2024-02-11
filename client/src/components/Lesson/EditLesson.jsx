@@ -5,40 +5,64 @@ import lessonService from '../../services/lessonService'
 import CircularProgressBar from '../ProgressBars/CircularProgressBar'
 
 const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professors }) => {
+  // Filter the lessons that belong to the current group and module
   const [lessons, setLessons] = useState(allLessons.filter((currentLesson) => currentLesson.groupId === currentGroup.id && currentLesson.moduleId === currentModule.id))
-  const [availableProfessors, setAvailableProfessors] = useState(professors.filter(professor => professor.specialty === currentModule.specialty))
+  // Filter the professors that have the same specialty as the module
+  const availableProfessors = professors.filter(professor => professor.specialty === currentModule.specialty)
+  // State to store the lessons that were removed only if they were already in the database (have an id)
   const [lessonsToDel, setLessonsToDel] = useState([])
+  // State to store the current hour
   const [currentHour, setCurrentHour] = useState(lessons.reduce((acc, lesson) => acc + lesson.hours, 0))
-  const [maxHour, setMaxHour] = useState(currentModule.hours)
+  // State to store the error message
+  const maxHour = currentModule.hours
+  // State to store the error message
   const [error, setError] = useState(null)
 
+  /**
+   * Check if the professor is already assigned to another lesson and update the professor of the lesson
+   * @param {Number} index The index of the lesson to update
+   * @param {Number} selectedProfessorId The id of the selected professor
+   * @returns
+   */
   const handleProfessorChange = (index, selectedProfessorId) => {
     // Check if the professor is already assigned to another lesson
     const professorAlreadyAssigned = lessons.some((lesson, i) => i !== index && lesson.professorId === selectedProfessorId)
+    // If the professor is already assigned to another lesson, show an error message
     if (professorAlreadyAssigned) {
       setError('The professor is already assigned to another lesson')
       return
     }
 
     // Update the professor of the lesson
-    const updatedLessons = [...lessons]
-    updatedLessons[index].professorId = selectedProfessorId
-    setLessons(updatedLessons)
+    const updatedLessons = [...lessons] // Create a copy of the lessons to avoid modifying the state directly
+    updatedLessons[index].professorId = selectedProfessorId // Update the professor of the lesson
+    setLessons(updatedLessons) // Update the state with the new lessons
   }
 
+  /**
+   * Update the hours of the lesson
+   * @param {Number} index The index of the lesson to update
+   * @param {Number} selectedHours The selected hours
+   */
   const handleHoursChange = (index, selectedHours) => {
-    const updatedLessons = [...lessons]
-    updatedLessons[index].hours = selectedHours
-    setLessons(updatedLessons)
-    setCurrentHour(updatedLessons.reduce((acc, lesson) => acc + lesson.hours, 0))
+    const updatedLessons = [...lessons] // Create a copy of the lessons to avoid modifying the state directly
+    updatedLessons[index].hours = selectedHours // Update the hours of the lesson
+    setLessons(updatedLessons) // Update the state with the new lessons
+    setCurrentHour(updatedLessons.reduce((acc, lesson) => acc + lesson.hours, 0)) // Update the current hour
   }
 
+  /**
+   * Delete the lesson from the list of lessons
+   * Also, add the lesson to the list of lessons to delete if it was already in the database
+   * @param {Number} index The index of the lesson to delete
+   */
   const handleLessonDelete = (index) => {
-    const lessonToDelete = lessons[index]
+    const lessonToDelete = lessons[index] // Get the lesson to delete
     // If the lesson was already in the database, add it to the list of lessons to delete
     if (lessonToDelete.id) {
       setLessonsToDel([...lessonsToDel, lessonToDelete.id])
     }
+    // Remove the lesson from the list of lessons
     const updatedLessons = lessons.filter((lesson, i) => i !== index)
     setLessons(updatedLessons)
 
@@ -46,9 +70,15 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
     setCurrentHour(updatedLessons.reduce((acc, lesson) => acc + lesson.hours, 0))
   }
 
+  /**
+   * Add a new lesson to the list of lessons
+   * Only add a new lesson if the last lesson has a professor and hours
+   * Also, don't add a new lesson if all hours are already assigned
+   */
   const handleAddLesson = () => {
     // Only add a new lesson if the last lesson has a professor and hours
-    const lastLesson = lessons[lessons.length - 1]
+    const lastLesson = lessons[lessons.length - 1] // Get the last lesson
+    // If the last lesson doesn't have a professor or hours, show an error message
     if (lastLesson && (!lastLesson.professorId || !lastLesson.hours)) {
       setError('Please fill the last lesson before adding a new one')
       return
@@ -60,20 +90,27 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
       return
     }
 
-    if (currentHour < maxHour) {
-      const newLesson = {
-        groupId: currentGroup.id,
-        moduleId: currentModule.id,
-        professorId: null,
-        hours: 0
-      }
-      setLessons([...lessons, newLesson])
+    // Add a new lesson to the list of lessons
+    const newLesson = {
+      groupId: currentGroup.id,
+      moduleId: currentModule.id,
+      professorId: null,
+      hours: 0
     }
+    // Update the state with the new lessons
+    setLessons([...lessons, newLesson])
   }
 
+  /**
+   * Save the changes made to the lessons
+   * - Delete the lessons that were removed from the list of lessons
+   * - Update the lessons that were modified
+   * - Create the new lessons
+   * Also, validate that all lessons have a professor and hours
+   * And validate that the total hours assigned are equal to the module hours
+   * Finally, refresh the page
+   */
   const saveChanges = async () => {
-    // Create a lessons copy to avoid modifying the state directly
-    const lessonsCopy = [...lessons]
     // Validate that all lessons have a professor and hours
     const invalidLessons = lessons.filter((lesson) => !lesson.professorId || !lesson.hours)
     if (invalidLessons.length > 0) {
@@ -111,10 +148,7 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
     if (newLessons.length > 0) {
       newLessons.forEach(async (lesson) => {
         try {
-          const newLesson = await lessonService.createLesson(lesson)
-          // Replace the new lesson with the old one that match the professorId and hours
-          const oldLessonIndex = lessonsCopy.findIndex((oldLesson) => oldLesson.professorId === lesson.professorId && oldLesson.hours === lesson.hours)
-          lessonsCopy[oldLessonIndex] = newLesson
+          await lessonService.createLesson(lesson)
         } catch (error) {
           setError('Error creating lessons')
         }
@@ -127,10 +161,15 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
 
   return (
     <div className='relative'>
-      <button className='absolute top-3 right-3' onClick={onClose}>
+      {/* Close Button */}
+      <button className='absolute top-3 right-3 fill-current duration-300 ease-in-out hover:text-red-500' onClick={onClose}>
         <span className='icon-[lets-icons--close-round-light]' style={{ fontSize: '40px' }} />
       </button>
+      {/* End Close Button */}
+
       {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
+
+      {/* Start of Lesson Info */}
       <div className='flex items-center gap-10 mb-12'>
         <div>
           <h4 className='mb-3 text-xl font-semibold text-black dark:text-white'>Editing Lesson</h4>
@@ -139,14 +178,16 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
         </div>
         <CircularProgressBar current={currentHour} max={maxHour} />
       </div>
+      {/* End of Lesson Info */}
 
+      {/* Start of All Lessons */}
       <div className='lessons-container flex flex-wrap justify-start items-center'>
         {lessons.length >= 0 && (
           <>
             {lessons.map((lesson, index) => (
               <div key={index} className='grow-0 shrink-0 basis-1/3'>
                 <div className='relative rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-6 m-5'>
-                  <button className='absolute top-3 right-3' onClick={() => handleLessonDelete(index)}>
+                  <button className='absolute top-3 right-3 fill-current duration-300 ease-in-out hover:text-red-500' onClick={() => handleLessonDelete(index)}>
                     <span className='icon-[lets-icons--close-round-light]' style={{ fontSize: '25px' }} />
                   </button>
                   <div className='lesson mb-4 relative'>
@@ -189,7 +230,9 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
           </>
         )}
       </div>
-      {/* Mostrar todas las lecciones */}
+      {/* End of All Lessons */}
+
+      {/* Start of Save Lessons Button */}
       <div className='flex justify-center items-center mt-6'>
         <button
           className={`inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 duration-300 ease-in-out ${currentHour !== maxHour ? 'opacity-50 cursor-not-allowed' : ''}`}
@@ -198,6 +241,7 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
         >Save Lessons
         </button>
       </div>
+      {/* End of Save Lessons Button */}
     </div>
   )
 }
