@@ -7,6 +7,7 @@ import professorService from '../../../services/professorService'
 import groupService from '../../../services/groupService'
 import ErrorAlert from '../../../components/Alerts/ErrorAlert'
 import TableRowLoading from '../../../components/Loading/TableRowLoading'
+import LessonList from '../../../components/Tables/LessonList'
 
 const LessonIndex = () => {
   const [error, setError] = useState(null) // Save the error message
@@ -85,9 +86,21 @@ const LessonIndex = () => {
         ? (
           <TableRowLoading columns={2} rows={5} />
           )
-        : (
-          <p>Desarrollo</p>
-          )
+        : professors.lengh === 0 || modules.length === 0 || groups.length === 0
+          ? (
+            <div className='text-center'>
+              <p className='text-2xl font-semibold'>To create lessons you need to have at least one Professor, one Module and one Group</p>
+              <p className='text-gray-500 mt-5'>If you have not created any of these, you can create one by clicking the button below</p>
+              <div className='flex gap-3 justify-center'>
+                <button type='button' className='mt-5 bg-primary text-white py-2 px-4 rounded-md' onClick={() => { window.location.href = '/dashboard/professors' }}>Create Professor</button>
+                <button type='button' className='mt-5 bg-primary text-white py-2 px-4 rounded-md' onClick={() => { window.location.href = '/dashboard/modules' }}>Create Module</button>
+                <button type='button' className='mt-5 bg-primary text-white py-2 px-4 rounded-md' onClick={() => { window.location.href = '/dashboard/groups' }}>Create Group</button>
+              </div>
+            </div>
+            )
+          : (
+            <LessonList lessons={lessons} professors={professors} modules={modules} groups={groups} />
+            )
 
       }
     </DefaultLayout>
