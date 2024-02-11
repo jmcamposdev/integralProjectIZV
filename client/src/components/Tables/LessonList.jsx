@@ -7,16 +7,49 @@ const LessonList = ({ lessons, professors, modules, groups }) => {
   const { isAdmin } = useAuth()
   const [error, setError] = useState(null) // Save the error message
   const [lessonToEdit, setLessonToEdit] = useState(null) // Save the lesson to edit
+  const [availableModules, setAvailableModules] = useState([]) // Save the available modules
+  const [createLessonInput, setCreateLessonInput] = useState({
+    group: null,
+    module: null
+  }) // Save the input to create a lesson
+
+  const handleLessonInputChange = (e) => {
+    if (e.target.name === 'groupId') {
+      const group = groups.find((group) => group.id === Number(e.target.value))
+      const availableModules = modules.filter((currentModule) => currentModule.course === group.course && currentModule.formationId === group.formationId)
+      if (availableModules.length <= 0) {
+        setError('No modules available for this group. Please add a module to the group course.')
+      }
+      setAvailableModules(availableModules)
+      setCreateLessonInput({ ...createLessonInput, group })
+    }
+
+    if (e.target.name === 'moduleId') {
+      const module = modules.find((module) => module.id === Number(e.target.value))
+      setCreateLessonInput({ ...createLessonInput, module })
+    }
+  }
+
+  const handleEditLesson = (lesson) => {
+    const group = groups.find((group) => group.id === lesson.groupId)
+    const module = modules.find((module) => module.id === lesson.moduleId)
+    setLessonToEdit({ group, module })
+  }
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault()
+    setLessonToEdit(createLessonInput)
+  }
 
   return (
     <>
       {
         lessonToEdit
           ? (
-            <EditLesson lesson={lessonToEdit} onClose={() => setLessonToEdit(null)} />
+            <EditLesson currentModule={lessonToEdit.module} currentGroup={lessonToEdit.group} allLessons={lessons} professors={professors} onClose={() => setLessonToEdit(null)} />
             )
           : (
-            <>
+            <div>
               {/* <!-- ===== Start of Lesson Table ===== --> */}
               <div className='rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-6'>
                 {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
@@ -24,7 +57,7 @@ const LessonList = ({ lessons, professors, modules, groups }) => {
                   Lessons List
                 </h4>
                 <div className='flex flex-col'>
-                  <div className={`grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 ${isAdmin ? 'sm:grid-cols-4' : 'sm:grid-cols-3'}`}>
+                  <div className={`grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 ${isAdmin ? 'sm:grid-cols-5' : 'sm:grid-cols-4'}`}>
                     <div className='p-2.5 xl:p-5'>
                       <h5 className='text-sm font-medium uppercase xsm:text-base'>
                         Group
@@ -38,6 +71,11 @@ const LessonList = ({ lessons, professors, modules, groups }) => {
                     <div className='p-2.5 text-center xl:p-5'>
                       <h5 className='text-sm font-medium uppercase xsm:text-base'>
                         Professor
+                      </h5>
+                    </div>
+                    <div className='p-2.5 text-center xl:p-5'>
+                      <h5 className='text-sm font-medium uppercase xsm:text-base'>
+                        Hours
                       </h5>
                     </div>
                     {// Only show the actions column if the user is an admin
@@ -57,7 +95,7 @@ const LessonList = ({ lessons, professors, modules, groups }) => {
                     )
                   : (
                       lessons.map((lesson) => (
-                        <div className={`grid grid-cols-2 sm:grid-cols-${isAdmin ? '4' : '3'}`} key={lesson.id}>
+                        <div className={`grid grid-cols-2 sm:grid-cols-${isAdmin ? '5' : '4'}`} key={lesson.id}>
                           <div className='p-2.5 xl:p-5'>
                             <p className='text-black dark:text-white'>
                               {groups.find((group) => group.id === lesson.groupId)?.denomination}
@@ -73,10 +111,15 @@ const LessonList = ({ lessons, professors, modules, groups }) => {
                               {professors.find((professor) => professor.id === lesson.professorId)?.name || 'No professor'}
                             </p>
                           </div>
+                          <div className='p-2.5 text-center xl:p-5'>
+                            <p className='text-black dark:text-white'>
+                              {lesson.hours}
+                            </p>
+                          </div>
                           {
                             isAdmin && (
                               <div className='p-2.5 text-center xl:p-5 flex align-center justify-center'>
-                                <button onClick={() => { setLessonToEdit(lesson) }}>
+                                <button onClick={() => { handleEditLesson(lesson) }}>
                                   <i className='icon-[lucide--edit] fill-current duration-300 ease-in-out hover:text-meta-3' style={{ fontSize: '20px' }} />
                                 </button>
                               </div>
@@ -87,15 +130,33 @@ const LessonList = ({ lessons, professors, modules, groups }) => {
                     )}
                 {// Only show the add lessons button if the user is an admin
                   isAdmin && (
-                    <button className='mt-8 flex ml-auto w-max items-center justify-center gap-2.5 rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10'>
-                      <span><svg xmlns='http://www.w3.org/2000/svg' width='24px' height='24px' viewBox='0 0 24 24'><path fill='currentColor' d='M11 13H5v-2h6V5h2v6h6v2h-6v6h-2z' /></svg></span>Add Lesson
-                    </button>
+                    <form className='' onSubmit={handleFormSubmit}>
+                      {/* <!-- Select to select the Group --> */}
+                      <select className='w-full mt-5 border border-stroke dark:border-strokedark rounded-sm bg-gray-2 dark:bg-meta-4' name='groupId' id='groupId' onChange={handleLessonInputChange}>
+                        <option value=''>Select Group</option>
+                        {groups.map((group) => (
+                          <option key={group.id} value={group.id}>{group.denomination}</option>
+                        ))}
+                      </select>
+                      {/* <!-- Select to Modules only show the modules with the same course --> */}
+                      <select className='w-full mt-5 border border-stroke dark:border-strokedark rounded-sm bg-gray-2 dark:bg-meta-4' name='moduleId' id='moduleId' onChange={handleLessonInputChange} disabled={availableModules.length <= 0}>
+                        <option value=''>Select Module</option>
+                        {availableModules.map((module) => (
+                          <option key={module.id} value={module.id}>{module.acronym}</option>
+                        ))}
+                      </select>
+                      <div className='flex justify-end mt-5'>
+                        <button type='submit' className='bg-primary text-white py-2 px-4 rounded-md' disabled={createLessonInput.group === null || createLessonInput.module === null}>
+                          Create Lesson
+                        </button>
+                      </div>
+                    </form>
                   )
                 }
 
               </div>
               {/* <!-- ===== End of Lesson Table ===== --> */}
-            </>
+            </div>
             )
       }
     </>
