@@ -1,24 +1,34 @@
 import { useEffect, useState } from 'react'
 
 const HoursCounter = ({ index, maxHour, minHour, currentHour, handleHourChange }) => {
-  console.log('Componente Renderizado')
-  const [hours, setHours] = useState(currentHour)
+  const [hours, setHours] = useState(currentHour) // Save the current hour in the state
 
+  /**
+   * Update the state when the currentHour changes
+   */
   useEffect(() => {
     setHours(currentHour)
   }, [currentHour])
 
+  /**
+   * Rest 1 hour from the current hour
+   */
   const handleRest = () => {
+    // If the current hour is greater than the minimum hour, rest 1 hour
     if (hours > minHour) {
-      setHours(hours - 1)
-      handleHourChange(index, hours - 1)
+      setHours(hours - 1) // Update the state
+      handleHourChange(index, hours - 1) // Update the parent state
     }
   }
 
+  /**
+   * Add 1 hour to the current hour
+   */
   const handleAdd = () => {
+    // If the current hour is less than the maximum hour, add 1 hour
     if (hours < maxHour) {
-      setHours(hours + 1)
-      handleHourChange(index, hours + 1)
+      setHours(hours + 1) // Update the state
+      handleHourChange(index, hours + 1) // Update the parent state
     }
   }
 
