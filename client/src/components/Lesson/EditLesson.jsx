@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import ErrorAlert from '../Alerts/ErrorAlert'
 import HoursCounter from './HoursCounter'
 import lessonService from '../../services/lessonService'
+import CircularProgressBar from '../ProgressBars/CircularProgressBar'
 
 const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professors }) => {
   const [lessons, setLessons] = useState(allLessons.filter((currentLesson) => currentLesson.groupId === currentGroup.id && currentLesson.moduleId === currentModule.id))
@@ -125,62 +126,78 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
   }
 
   return (
-    <div className='rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-6'>
+    <div className='relative'>
+      <button className='absolute top-3 right-3' onClick={onClose}>
+        <span className='icon-[lets-icons--close-round-light]' style={{ fontSize: '40px' }} />
+      </button>
       {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
-      <h4 className='mb-3 text-xl font-semibold text-black dark:text-white'>Editing Lesson</h4>
-      <h5 className='text-lg font-medium text-gray-500'><span className='text-black dark:text-white'>Group:</span> {currentGroup.denomination}</h5>
-
-      {/* Mostrar todas las lecciones */}
-      {lessons.length >= 0 && (
+      <div className='flex items-center gap-10 mb-12'>
         <div>
-          {lessons.map((lesson, index) => (
-            <div key={index}>
-              {/* Mostrar detalles de la lección y permitir la modificación */}
-              <select
-                value={lesson.professorId || ''}
-                onChange={(e) => handleProfessorChange(index, Number(e.target.value))}
-              >
-                <option value='' disabled>Select Professor</option>
-                {availableProfessors.map((professor) => (
-                  <option key={professor.id} value={professor.id}>
-                    {professor.name}
-                  </option>
-                ))}
-              </select>
-              <HoursCounter
-                index={index}
-                maxHour={lesson.professorId ? currentModule.hours - currentHour + lesson.hours : 0}
-                minHour={0}
-                currentHour={lesson.hours}
-                handleHourChange={handleHoursChange}
-              />
-
-              <button onClick={() => handleLessonDelete(index)}>Delete</button>
-            </div>
-          ))}
-          {/* Permitir agregar más lecciones si no se exceden las horas */}
-          {currentHour < maxHour && (
-            <button onClick={handleAddLesson}>Add Lesson</button>
-          )}
-          <div className='d-flex justify-content-between'>
-            <h5>Hours</h5>
-            <h5>{currentHour}/{maxHour}</h5>
-          </div>
-          <div className='progress' style={{ height: '4px', maxWidth: '450px', backgroundColor: '#E5E7EB', borderRadius: '4px' }}>
-            <div
-              className='progress-bar'
-              role='progressbar'
-              style={{ width: `${(currentHour / maxHour) * 100}%`, backgroundColor: '#FFD700', height: '4px', borderRadius: '4px', transition: 'width 0.6s ease' }}
-              aria-valuenow={(currentHour / maxHour) * 100}
-              aria-valuemin='0'
-              aria-valuemax='100'
-            />
-          </div>
+          <h4 className='mb-3 text-xl font-semibold text-black dark:text-white'>Editing Lesson</h4>
+          <h5 className='text-lg font-medium text-gray-500'><span className='text-black dark:text-white'>Group:</span> {currentGroup.denomination}</h5>
+          <h5 className='text-lg font-medium text-gray-500'><span className='text-black dark:text-white'>Module:</span> {currentModule.denomination}</h5>
         </div>
-      )}
+        <CircularProgressBar current={currentHour} max={maxHour} />
+      </div>
 
-      <button onClick={onClose}>Close</button>
-      <button onClick={saveChanges}>Save</button>
+      <div className='lessons-container flex flex-wrap justify-start items-center'>
+        {lessons.length >= 0 && (
+          <>
+            {lessons.map((lesson, index) => (
+              <div key={index} className='grow-0 shrink-0 basis-1/3'>
+                <div className='relative rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-6 m-5'>
+                  <button className='absolute top-3 right-3' onClick={() => handleLessonDelete(index)}>
+                    <span className='icon-[lets-icons--close-round-light]' style={{ fontSize: '25px' }} />
+                  </button>
+                  <div className='lesson mb-4 relative'>
+                    <h5 className='text-lg font-medium text-gray-500 mb-3'>Lesson {index + 1}</h5>
+                    {/* Mostrar detalles de la lección y permitir la modificación */}
+                    <div className='relative z-20 bg-transparent dark:bg-form-input'>
+                      <select
+                        className='relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary '
+                        value={lesson.professorId || ''}
+                        onChange={(e) => handleProfessorChange(index, Number(e.target.value))}
+                      >
+                        <option value='' disabled>Select Professor</option>
+                        {availableProfessors.map((professor) => (
+                          <option key={professor.id} value={professor.id}>
+                            {professor.name}
+                          </option>
+                        ))}
+                      </select>
+                      <span className='absolute top-1/2 right-4 z-30 -translate-y-1/2 icon-[ep--arrow-down]' style={{ fontSize: '22px' }} />
+                    </div>
+                    <HoursCounter
+                      index={index}
+                      maxHour={lesson.professorId ? currentModule.hours - currentHour + lesson.hours : 0}
+                      minHour={0}
+                      currentHour={lesson.hours}
+                      handleHourChange={handleHoursChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+            {/* Permitir agregar más lecciones si no se exceden las horas */}
+            {currentHour < maxHour && (
+              <div className='grow-0 shrink-0 basis-1/3 flex justify-center'>
+                <button className='inline-flex items-center justify-center rounded-full bg-primary py-4 px-4 text-center font-medium text-white hover:bg-opacity-90 lg:px-4 xl:px-4 duration-300 ease-in-out' onClick={handleAddLesson}>
+                  <span className='icon-[ph--plus]' style={{ fontSize: '28px' }} />
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+      {/* Mostrar todas las lecciones */}
+      <div className='flex justify-center items-center mt-6'>
+        <button
+          className={`inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 duration-300 ease-in-out ${currentHour !== maxHour ? 'opacity-50 cursor-not-allowed' : ''}`}
+          onClick={saveChanges}
+          disabled={currentHour !== maxHour}
+        >Save Lessons
+        </button>
+      </div>
     </div>
   )
 }
