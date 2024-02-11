@@ -90,10 +90,10 @@ const ProfessorList = () => {
     try {
       await professorService.deleteProfessor(professorIdToDelete)
       setProfessors(professors.filter((professor) => professor.id !== professorIdToDelete))
-      handleCloseDeleteModal()
     } catch (error) {
-      console.error('Error deleting professor:', error.message)
+      setError(error.message)
     }
+    handleCloseDeleteModal()
   }
 
   /**
