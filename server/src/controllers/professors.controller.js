@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize'
 import { Professor, professorExists, professorFieldsValidation, professorHasLessons } from '../models/Professor.js'
+import { Lesson } from '../models/Lesson.js'
 
 /**
  * Get all professors from database
@@ -162,5 +163,30 @@ export const deleteProfessor = async (req, res) => {
   } catch (error) {
     // If there's an error, send it
     res.status(500).json({ message: error.message })
+  }
+}
+
+/**
+ * Get all lessons from a professor by id
+ * @param {Object} req The request object from Express
+ * @param {Object} res The response object from Express
+ */
+export const getProfessorLessons = async (req, res) => {
+  // Destructuring the id from the request parameters
+  const { id } = req.params
+
+  try {
+    // Get the lessons from the database
+    const lessons = await Lesson.findAll({
+      where: {
+        professorId: id
+      }
+    })
+
+    // Send the lessons in the response as JSON
+    res.json(lessons)
+  } catch (err) {
+    // If there's an error, send it
+    res.status(500).json({ message: err.message })
   }
 }
