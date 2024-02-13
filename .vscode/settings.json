@@ -6,5 +6,8 @@
     "signin",
     "strokedark"
   ],
-  "github.copilot.chat.localeOverride": "en"
+  "github.copilot.chat.localeOverride": "en",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
 }
