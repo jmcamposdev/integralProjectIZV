@@ -38,6 +38,16 @@ const professorService = {
       console.error('Error deleting professor:', error.message)
       throw error
     }
+  },
+
+  getProfessorLessons: async (id) => {
+    try {
+      const lessons = await api.get(`professors/${id}/lessons`)
+      return lessons
+    } catch (error) {
+      console.error('Error getting professor lessons:', error.message)
+      throw error
+    }
   }
 }
 
