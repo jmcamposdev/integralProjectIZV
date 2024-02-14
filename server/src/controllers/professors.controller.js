@@ -98,7 +98,7 @@ export const updateProfessor = async (req, res) => {
   const { id } = req.params
 
   try {
-    // Validate that there doesn't exist a professor with the same senecaUser
+    // Validate that there isn't a professor with the same senecaUser
     const existingProfessor = await Professor.findOne({
       where: {
         senecaUser: req.body.senecaUser,
