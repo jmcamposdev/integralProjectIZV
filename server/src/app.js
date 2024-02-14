@@ -13,14 +13,10 @@ import authRoutes from './routes/auth.routes.js'
 import userRoutes from './routes/user.routes.js'
 
 // InitialSetup
-import * as initialSetup from './libs/initialSetup.js'
 import { handleJsonSyntaxError } from './middlewares/index.js'
 
 // Create Express app
 const app = express()
-
-// Init all Data
-initialSetup.createRoles()
 
 // Middlewares
 app.use(express.json()) // Parse JSON bodies (as sent by API clients)
