@@ -47,3 +47,37 @@ export const Module = sequelize.define('modules', {
 // Relation 1:N between Modules and Lessons
 Module.hasMany(Lesson, { foreignKey: { name: 'moduleId', allowNull: false }, sourceKey: 'id' })
 Lesson.belongsTo(Module, { foreignKey: { name: 'moduleId', allowNull: false }, targetId: 'id' })
+
+/** ------------------------------------------------------
+ * Module Validation
+ * ---------------------------------------------------- */
+
+/**
+ * All fields are required
+ * @param {string} denomination
+ * @param {string} acronym
+ * @param {number} course
+ * @param {number} hours
+ * @param {string} specialty
+ * @returns {boolean} true if all fields are valid
+ */
+export const moduleFieldsValidation = (denomination, acronym, course, hours, specialty) => {
+  // Valid all the fields to be not null or empty and the specialty to be FP or Secondary
+  const validDenomination = denomination?.trim().length > 0
+  const validAcronym = acronym?.trim().length > 0
+  // Validate that course and hours are numbers and greater than 0
+  const validCourse = !isNaN(course) && course > 0
+  const validHours = !isNaN(hours) && hours > 0
+  const validSpecialty = specialty === 'FP' || specialty === 'Secondary'
+  return validDenomination && validAcronym && validCourse && validHours && validSpecialty
+}
+
+/**
+ * Validate if the module has lessons
+ * @param {number} id
+ * @returns {boolean} true if the module has lessons
+ */
+export const moduleHasLessons = async id => {
+  const lessons = await Lesson.findAll({ where: { moduleId: id } })
+  return lessons.length > 0
+}
