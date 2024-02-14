@@ -147,6 +147,104 @@ The API can be accessed through the following base URL:
 
 To access certain resources, authentication is required. Be sure to include the `x-access-token` header with a valid token in the relevant requests.
 
+### Endpoints
+
+#### Auth 
+- `POST /auth/signup`: Register a new user. Returns a `JSON` object with the new user's data. Requires a `JSON` object with the user's data.
+- `POST /auth/signin`: Sign in a user. Returns a `JSON` object with the user's data and a token. Requires a `JSON` object with the user's data.
+
+#### User
+- `GET /users`: Get all users. Returns a `JSON` array of all users. `x-access-token` header required.
+- `GET /users/:id`: Get a user by ID. Returns a `JSON` object with the user's data. `x-access-token` header required.
+- `POST /users`: Create a new user. Returns a `JSON` object with the new user's data. Requires a `JSON` object with the user's data. `x-access-token` header required.
+- `PUT /users/:id`: Update a user by ID. Returns a `JSON` object with the updated user's data. Requires a `JSON` object with the user's data. `x-access-token` header required.
+- `DELETE /users/:id`: Delete a user by ID. Returns a `JSON` object with the deleted user's data. `x-access-token` header required.
+
+
+#### Professor
+- `GET /professors`: Get all professors. Returns a `JSON` array of all professors.
+- `GET /professors/:id`: Get a professor by ID. Returns a `JSON` object with the professor's data.
+- `POST /professors`: Create a new professor. Returns a `JSON` object with the new professor's data. Requires a `JSON` object with the professor's data. `x-access-token` header required.
+- `PUT /professors/:id`: Update a professor by ID. Returns a `JSON` object with the updated professor's data. Requires a `JSON` object with the professor's data. `x-access-token` header required.
+- `DELETE /professors/:id`: Delete a professor by ID. Returns a `JSON` object with the deleted professor's data. `x-access-token` header required.
+- `GET /professors/:id/lessons`: Get all lessons assigned to a professor by ID. Returns a `JSON` array of all lessons. 
+
+#### Formation
+- `GET /formations`: Get all formations. Returns a `JSON` array of all formations.
+- `GET /formations/:id`: Get a formation by ID. Returns a `JSON` object with the formation's data.
+- `POST /formations`: Create a new formation. Returns a `JSON` object with the new formation's data. Requires a `JSON` object with the formation's data. `x-access-token` header required.
+- `PUT /formations/:id`: Update a formation by ID. Returns a `JSON` object with the updated formation's data. Requires a `JSON` object with the formation's data. `x-access-token` header required.
+- `DELETE /formations/:id`: Delete a formation by ID. Returns a `JSON` object with the deleted formation's data. `x-access-token` header required.
+- `GET /formations/:id/groups`: Get all groups of a formation by ID. Returns a `JSON` array of all groups.
+- `GET /formations/:id/modules`: Get all modules of a formation by ID. Returns a `JSON` array of all modules.
+
+#### Module
+- `GET /modules`: Get all modules. Returns a `JSON` array of all modules.
+- `GET /modules/:id`: Get a module by ID. Returns a `JSON` object with the module's data.
+- `POST /modules`: Create a new module. Returns a `JSON` object with the new module's data. Requires a `JSON` object with the module's data. `x-access-token` header required.
+- `PUT /modules/:id`: Update a module by ID. Returns a `JSON` object with the updated module's data. Requires a `JSON` object with the module's data. `x-access-token` header required.
+- `DELETE /modules/:id`: Delete a module by ID. Returns a `JSON` object with the deleted module's data. `x-access-token` header required.
+
+#### Group
+- `GET /groups`: Get all groups. Returns a `JSON` array of all groups.
+- `GET /groups/:id`: Get a group by ID. Returns a `JSON` object with the group's data.
+- `POST /groups`: Create a new group. Returns a `JSON` object with the new group's data. Requires a `JSON` object with the group's data. `x-access-token` header required.
+- `PUT /groups/:id`: Update a group by ID. Returns a `JSON` object with the updated group's data. Requires a `JSON` object with the group's data. `x-access-token` header required.
+- `DELETE /groups/:id`: Delete a group by ID. Returns a `JSON` object with the deleted group's data. `x-access-token` header required.
+
+#### Lesson
+- `GET /lessons`: Get all lessons. Returns a `JSON` array of all lessons.
+- `GET /lessons/:id`: Get a lesson by ID. Returns a `JSON` object with the lesson's data.
+- `POST /lessons`: Create a new lesson. Returns a `JSON` object with the new lesson's data. Requires a `JSON` object with the lesson's data. `x-access-token` header required.
+- `PUT /lessons/:id`: Update a lesson by ID. Returns a `JSON` object with the updated lesson's data. Requires a `JSON` object with the lesson's data. `x-access-token` header required.
+- `DELETE /lessons/:id`: Delete a lesson by ID. Returns a `JSON` object with the deleted lesson's data. `x-access-token` header required.
+
+### Example
+```bash
+# Request
+GET /professors/
+
+# Response
+[
+  {
+    "id": 1,
+    "senecaUser": "josemariacampos",
+    "name": "José María",
+    "firstSurname": "Campos",
+    "lastSurname": "Trujillo",
+    "specialty": "FP",
+  },
+  {
+    "id": 2,
+    "senecaUser": "carloshernandez",
+    "name": "Carlos",
+    "firstSurname": "Hernández",
+    "lastSurname": "Palma",
+    "specialty": "Secundary",
+  },
+]
+
+# Request
+POST /professors/
+Headers: x-access-token: <token>
+{
+  "seneceUser": "davidluque",
+  "name": "David",
+  "firstSurname": "Luque",
+  "lastSurname": "Vegas",
+  "specialty": "FP"
+}
+
+# Response - 201 Created
+{
+  "id": 3,
+  "senecaUser": "davidluque",
+  "name": "David",
+  "firstSurname": "Luque",
+  "lastSurname": "Vegas",
+  "specialty": "FP"
+}
+```
 
 ## Key Features
 - Management of five tables: Professor, Formation, Module, Group, Lesson.
