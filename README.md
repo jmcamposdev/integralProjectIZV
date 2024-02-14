@@ -4,9 +4,16 @@
   Here will be a gif of the finish project
 </p>
 
+
+## Project Link 🌐
+Access to the website here -> put the URL
+
 ## Table of Contents
 * [General Info](#general-info)
 * [Technologies](#technologies)
+* [Setup](#setup)
+* [Project Structure](#project-structure)
+* [Key Features](#key-features)
 
 ## General Info
 The Inter-module Project was carried out during the last 2 months of class before the FCT.
@@ -63,10 +70,36 @@ Project is created with:
   </tr>
 </table>
 
+## Setup
+
+### Prerequisites
+1. Node.js and npm installed
+2. MySQL installed and configured
+
+### Steps to Start the Application
+To clone and run this applicaion, you'll need [Git](https://git-scm.com/downloads) and [Node.js](https://nodejs.org/en/download) (which comes with [npm](https://www.npmjs.com/)) installed on you computer.
+
+Next you'll need to create the ```eduAssignment``` database created
+
+```
+# Clone this repository
+$ git clone https://github.com/jmcamposdev/integralProjectIZV.git
+
+# Go into the repository
+$ cd integralProjectIZV
+
+# Install dependencies on the Server and Client
+$ cd client && npm i
+$ cd ../server && npm i
+
+# Run the app
+$ npm start
+```
+
 ## Project Structure
 
 ```bash
-Work-intermodules-v2/
+integralProjectIZV/
 │
 ├── client/
 │ ├── public/
@@ -74,8 +107,8 @@ Work-intermodules-v2/
 │ ├── src/
 │ │ ├── components/
 │ │ │ └── ... (React components)
-│ │ ├── views/
-│ │ │ └── ... (React views)
+│ │ ├── pages/
+│ │ │ └── ... (React pages)
 │ │ ├── App.js
 │ │ └── index.js
 │ │
@@ -102,35 +135,6 @@ Work-intermodules-v2/
 └── ...
 ```
 
-## Usage Instructions
-
-### Prerequisites
-1. Node.js and npm installed
-2. MySQL installed and configured
-
-### Steps to Start the Application
-To clone and run this applicaion, you'll need [Git](https://git-scm.com/downloads) and [Node.js](https://nodejs.org/en/download) (which comes with [npm](https://www.npmjs.com/)) installed on you computer.
-
-Next you'll need to create the ```eduAssignment``` database created
-
-```
-# Clone this repository
-$ git clone https://github.com/jmcamposdev/integralProjectIZV.git
-
-# Go into the repository
-$ cd integralProjectIZV
-
-# Install dependencies on the Server and Client
-$ cd client && npm i
-$ cd ../server && npm i
-
-# Run the app
-$ npm start
-```
-
-## Project Diagram
-Insert the project diagram image here.
-
 ## Key Features
 - Management of five tables: Professor, Formation, Module, Group, Lesson.
 - Administrators can perform any operation on the tables.
@@ -154,7 +158,13 @@ Insert the project diagram image here.
 This project is under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Authors
-Your Name - [Your GitHub Profile](https://github.com/your_username)
+Campos Trujillo, José María - [jmcamposdev](https://github.com/jmcamposdev)
+
+Carlos Hernandez Palma - [carloshpdev](https://github.com/carloshpdev)
+
+Luque Vegas, David - [Daviiid999](https://github.com/Daviiid999)
+
+Capdevila Rodríguez, Víctor - [vilacprd](https://github.com/vilacprd)
 
 ## Acknowledgments
 We appreciate the collaboration of IES Zaidín-Vergeles in this project.
