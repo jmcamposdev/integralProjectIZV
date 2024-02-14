@@ -1,4 +1,4 @@
-import { Module } from '../models/Module.js'
+import { Module, moduleFieldsValidation } from '../models/Module.js'
 import { Formation } from '../models/Formation.js'
 
 /**
@@ -8,10 +8,13 @@ import { Formation } from '../models/Formation.js'
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const getModules = (req, res) => {
-  Module.findAll()
-    .then((modules) => res.json(modules))
-    .catch((err) => res.status(500).json({ message: err.message }))
+export const getModules = async (req, res) => {
+  try {
+    const modules = await Module.findAll()
+    res.json(modules)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
 }
 
 /**
@@ -22,16 +25,23 @@ export const getModules = (req, res) => {
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const getModule = (req, res) => {
+export const getModule = async (req, res) => {
   const { id } = req.params
-  Module.findOne({ where: { id } })
-    .then((module) => {
-      if (!module) {
-        return res.status(404).json({ message: 'Module not found' })
-      }
-      res.json(module)
-    })
-    .catch((err) => res.status(500).json({ message: err.message }))
+
+  try {
+    // Get the module from database
+    const currentModule = await Module.findOne({ where: { id } })
+
+    // If the module doesn't exist, send a 404 status code and a message
+    if (!currentModule) {
+      return res.status(404).json({ message: 'Module not found' })
+    }
+
+    // Send the module in the response as JSON
+    res.json(currentModule)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
 }
 
 /**
@@ -47,11 +57,12 @@ export const createModule = async (req, res) => {
     // Destructuring the request body to get the values of the fields
     const { denomination, acronym, course, hours, specialty, formationId } = req.body
 
-    // Validate the request body
-    if (!denomination || !acronym || !course || !hours || !specialty || !formationId) {
-      return res.status(400).json({ message: 'Please send denomination, acronym, course, hours or specialty' })
+    // Validate all the fields to be not null or empty and the specialty to be FP or Secondary
+    if (!moduleFieldsValidation(denomination, acronym, course, hours, specialty)) {
+      return res.status(400).json({ message: 'Invalid fields' })
     }
 
+    // TODO Transfer this validation to Formation model
     // Validate if the formation exists
     const formation = await Formation.findOne({ where: { id: formationId } })
     if (!formation) {
@@ -76,21 +87,27 @@ export const createModule = async (req, res) => {
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const updateModule = (req, res) => {
+export const updateModule = async (req, res) => {
   const { id } = req.params
 
-  Module.findOne({ where: { id } })
-    .then((module) => {
-      if (!module) {
-        return res.status(404).json({ message: 'Module not found' })
-      }
-      // Update the module
-      module.set(req.body)
-      module.save()
-        .then((module) => res.json(module))
-        .catch((err) => res.status(500).json({ message: err.message }))
-    })
-    .catch((err) => res.status(500).json({ message: err.message }))
+  try {
+    // Get the module from database
+    const currentModule = await Module.findOne({ where: { id } })
+
+    // If the module doesn't exist, send a 404 status code and a message
+    if (!currentModule) {
+      return res.status(404).json({ message: 'Module not found' })
+    }
+
+    // Update the module
+    currentModule.set(req.body)
+    await currentModule.save()
+
+    // Send the module in the response
+    res.json(currentModule)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
 }
 
 /**
