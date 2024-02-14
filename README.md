@@ -4,12 +4,25 @@
   <img src="https://github.com/jmcamposdev/integralProjectIZV/assets/108521775/78863401-cce5-4a71-84b8-2c246584cd7e" >
 </p>
 
-## Description
-The "Work inter-modules" project is an application developed for the **assignment** of **lessons** to **teachers** in the **Department of Informatics** and Communications at IES Zaidín-Vergeles. 
+## Table of Contents
+* [General Info](#general-info)
+* [Technologies](#technologies)
 
-## Technologies Used
+## General Info
+The Inter-module Project was carried out during the last 2 months of class before the FCT.
 
-<div align="center" style="display: flex;">
+The project consists of the **Lesson Assignment to Professors of the Department**. It will also implement roles and we will have 3 types
+* Administrator: Can perform any operation on the tables.
+* Registered User: Can consult all the data without making modifications.
+* Unregistered User: Can consult the group structure of the current course.
+
+### Entity Relationship Diagram
+![Integral Project IZV Diagram](https://github.com/jmcamposdev/integralProjectIZV/assets/108521775/ed6a807e-af6e-4958-8a23-ecc9de39678a)
+
+## Technologies
+
+Project is created with:
+<div>
 
   <!-- React -->
   <div style="text-align: center;">
