@@ -12,6 +12,7 @@ const ProfessorList = () => {
   const [error, setError] = useState(null) // Save the error message if there is one
   const [professors, setProfessors] = useState([]) // Save all professors from the database
   const [professorIdToDelete, setProfessorIdToDelete] = useState(null) // Save the professor Id to delete
+  const [isSpecialtyDisabled, setIsSpecialtyDisabled] = useState(false)
   const [viewDeleteModal, setViewDeleteModal] = useState(false) // Show or hide the delete modal
   const [viewCreateModal, setViewCreateModal] = useState(false) // Show or hide the create modal
   const [viewUpdateModal, setViewUpdateModal] = useState(false) // Show or hide the update modal
@@ -114,6 +115,7 @@ const ProfessorList = () => {
    */
   const handleShowCreateModal = () => {
     setViewCreateModal(true)
+    isSpecialtyDisabled && setIsSpecialtyDisabled(false)
   }
 
   /**
@@ -147,10 +149,47 @@ const ProfessorList = () => {
     resetCreateInputs()
   }
 
+  useEffect(() => {
+    const fetchProfessorLessons = async () => {
+      const lessons = await getProfessorLessons(createInputs.id)
+      setIsSpecialtyDisabled(lessons.length > 0)
+    }
+
+    if (viewUpdateModal) {
+      fetchProfessorLessons()
+    }
+  }, [createInputs.id, viewUpdateModal])
+
+  /**
+   * Handles the edit professor button
+   * It shows the create modal with the professor data
+   * to be edited
+   * @param {Object} professor The professor to edit
+   */
+  const handleEditProfessorButton = (professor) => {
+    setViewUpdateModal(true) // Set the viewUpdateModal to true
+    // Update the inputs with the professor data
+    setCreateInputs({
+      senecaUser: professor.senecaUser,
+      name: professor.name,
+      firstSurname: professor.firstSurname,
+      lastSurname: professor.lastSurname,
+      specialty: professor.specialty,
+      id: professor.id
+    })
+    // Show the create modal
+    setViewCreateModal(true)
+  }
+
   const handleUpdateProfessor = async (event) => {
-    event.preventDefault()
+    event.preventDefault() // Prevent the default form behavior
+    const professorInputs = createInputs
+    if (isSpecialtyDisabled) {
+      delete professorInputs.specialty
+    }
+
     try {
-      const professor = await professorService.updateProfessor(createInputs)
+      const professor = await professorService.updateProfessor(professorInputs)
       const newProfessorsList = professors.map((prof) => {
         if (prof.id === professor.id) {
           return professor
@@ -174,6 +213,16 @@ const ProfessorList = () => {
     })
     // Reset the viewUpdateModal
     setViewUpdateModal(false)
+  }
+
+  const getProfessorLessons = async (professorId) => {
+    try {
+      const lessons = await professorService.getProfessorLessons(professorId)
+      return lessons
+    } catch (error) {
+      setError(error.message)
+      console.error('Error getting professor lessons:', error.message)
+    }
   }
 
   return (
@@ -241,19 +290,7 @@ const ProfessorList = () => {
                             <i className='icon-[material-symbols-light--delete-outline-rounded] fill-current duration-300 ease-in-out hover:text-red-500' style={{ fontSize: '27px' }} />
                           </button>
 
-                          <button onClick={() => {
-                            setViewUpdateModal(true)
-                            setCreateInputs({
-                              senecaUser: professor.senecaUser,
-                              name: professor.name,
-                              firstSurname: professor.firstSurname,
-                              lastSurname: professor.lastSurname,
-                              specialty: professor.specialty,
-                              id: professor.id
-                            })
-                            setViewCreateModal(true)
-                          }}
-                          >
+                          <button onClick={() => handleEditProfessorButton(professor)}>
                             <i className='icon-[lucide--edit] ml-6 fill-current duration-300 ease-in-out hover:text-meta-3' style={{ fontSize: '20px' }} />
                           </button>
                         </div>
@@ -331,11 +368,11 @@ const ProfessorList = () => {
               value: createInputs.specialty,
               handleInputsChange: handleCreateInputs,
               options: [
-                { value: '', label: 'Select Specialty' },
+                { value: '', label: 'Select Specialty', disabled: true },
                 { value: 'FP', label: 'FP' },
                 { value: 'Secondary', label: 'Secondary' }
               ],
-              disabled: viewUpdateModal
+              disabled: isSpecialtyDisabled
             }
           ]}
         />)}
