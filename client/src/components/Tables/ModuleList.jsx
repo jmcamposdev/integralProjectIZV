@@ -43,18 +43,19 @@ const ModuleList = ({ formations }) => {
    * @param {Event} e The event object
    */
   const handleModuleInputs = (e) => {
+    const { name, value } = e.target
     // If the input is a number, save it as a number
-    if (e.target.name === 'formationId' || e.target.name === 'hours' || e.target.name === 'course') {
+    if (name === 'formationId' || name === 'hours' || name === 'course') {
       setModulesInputs({
         ...modulesInputs,
-        [e.target.name]: Number(e.target.value)
+        [name]: value.trim() === '' ? '' : parseInt(value)
       })
       return
     }
     // Save the input in the state
     setModulesInputs({
       ...modulesInputs,
-      [e.target.name]: e.target.value
+      [name]: value
     })
   }
 
