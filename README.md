@@ -13,6 +13,7 @@ Access to the website here -> put the URL
 * [Technologies](#technologies)
 * [Setup](#setup)
 * [Project Structure](#project-structure)
+* [RESTful API](#restful-api)
 * [Key Features](#key-features)
 
 ## General Info
@@ -134,6 +135,18 @@ integralProjectIZV/
 ├── README.md
 └── ...
 ```
+
+## RESTful API
+Welcome to the Integral Project RESTful API. This API provides access to the management of all available resources.
+
+### Base URL 
+The API can be accessed through the following base URL:
+[https://dominio.com/api/v1](https://dominio.com/api/v1)
+
+### Authentication
+
+To access certain resources, authentication is required. Be sure to include the `x-access-token` header with a valid token in the relevant requests.
+
 
 ## Key Features
 - Management of five tables: Professor, Formation, Module, Group, Lesson.
