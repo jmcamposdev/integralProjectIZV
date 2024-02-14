@@ -1,9 +1,48 @@
-# Work inter·modules v2
+# Work inter-modules
 
-![Project Diagram](insert_your_diagram_path_here.svg)
+<p align="center">
+  <img src="https://github.com/jmcamposdev/integralProjectIZV/assets/108521775/78863401-cce5-4a71-84b8-2c246584cd7e" >
+</p>
 
 ## Description
-The "Work inter·modules v2" project is an application developed for the assignment of lessons to teachers in the Department of Informatics and Communications at IES Zaidín-Vergeles. The application uses an architecture based on React for the frontend, Node.js with Express for the backend, and MySQL as the database.
+The "Work inter-modules" project is an application developed for the **assignment** of **lessons** to **teachers** in the **Department of Informatics** and Communications at IES Zaidín-Vergeles. 
+
+## Technologies Used
+
+<div align="center" style="display: flex;">
+
+  <!-- React -->
+  <div style="text-align: center;">
+    <img src="https://user-images.githubusercontent.com/25181517/192158954-f88b5814-d510-4564-b285-dff7d6400dad.png" alt="HTML5" width="50" />
+    <br />
+    HTML5
+  </div>
+
+  <!-- Node.js -->
+  <div style="text-align: center;">
+    <img src="https://user-images.githubusercontent.com/25181517/183898674-75a4a1b1-f960-4ea9-abcb-637170a00a75.png" alt="CSS3" width="50" />
+    <br />
+    CSS3
+  </div>
+
+  <!-- HTML5 -->
+  <div style="text-align: center;">
+    <img src="path/to/html5-logo.png" alt="HTML5 Logo" width="50" />
+    <br />
+    HTML5
+  </div>
+
+  <!-- CSS3 -->
+  <div style="text-align: center;">
+    <img src="path/to/css3-logo.png" alt="CSS3 Logo" width="50" />
+    <br />
+    CSS3
+  </div>
+
+  <!-- Add more technologies as needed -->
+
+</div>
+
 
 ## Project Structure
 
@@ -51,10 +90,24 @@ Work-intermodules-v2/
 2. MySQL installed and configured
 
 ### Steps to Start the Application
-1. Clone the repository: `git clone https://github.com/your_username/Work-intermodules-v2.git`
-2. Install dependencies in both `client` and `server` folders: `npm install`
-3. Start the development server for the frontend: `npm start` in the `client` folder
-4. Start the Node.js server for the backend: `npm start` in the `server` folder
+To clone and run this applicaion, you'll need [Git](https://git-scm.com/downloads) and [Node.js](https://nodejs.org/en/download) (which comes with [npm](https://www.npmjs.com/)) installed on you computer.
+
+Next you'll need to create the ```eduAssignment``` database created
+
+```
+# Clone this repository
+$ git clone https://github.com/jmcamposdev/integralProjectIZV.git
+
+# Go into the repository
+$ cd integralProjectIZV
+
+# Install dependencies on the Server and Client
+$ cd client && npm i
+$ cd ../server && npm i
+
+# Run the app
+$ npm start
+```
 
 ## Project Diagram
 Insert the project diagram image here.
