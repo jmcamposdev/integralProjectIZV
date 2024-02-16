@@ -1,12 +1,12 @@
 import Breadcrumb from '../../../components/Breadcrumbs/Breadcrumb'
 import DefaultLayout from '../../../layout/DefaultLayout'
-import ProfessorList from '../../../components/Tables/ProfessorList'
+import ProfessorTable from '../../../components/Tables/ProfessorTable/ProfessorTable'
 
 const ProfessorIndex = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName='Professors' />
-      <ProfessorList />
+      <ProfessorTable />
     </DefaultLayout>
   )
 }
