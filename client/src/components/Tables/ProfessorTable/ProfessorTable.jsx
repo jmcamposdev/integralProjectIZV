@@ -55,7 +55,6 @@ const ProfessorTable = () => {
       try {
         const professors = await professorService.getAllProfessors()
         setProfessors(professors)
-        console.log(professors)
         setIsLoading(false)
       } catch (error) {
         console.error('Error getting professors:', error.message)
