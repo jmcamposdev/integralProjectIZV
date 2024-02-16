@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
-import professorService from '../../services/professorService'
-import ConfirmModal from '../Modals/ConfirmModal'
-import ErrorAlert from '../Alerts/ErrorAlert'
-import useAuth from '../../hooks/useAuth'
-import FormModal from '../Modals/FormModal'
-import TableRowLoading from '../Loading/TableRowLoading'
+import professorService from '../../../services/professorService'
+import ConfirmModal from '../../Modals/ConfirmModal'
+import ErrorAlert from '../../Alerts/ErrorAlert'
+import useAuth from '../../../hooks/useAuth'
+import FormModal from '../../Modals/FormModal'
+import TableRowLoading from '../../Loading/TableRowLoading'
+import TableTemplate from '../TableTemplate'
+import professorColumns from '../ProfessorTable/ProfessorColumns'
 
-const ProfessorList = () => {
+const ProfessorTable = () => {
   const { isAdmin } = useAuth()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState(null) // Save the error message if there is one
@@ -53,6 +55,7 @@ const ProfessorList = () => {
       try {
         const professors = await professorService.getAllProfessors()
         setProfessors(professors)
+        console.log(professors)
         setIsLoading(false)
       } catch (error) {
         console.error('Error getting professors:', error.message)
@@ -95,6 +98,10 @@ const ProfessorList = () => {
       setError(error.message)
     }
     handleCloseDeleteModal()
+  }
+
+  const onDelete = (id) => {
+    setProfessorIdToDelete(id)
   }
 
   /**
@@ -227,95 +234,28 @@ const ProfessorList = () => {
 
   return (
     <>
-      {/* <!-- ===== Start of Professor Table ===== --> */}
-      <div className='rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-6'>
-        {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
-        <h4 className='mb-6 text-xl font-semibold text-black dark:text-white'>
-          Professors List
-        </h4>
-        <div className='flex flex-col'>
-          <div className={`grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 ${isAdmin ? 'sm:grid-cols-4' : 'sm:grid-cols-3'}`}>
-            <div className='p-2.5 xl:p-5'>
-              <h5 className='text-sm font-medium uppercase xsm:text-base'>
-                Name
-              </h5>
-            </div>
-            <div className='p-2.5 text-center xl:p-5'>
-              <h5 className='text-sm font-medium uppercase xsm:text-base'>
-                Seneca User
-              </h5>
-            </div>
-            <div className='p-2.5 text-center xl:p-5'>
-              <h5 className='text-sm font-medium uppercase xsm:text-base'>
-                Specialty
-              </h5>
-            </div>
-            {// Only show the actions column if the user is an admin
+      {error && <ErrorAlert message={error} clear={() => setError(null)} />}
+      {
+        isLoading
+          ? <TableRowLoading columns={professorColumns} />
+          : (
+            <>
+              <TableTemplate data={professors} columns={professorColumns} onDelete={onDelete} onEdit={handleEditProfessorButton} />
+              {// Only show the add professor button if the user is an admin
               isAdmin && (
-                <div className='p-2.5 text-center xl:p-5'>
-                  <h5 className='text-sm font-medium uppercase xsm:text-base'>
-                    Actions
-                  </h5>
-                </div>
+                <button
+                  onClick={handleShowCreateModal}
+                  className='mt-8 flex ml-auto w-max items-center justify-center gap-2.5 rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10'
+                >
+                  <span>
+                    <svg xmlns='http://www.w3.org/2000/svg' width='24px' height='24px' viewBox='0 0 24 24'><path fill='currentColor' d='M11 13H5v-2h6V5h2v6h6v2h-6v6h-2z' /></svg>
+                  </span>Add Professor
+                </button>
               )
             }
-
-          </div>
-
-        </div>
-        {isLoading
-          ? (
-            <TableRowLoading columns={isAdmin ? 4 : 3} rows={3} />
+            </>
             )
-          : professors.length <= 0
-            ? (
-              <div className='text-center p-10'>No professors yet...</div>
-              )
-            : (
-                professors.map((professor) => (
-                  <div className={`grid grid-cols-2 sm:grid-cols-${isAdmin ? '4' : '3'}`} key={professor.id}>
-                    <div className='p-2.5 xl:p-5'>
-                      <p className='text-black dark:text-white'>{professor.firstSurname} {professor.lastSurname}, {professor.name}</p>
-                    </div>
-                    <div className='p-2.5 text-center xl:p-5'>
-                      <p className='text-black dark:text-white'>{professor.senecaUser}</p>
-                    </div>
-                    <div className='p-2.5 text-center xl:p-5'>
-                      <p className='text-black dark:text-white'>{professor.specialty}</p>
-                    </div>
-                    {
-                      isAdmin && (
-                        <div className='p-2.5 text-center xl:p-5 flex align-center justify-center'>
-                          <button onClick={() => setProfessorIdToDelete(professor.id)}>
-                            <i className='icon-[material-symbols-light--delete-outline-rounded] fill-current duration-300 ease-in-out hover:text-red-500' style={{ fontSize: '27px' }} />
-                          </button>
-
-                          <button onClick={() => handleEditProfessorButton(professor)}>
-                            <i className='icon-[lucide--edit] ml-6 fill-current duration-300 ease-in-out hover:text-meta-3' style={{ fontSize: '20px' }} />
-                          </button>
-                        </div>
-                      )
-                    }
-
-                  </div>
-
-                ))
-              )}
-        {// Only show the add professor button if the user is an admin
-          isAdmin && (
-            <button
-              onClick={handleShowCreateModal}
-              className='mt-8 flex ml-auto w-max items-center justify-center gap-2.5 rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10'
-            >
-              <span>
-                <svg xmlns='http://www.w3.org/2000/svg' width='24px' height='24px' viewBox='0 0 24 24'><path fill='currentColor' d='M11 13H5v-2h6V5h2v6h6v2h-6v6h-2z' /></svg>
-              </span>Add Professor
-            </button>
-          )
-        }
-
-      </div>
-      {/* <!-- ===== End of Professor Table ===== --> */}
+      }
 
       {/* <!-- ===== Start of Delete Modal ===== --> */}
       {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={handleCloseDeleteModal} handleConfirm={handleDeleteProfessor} message='Are you sure you want to delete this professor?' />)}
@@ -381,4 +321,4 @@ const ProfessorList = () => {
   )
 }
 
-export default ProfessorList
+export default ProfessorTable
