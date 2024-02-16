@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
-import useAuth from '../../hooks/useAuth'
-import moduleService from '../../services/moduleService'
-import ErrorAlert from '../Alerts/ErrorAlert'
-import ConfirmModal from '../Modals/ConfirmModal'
-import FormModal from '../Modals/FormModal'
+import useAuth from '../../../hooks/useAuth'
+import moduleService from '../../../services/moduleService'
+import ErrorAlert from '../../Alerts/ErrorAlert'
+import ConfirmModal from '../../Modals/ConfirmModal'
+import FormModal from '../../Modals/FormModal'
+import TableTemplate from '../TableTemplate'
+import moduleColumns from './moduleColumns'
 
-const ModuleList = ({ formations }) => {
+const ModuleTable = ({ formations }) => {
   const { isAdmin } = useAuth()
   const [error, setError] = useState(null) // Save the error message
   const [modules, setModules] = useState([]) // Save the modules
@@ -189,103 +191,10 @@ const ModuleList = ({ formations }) => {
 
   return (
     <>
-      {/* <!-- ===== Start of Module Table ===== --> */}
-      <div className='rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-6'>
-        {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
-        <h4 className='mb-6 text-xl font-semibold text-black dark:text-white'>
-          Modules List
-        </h4>
-        <div className='flex flex-col'>
-          <div className={`grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 ${isAdmin ? 'sm:grid-cols-7' : 'sm:grid-cols-6'}`}>
-            <div className='p-2.5 xl:p-5'>
-              <h5 className='text-sm font-medium uppercase xsm:text-base'>
-                Denomination
-              </h5>
-            </div>
-            <div className='p-2.5 text-center xl:p-5'>
-              <h5 className='text-sm font-medium uppercase xsm:text-base'>
-                Acronym
-              </h5>
-            </div>
-            <div className='p-2.5 text-center xl:p-5'>
-              <h5 className='text-sm font-medium uppercase xsm:text-base'>
-                Course
-              </h5>
-            </div>
-            <div className='p-2.5 text-center xl:p-5'>
-              <h5 className='text-sm font-medium uppercase xsm:text-base'>
-                Hours
-              </h5>
-            </div>
-            <div className='p-2.5 text-center xl:p-5'>
-              <h5 className='text-sm font-medium uppercase xsm:text-base'>
-                Specialty
-              </h5>
-            </div>
-            <div className='p-2.5 text-center xl:p-5'>
-              <h5 className='text-sm font-medium uppercase xsm:text-base'>
-                Formation
-              </h5>
-            </div>
-            {// Only show the actions column if the user is an admin
-              isAdmin && (
-                <div className='p-2.5 text-center xl:p-5'>
-                  <h5 className='text-sm font-medium uppercase xsm:text-base'>
-                    Actions
-                  </h5>
-                </div>
-              )
-            }
+      {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
 
-          </div>
-
-        </div>
-        {modules.length <= 0
-          ? (
-            <div className='text-center p-10'>No modules yet...</div>
-            )
-          : (
-              modules.map((modules) => (
-                <div className={`grid grid-cols-2 sm:grid-cols-${isAdmin ? '7' : '6'}`} key={modules.id}>
-                  <div className='p-2.5 xl:p-5'>
-                    <p className='text-black dark:text-white'>{modules.denomination}</p>
-                  </div>
-                  <div className='p-2.5 text-center xl:p-5'>
-                    <p className='text-black dark:text-white'>{modules.acronym}</p>
-                  </div>
-                  <div className='p-2.5 text-center xl:p-5'>
-                    <p className='text-black dark:text-white'>{modules.course}</p>
-                  </div>
-                  <div className='p-2.5 text-center xl:p-5'>
-                    <p className='text-black dark:text-white'>{modules.hours}</p>
-                  </div>
-                  <div className='p-2.5 text-center xl:p-5'>
-                    <p className='text-black dark:text-white'>{modules.specialty}</p>
-                  </div>
-                  <div className='p-2.5 text-center xl:p-5'>
-                    <p className='text-black dark:text-white'>
-                      {formations.find((formation) => formation.id === modules.formationId)?.acronym}
-                    </p>
-                  </div>
-                  {
-                      isAdmin && (
-                        <div className='p-2.5 text-center xl:p-5 flex align-center justify-center'>
-                          {/* Delete Modules Modal */}
-                          <button onClick={() => setModuleIdToDelete(modules.id)}>
-                            <i className='icon-[material-symbols-light--delete-outline-rounded] fill-current duration-300 ease-in-out hover:text-red-500' style={{ fontSize: '27px' }} />
-                          </button>
-
-                          <button onClick={() => handleUpdateClick(modules)}>
-                            <i className='icon-[lucide--edit] ml-6 fill-current duration-300 ease-in-out hover:text-meta-3' style={{ fontSize: '20px' }} />
-                          </button>
-                        </div>
-                      )
-                    }
-
-                </div>
-
-              )))}
-        {// Only show the add modules button if the user is an admin
+      <TableTemplate data={modules} columns={moduleColumns(formations)} onDelete={setModuleIdToDelete} onEdit={handleUpdateClick} />
+      {// Only show the add modules button if the user is an admin
           isAdmin && (
             <button
               onClick={() => setViewCreateModal(true)}
@@ -297,9 +206,6 @@ const ModuleList = ({ formations }) => {
             </button>
           )
         }
-
-      </div>
-      {/* <!-- ===== End of Module Table ===== --> */}
 
       {/* <!-- ===== Start of Delete Modal ===== --> */}
       {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={() => (setModuleIdToDelete(null))} handleConfirm={handleDeleteModule} message='Are you sure you want to delete this module?' />)}
@@ -379,4 +285,4 @@ const ModuleList = ({ formations }) => {
   )
 }
 
-export default ModuleList
+export default ModuleTable
