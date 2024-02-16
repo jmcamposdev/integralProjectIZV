@@ -6,7 +6,7 @@ import useAuth from '../../../hooks/useAuth'
 import FormModal from '../../Modals/FormModal'
 import TableRowLoading from '../../Loading/TableRowLoading'
 import TableTemplate from '../TableTemplate'
-import professorColumns from '../ProfessorTable/ProfessorColumns'
+import professorColumns from '../ProfessorTable/professorColumns'
 
 const ProfessorTable = () => {
   const { isAdmin } = useAuth()
@@ -233,10 +233,10 @@ const ProfessorTable = () => {
 
   return (
     <>
-      {error && <ErrorAlert message={error} clear={() => setError(null)} />}
+      {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
       {
         isLoading
-          ? <TableRowLoading columns={professorColumns} />
+          ? <TableRowLoading columns={professorColumns.length} />
           : (
             <>
               <TableTemplate data={professors} columns={professorColumns} onDelete={onDelete} onEdit={handleEditProfessorButton} />
@@ -254,7 +254,7 @@ const ProfessorTable = () => {
             }
             </>
             )
-      }
+        }
 
       {/* <!-- ===== Start of Delete Modal ===== --> */}
       {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={handleCloseDeleteModal} handleConfirm={handleDeleteProfessor} message='Are you sure you want to delete this professor?' />)}
