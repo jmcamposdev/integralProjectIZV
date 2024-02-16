@@ -10,13 +10,13 @@ import { useState } from 'react'
 import useAuth from '../../hooks/useAuth'
 
 const TableTemplate = ({ data, columns, onDelete, onEdit }) => {
-  const { isAdmin } = useAuth()
+  const { isAdmin } = useAuth() // Get the isAdmin value from the useAuth hook
 
   // Add the Action column if the user is an admin
   if (isAdmin) {
     columns.push({
-      header: 'Actions',
-      cell: (row) => (
+      header: 'Actions', // Add the Actions header
+      cell: (row) => ( // Add the cell function
         <div className='flex space-x-4'>
           <button
             className='flex justify-center items-center w-8 h-8 rounded-md bg-primary hover:bg-opacity-70' title='Edit'
@@ -35,22 +35,23 @@ const TableTemplate = ({ data, columns, onDelete, onEdit }) => {
     })
   }
 
-  const [sorting, setSorting] = useState([])
-  const [globalFilter, setGlobalFilter] = useState('')
+  const [sorting, setSorting] = useState([]) // This will be used to store the sorting state
+  const [globalFilter, setGlobalFilter] = useState('') // This will be used to store the global filter state
 
+  // Create the table using the useReactTable hook
   const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    state: {
+    data, // The data to be displayed
+    columns, // The columns to be displayed
+    getCoreRowModel: getCoreRowModel(), // The core row model
+    getPaginationRowModel: getPaginationRowModel(), // This will enable the pagination
+    getSortedRowModel: getSortedRowModel(), // This will enable the sorting
+    getFilteredRowModel: getFilteredRowModel(), // This will enable the filtering
+    state: { // The initial state of the table
       sorting,
       globalFilter
     },
-    onSortingChange: setSorting,
-    onGlobalFilterChange: setGlobalFilter
+    onSortingChange: setSorting, // Set the sorting state
+    onGlobalFilterChange: setGlobalFilter // Set the global filter state
   })
 
   return (
