@@ -12,7 +12,10 @@ import useAuth from '../../hooks/useAuth'
 const TableTemplate = ({ data, columns, onDelete, onEdit }) => {
   const { isAdmin } = useAuth() // Get the isAdmin value from the useAuth hook
 
-  // Add the Action column if the user is an admin and if the action column is not already added
+  // Remove the Action column if exists to prevent unexpected actions
+  columns = columns.filter(column => column.header !== 'Actions')
+
+  // Add the Action column if the user is an admin and if the action column is not already added to prevent duplication
   if (isAdmin && !columns.some(column => column.header === 'Actions')) {
     columns.push({
       header: 'Actions', // Add the Actions header
