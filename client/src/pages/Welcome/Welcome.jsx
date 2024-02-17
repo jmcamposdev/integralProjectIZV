@@ -1,6 +1,7 @@
 import useSignOut from 'react-auth-kit/hooks/useSignOut'
 import useAuth from '../../hooks/useAuth'
 import HeaderMain from '../../components/HeaderMain/HeaderMain'
+import Hero from '../../components/Hero/Hero'
 
 const Welcome = () => {
   const { name, isLogged } = useAuth()
@@ -12,6 +13,7 @@ const Welcome = () => {
   }
   return (
     <>
+      <Hero />
       <HeaderMain />
       <div className='px-4 py-4'>
         <div className='text-center'>
