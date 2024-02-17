@@ -21,18 +21,29 @@ const TableTemplate = ({ data, columns, onDelete, onEdit }) => {
       header: 'Actions', // Add the Actions header
       cell: (row) => ( // Add the cell function
         <div className='flex space-x-4'>
-          <button
-            className='flex justify-center items-center w-8 h-8 rounded-md bg-primary hover:bg-opacity-70' title='Edit'
-            onClick={() => onEdit(row.cell.row.original)}
-          >
-            <i className='icon-[material-symbols-light--edit] fill-current duration-300 ease-in-out  text-white' />
-          </button>
-          <button
-            className='flex justify-center items-center w-8 h-8 rounded-md bg-danger hover:bg-opacity-70' title='Delete'
-            onClick={() => onDelete(row.cell.row.original.id)}
-          >
-            <i className='icon-[material-symbols-light--delete] fill-current duration-300 ease-in-out text-white' />
-          </button>
+          {
+            // Only show the edit button if the onEdit function is provided
+            onEdit && (
+              <button
+                className='flex justify-center items-center w-8 h-8 rounded-md bg-primary hover:bg-opacity-70' title='Edit'
+                onClick={() => onEdit(row.cell.row.original)}
+              >
+                <i className='icon-[material-symbols-light--edit] fill-current duration-300 ease-in-out  text-white' />
+              </button>
+            )
+          }
+
+          {
+            // Only show the delete button if the onDelete function is provided
+            onDelete && (
+              <button
+                className='flex justify-center items-center w-8 h-8 rounded-md bg-danger hover:bg-opacity-70' title='Delete'
+                onClick={() => onDelete(row.cell.row.original.id)}
+              >
+                <i className='icon-[material-symbols-light--delete] fill-current duration-300 ease-in-out text-white' />
+              </button>
+            )
+          }
         </div>
       )
     })
