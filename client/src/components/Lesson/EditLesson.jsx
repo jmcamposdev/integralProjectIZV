@@ -70,6 +70,16 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
     setCurrentHour(updatedLessons.reduce((acc, lesson) => acc + lesson.hours, 0))
   }
 
+  const handleDeleteAllLessons = async () => {
+    const lessonsToDelete = lessons.map((lesson) => lesson.id)
+    if (lessonsToDelete.length > 0) {
+      lessonsToDelete.forEach(async (lessonId) => {
+        lessonService.deleteLesson(lessonId)
+      })
+    }
+    window.location.reload()
+  }
+
   /**
    * Add a new lesson to the list of lessons
    * Only add a new lesson if the last lesson has a professor and hours
@@ -234,12 +244,21 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
 
       {/* Start of Save Lessons Button */}
       <div className='flex justify-center items-center mt-6'>
-        <button
-          className={`inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 duration-300 ease-in-out ${currentHour !== maxHour ? 'opacity-50 cursor-not-allowed' : ''}`}
-          onClick={saveChanges}
-          disabled={currentHour !== maxHour}
-        >Save Lessons
-        </button>
+        <div>
+          <button
+            className='inline-flex items-center justify-center rounded-md bg-red-500 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 duration-300 ease-in-out'
+            onClick={handleDeleteAllLessons}
+          >Delete All
+          </button>
+        </div>
+        <div className='flex-1 flex justify-center items-center'>
+          <button
+            className={`inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 duration-300 ease-in-out ${currentHour !== maxHour ? 'opacity-50 cursor-not-allowed' : ''}`}
+            onClick={saveChanges}
+            disabled={currentHour !== maxHour}
+          >Save Lessons
+          </button>
+        </div>
       </div>
       {/* End of Save Lessons Button */}
     </div>
