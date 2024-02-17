@@ -111,13 +111,13 @@ export const deleteFormation = async (req, res) => {
   try {
     const { id } = req.params // Destructuring the id from the request parameters
 
-    if (await formationHasGroups(id)) {
-      return res.status(400).json({ message: 'The formation has groups, please delete them first' })
-    }
+    // if (await formationHasGroups(id)) {
+    //   return res.status(400).json({ message: 'The formation has groups, please delete them first' })
+    // }
 
-    if (await formationHasModules(id)) {
-      return res.status(400).json({ message: 'The formation has modules, please delete them first' })
-    }
+    // if (await formationHasModules(id)) {
+    //   return res.status(400).json({ message: 'The formation has modules, please delete them first' })
+    // }
 
     // Delete the formation
     const deletedFormationCount = await Formation.destroy({ where: { id } })
