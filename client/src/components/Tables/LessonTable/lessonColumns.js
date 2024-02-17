@@ -17,7 +17,6 @@ const lessonColumns = (groups, modules, professors) => {
       accessorKey: 'hours'
     }
   ]
-  console.log(columns)
   return columns
 }
 
