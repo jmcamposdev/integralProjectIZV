@@ -257,7 +257,7 @@ const ProfessorTable = () => {
         }
 
       {/* <!-- ===== Start of Delete Modal ===== --> */}
-      {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={handleCloseDeleteModal} handleConfirm={handleDeleteProfessor} message='Are you sure you want to delete this professor?' />)}
+      {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={handleCloseDeleteModal} handleConfirm={handleDeleteProfessor} title='Delete Professor' message='Are you sure you want to delete this professor?' />)}
 
       {/* <!-- ===== Start of Add Professor Modal ===== --> */}
       {isAdmin && (
