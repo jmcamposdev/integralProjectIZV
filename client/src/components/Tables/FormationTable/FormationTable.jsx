@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
-import useAuth from '../../hooks/useAuth'
-import formationService from '../../services/formationService'
-import ErrorAlert from '../Alerts/ErrorAlert'
-import ConfirmModal from '../Modals/ConfirmModal'
-import FormModal from '../Modals/FormModal'
-import TableRowLoading from '../Loading/TableRowLoading'
+import useAuth from '../../../hooks/useAuth'
+import formationService from '../../../services/formationService'
+import ErrorAlert from '../../Alerts/ErrorAlert'
+import ConfirmModal from '../../Modals/ConfirmModal'
+import FormModal from '../../Modals/FormModal'
+import TableRowLoading from '../../Loading/TableRowLoading'
+import TableTemplate from '../TableTemplate'
+import formationColumns from './formationColumns'
 
-const FormationList = () => {
+const FormationTable = () => {
   const { isAdmin } = useAuth() // Check if the user is an admin
   const [isLoading, setIsLoading] = useState(true) // Check if the data is loading
   const [error, setError] = useState(null) // Save the error message
@@ -71,6 +73,10 @@ const FormationList = () => {
    *  Delete Formation Logic
    * ------------------------------------------------------------------------
    */
+
+  const onDelete = (id) => {
+    setFormationIdToDelete(id)
+  }
 
   /**
    * This runs when the formationIdToDelete changes
@@ -181,87 +187,29 @@ const FormationList = () => {
 
   return (
     <>
-      {/* <!-- ===== Start of Formation Table ===== --> */}
-      <div className='rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-6'>
-        {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
-        <h4 className='mb-6 text-xl font-semibold text-black dark:text-white'>
-          Formations List
-        </h4>
-        <div className='flex flex-col'>
-          <div className={`grid grid-cols-2 rounded-sm bg-gray-2 dark:bg-meta-4 ${isAdmin ? 'sm:grid-cols-3' : 'sm:grid-cols-2'}`}>
-            <div className='p-2.5 xl:p-5'>
-              <h5 className='text-sm font-medium uppercase xsm:text-base'>
-                Denomination
-              </h5>
-            </div>
-            <div className='p-2.5 text-center xl:p-5'>
-              <h5 className='text-sm font-medium uppercase xsm:text-base'>
-                Acronym
-              </h5>
-            </div>
-            {// Only show the actions column if the user is an admin
-              isAdmin && (
-                <div className='p-2.5 text-center xl:p-5'>
-                  <h5 className='text-sm font-medium uppercase xsm:text-base'>
-                    Actions
-                  </h5>
-                </div>
-              )
-            }
-
-          </div>
-
-        </div>
-        {isLoading
-          ? (
-            <TableRowLoading columns={isAdmin ? 3 : 2} rows={5} />
+      {error && <ErrorAlert message={error} onClose={() => setError(null)} />} {/* Show the error message if
+      there's an error */}
+      {
+        isLoading
+          ? <TableRowLoading columns={formationColumns.length} />
+          : (
+            <>
+              <TableTemplate data={formations} columns={formationColumns} onDelete={onDelete} onEdit={handleUpdateClick} />
+              {// Only show the add formation button if the user is an admin
+                isAdmin && (
+                  <button
+                    onClick={() => setViewCreateModal(true)}
+                    className='mt-8 flex ml-auto w-max items-center justify-center gap-2.5 rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10'
+                  >
+                    <span>
+                      <svg xmlns='http://www.w3.org/2000/svg' width='24px' height='24px' viewBox='0 0 24 24'><path fill='currentColor' d='M11 13H5v-2h6V5h2v6h6v2h-6v6h-2z' /></svg>
+                    </span>Add Formation
+                  </button>
+                )
+              }
+            </>
             )
-          : formations.length <= 0
-            ? (
-              <div className='text-center p-10'>No formations yet...</div>
-              )
-            : (
-                formations.map((formation) => (
-                  <div className={`grid grid-cols-2 sm:grid-cols-${isAdmin ? '3' : '2'}`} key={formation.id}>
-                    <div className='p-2.5 xl:p-5'>
-                      <p className='text-black dark:text-white'>{formation.denomination}</p>
-                    </div>
-                    <div className='p-2.5 text-center xl:p-5'>
-                      <p className='text-black dark:text-white'>{formation.acronym}</p>
-                    </div>
-                    {
-                      isAdmin && (
-                        <div className='p-2.5 text-center xl:p-5 flex align-center justify-center'>
-                          {/* Delete Formation Modal */}
-                          <button onClick={() => setFormationIdToDelete(formation.id)}>
-                            <i className='icon-[material-symbols-light--delete-outline-rounded] fill-current duration-300 ease-in-out hover:text-red-500' style={{ fontSize: '27px' }} />
-                          </button>
-
-                          <button onClick={() => handleUpdateClick(formation)}>
-                            <i className='icon-[lucide--edit] ml-6 fill-current duration-300 ease-in-out hover:text-meta-3' style={{ fontSize: '20px' }} />
-                          </button>
-                        </div>
-                      )
-                    }
-
-                  </div>
-
-                )))}
-        {// Only show the add formation button if the user is an admin
-          isAdmin && (
-            <button
-              onClick={() => setViewCreateModal(true)}
-              className='mt-8 flex ml-auto w-max items-center justify-center gap-2.5 rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10'
-            >
-              <span>
-                <svg xmlns='http://www.w3.org/2000/svg' width='24px' height='24px' viewBox='0 0 24 24'><path fill='currentColor' d='M11 13H5v-2h6V5h2v6h6v2h-6v6h-2z' /></svg>
-              </span>Add Formation
-            </button>
-          )
         }
-
-      </div>
-      {/* <!-- ===== End of Formation Table ===== --> */}
 
       {/* <!-- ===== Start of Delete Modal ===== --> */}
       {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={() => (setFormationIdToDelete(null))} handleConfirm={handleDeleteFormation} message='Are you sure you want to delete this formation?' />)}
@@ -296,4 +244,4 @@ const FormationList = () => {
   )
 }
 
-export default FormationList
+export default FormationTable

@@ -51,7 +51,8 @@ module.exports = {
         'meta-9': '#E5E7EB',
         success: '#219653',
         danger: '#D34053',
-        warning: '#FFA70B'
+        warning: '#FFA70B',
+        ...defaultTheme.colors
       },
       fontSize: {
         'title-xxl': ['44px', '55px'],

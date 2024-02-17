@@ -7,7 +7,7 @@ import professorService from '../../../services/professorService'
 import groupService from '../../../services/groupService'
 import ErrorAlert from '../../../components/Alerts/ErrorAlert'
 import TableRowLoading from '../../../components/Loading/TableRowLoading'
-import LessonList from '../../../components/Tables/LessonList'
+import LessonTable from '../../../components/Tables/LessonTable/LessonTable'
 
 const LessonIndex = () => {
   const [error, setError] = useState(null) // Save the error message
@@ -99,7 +99,7 @@ const LessonIndex = () => {
             </div>
             )
           : (
-            <LessonList lessons={lessons} professors={professors} modules={modules} groups={groups} />
+            <LessonTable lessons={lessons} professors={professors} modules={modules} groups={groups} />
             )
 
       }

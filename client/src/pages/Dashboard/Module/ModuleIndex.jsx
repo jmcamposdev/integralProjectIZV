@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import Breadcrumb from '../../../components/Breadcrumbs/Breadcrumb'
-import ModuleList from '../../../components/Tables/ModuleList'
 import DefaultLayout from '../../../layout/DefaultLayout'
 import formationService from '../../../services/formationService'
 import ErrorAlert from '../../../components/Alerts/ErrorAlert'
 import TableRowLoading from '../../../components/Loading/TableRowLoading'
+import ModuleTable from '../../../components/Tables/ModuleTable/ModuleTable'
 
 const ModuleIndex = () => {
   const [error, setError] = useState(null) // Save the error message
@@ -52,7 +52,7 @@ const ModuleIndex = () => {
             </div>
             )
           : (
-            <ModuleList formations={formations} />
+            <ModuleTable formations={formations} />
             )
         }
     </DefaultLayout>

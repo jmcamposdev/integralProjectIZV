@@ -73,6 +73,11 @@ export const professorExists = async (senecaUser) => {
   }
 }
 
+/**
+ * Validate if the professor has lessons
+ * @param {Number} professorId The id of the professor
+ * @returns {boolean} true if the professor has lessons
+ */
 export const professorHasLessons = async (professorId) => {
   try {
     const lessons = await Lesson.findAll({ where: { professorId } })

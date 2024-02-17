@@ -3,8 +3,8 @@ import Breadcrumb from '../../../components/Breadcrumbs/Breadcrumb'
 import DefaultLayout from '../../../layout/DefaultLayout'
 import formationService from '../../../services/formationService'
 import ErrorAlert from '../../../components/Alerts/ErrorAlert'
-import GroupList from '../../../components/Tables/GroupList'
 import TableRowLoading from '../../../components/Loading/TableRowLoading'
+import GroupTable from '../../../components/Tables/GroupTable/GroupTable'
 
 const GroupIndex = () => {
   const [error, setError] = useState(null) // Save the error message
@@ -54,7 +54,7 @@ const GroupIndex = () => {
               </div>
               )
             : (
-              <GroupList formations={formations} />
+              <GroupTable formations={formations} />
               )
         }
     </DefaultLayout>

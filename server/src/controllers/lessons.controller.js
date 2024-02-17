@@ -150,7 +150,7 @@ export const deleteLesson = (req, res) => {
         return res.status(404).json({ message: 'Lesson not found' })
       }
       // Send a 204 status code
-      res.status(204).json()
+      res.json({ message: 'Lesson deleted successfully' })
     })
     .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
 }

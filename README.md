@@ -1,14 +1,106 @@
-# Work inter·modules v2
+# Work inter-modules
 
-![Project Diagram](insert_your_diagram_path_here.svg)
+<p align="center">
+  Here will be a gif of the finish project
+</p>
 
-## Description
-The "Work inter·modules v2" project is an application developed for the assignment of lessons to teachers in the Department of Informatics and Communications at IES Zaidín-Vergeles. The application uses an architecture based on React for the frontend, Node.js with Express for the backend, and MySQL as the database.
+
+## Project Link 🌐
+Access to the website here -> put the URL
+
+## Table of Contents
+* [General Info](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Project Structure](#project-structure)
+* [RESTful API](#restful-api)
+* [Key Features](#key-features)
+
+## General Info
+The Inter-module Project was carried out during the last 2 months of class before the FCT.
+
+The project consists of the **Lesson Assignment to Professors of the Department**. It will also implement roles and we will have 3 types
+* Administrator: Can perform any operation on the tables.
+* Registered User: Can consult all the data without making modifications.
+* Unregistered User: Can consult the group structure of the current course.
+
+### Entity Relationship Diagram
+![Integral Project IZV Diagram](https://github.com/jmcamposdev/integralProjectIZV/assets/108521775/ed6a807e-af6e-4958-8a23-ecc9de39678a)
+
+## Technologies
+
+Project is created with:
+<table>
+  <tr>
+    <td align="center">
+      <img width="441" height="1">
+      <p><strong>FRONTEND</strong></p>
+    </td>
+    <td align="center">
+      <img width="441" height="1">
+      <p><strong>BACKEND</strong></p>
+    </td>
+    <td align="center">
+      <img width="441" height="1">
+      <p><strong>TOOLS</strong></p>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img width="50" src="https://user-images.githubusercontent.com/25181517/192158954-f88b5814-d510-4564-b285-dff7d6400dad.png" alt="HTML" title="HTML"/>
+      <img width="50" src="https://user-images.githubusercontent.com/25181517/183898674-75a4a1b1-f960-4ea9-abcb-637170a00a75.png" alt="CSS" title="CSS"/>
+      <img width="50" src="https://user-images.githubusercontent.com/25181517/202896760-337261ed-ee92-4979-84c4-d4b829c7355d.png" alt="Tailwind CSS" title="Tailwind CSS"/>
+      <img width="50" src="https://user-images.githubusercontent.com/25181517/117447155-6a868a00-af3d-11eb-9cfe-245df15c9f3f.png" alt="JavaScript" title="JavaScript"/>
+      <img width="50" src="https://user-images.githubusercontent.com/25181517/183897015-94a058a6-b86e-4e42-a37f-bf92061753e5.png" alt="React" title="React"/>
+      <img width="50" src="https://github.com/marwin1991/profile-technology-icons/assets/62091613/b40892ef-efb8-4b0e-a6b5-d1cfc2f3fc35" alt="Vite" title="Vite"/>
+      <img width="50" src="https://github.com/marwin1991/profile-technology-icons/assets/136815194/ecd443af-ebba-4af8-a46e-1bf64d863b5b" alt="Babel" title="Babel"/>
+    </td>
+    <td align="center">
+      <img width="50" src="https://user-images.githubusercontent.com/25181517/183568594-85e280a7-0d7e-4d1a-9028-c8c2209e073c.png" alt="Node.js" title="Node.js"/>
+      <img width="50" src="https://user-images.githubusercontent.com/25181517/183859966-a3462d8d-1bc7-4880-b353-e2cbed900ed6.png" alt="Express" title="Express"/>
+      <img width="50" src="https://user-images.githubusercontent.com/25181517/183896128-ec99105a-ec1a-4d85-b08b-1aa1620b2046.png" alt="MySQL" title="MySQL"/>
+    </td>
+    <td align="center">
+      <img width="50" src="https://user-images.githubusercontent.com/25181517/192107858-fe19f043-c502-4009-8c47-476fc89718ad.png" alt="REST" title="REST"/>
+      <img width="50" src="https://user-images.githubusercontent.com/25181517/192108372-f71d70ac-7ae6-4c0d-8395-51d8870c2ef0.png" alt="Git" title="Git"/>
+      <img width="50" src="https://user-images.githubusercontent.com/25181517/192108374-8da61ba1-99ec-41d7-80b8-fb2f7c0a4948.png" alt="GitHub" title="GitHub"/>
+      <img width="50" src="https://user-images.githubusercontent.com/25181517/121401671-49102800-c959-11eb-9f6f-74d49a5e1774.png" alt="npm" title="npm"/>
+      <img width="50" src="https://user-images.githubusercontent.com/25181517/192109061-e138ca71-337c-4019-8d42-4792fdaa7128.png" alt="Postman" title="Postman"/>
+      <img width="50" src="https://user-images.githubusercontent.com/25181517/117207330-263ba280-adf4-11eb-9b97-0ac5b40bc3be.png" alt="Docker" title="Docker"/>
+    </td>
+  </tr>
+</table>
+
+## Setup
+
+### Prerequisites
+1. Node.js and npm installed
+2. MySQL installed and configured
+
+### Steps to Start the Application
+To clone and run this applicaion, you'll need [Git](https://git-scm.com/downloads) and [Node.js](https://nodejs.org/en/download) (which comes with [npm](https://www.npmjs.com/)) installed on you computer.
+
+Next you'll need to create the ```eduAssignment``` database created
+
+```
+# Clone this repository
+$ git clone https://github.com/jmcamposdev/integralProjectIZV.git
+
+# Go into the repository
+$ cd integralProjectIZV
+
+# Install dependencies on the Server and Client
+$ cd client && npm i
+$ cd ../server && npm i
+
+# Run the app
+$ npm start
+```
 
 ## Project Structure
 
 ```bash
-Work-intermodules-v2/
+integralProjectIZV/
 │
 ├── client/
 │ ├── public/
@@ -16,8 +108,8 @@ Work-intermodules-v2/
 │ ├── src/
 │ │ ├── components/
 │ │ │ └── ... (React components)
-│ │ ├── views/
-│ │ │ └── ... (React views)
+│ │ ├── pages/
+│ │ │ └── ... (React pages)
 │ │ ├── App.js
 │ │ └── index.js
 │ │
@@ -44,20 +136,115 @@ Work-intermodules-v2/
 └── ...
 ```
 
-## Usage Instructions
+## RESTful API
+Welcome to the Integral Project RESTful API. This API provides access to the management of all available resources.
 
-### Prerequisites
-1. Node.js and npm installed
-2. MySQL installed and configured
+### Base URL 
+The API can be accessed through the following base URL:
+[https://dominio.com/api/v1](https://dominio.com/api/v1)
 
-### Steps to Start the Application
-1. Clone the repository: `git clone https://github.com/your_username/Work-intermodules-v2.git`
-2. Install dependencies in both `client` and `server` folders: `npm install`
-3. Start the development server for the frontend: `npm start` in the `client` folder
-4. Start the Node.js server for the backend: `npm start` in the `server` folder
+### Authentication
 
-## Project Diagram
-Insert the project diagram image here.
+To access certain resources, authentication is required. Be sure to include the `x-access-token` header with a valid token in the relevant requests.
+
+### Endpoints
+
+#### Auth 
+- `POST /auth/signup`: Register a new user. Returns a `JSON` object with the new user's data. Requires a `JSON` object with the user's data.
+- `POST /auth/signin`: Sign in a user. Returns a `JSON` object with the user's data and a token. Requires a `JSON` object with the user's data.
+
+#### User
+- `GET /users`: Get all users. Returns a `JSON` array of all users. `x-access-token` header required.
+- `GET /users/:id`: Get a user by ID. Returns a `JSON` object with the user's data. `x-access-token` header required.
+- `POST /users`: Create a new user. Returns a `JSON` object with the new user's data. Requires a `JSON` object with the user's data. `x-access-token` header required.
+- `PUT /users/:id`: Update a user by ID. Returns a `JSON` object with the updated user's data. Requires a `JSON` object with the user's data. `x-access-token` header required.
+- `DELETE /users/:id`: Delete a user by ID. Returns a `JSON` object with the deleted user's data. `x-access-token` header required.
+
+
+#### Professor
+- `GET /professors`: Get all professors. Returns a `JSON` array of all professors.
+- `GET /professors/:id`: Get a professor by ID. Returns a `JSON` object with the professor's data.
+- `POST /professors`: Create a new professor. Returns a `JSON` object with the new professor's data. Requires a `JSON` object with the professor's data. `x-access-token` header required.
+- `PUT /professors/:id`: Update a professor by ID. Returns a `JSON` object with the updated professor's data. Requires a `JSON` object with the professor's data. `x-access-token` header required.
+- `DELETE /professors/:id`: Delete a professor by ID. Returns a `JSON` object with the deleted professor's data. `x-access-token` header required.
+- `GET /professors/:id/lessons`: Get all lessons assigned to a professor by ID. Returns a `JSON` array of all lessons. 
+
+#### Formation
+- `GET /formations`: Get all formations. Returns a `JSON` array of all formations.
+- `GET /formations/:id`: Get a formation by ID. Returns a `JSON` object with the formation's data.
+- `POST /formations`: Create a new formation. Returns a `JSON` object with the new formation's data. Requires a `JSON` object with the formation's data. `x-access-token` header required.
+- `PUT /formations/:id`: Update a formation by ID. Returns a `JSON` object with the updated formation's data. Requires a `JSON` object with the formation's data. `x-access-token` header required.
+- `DELETE /formations/:id`: Delete a formation by ID. Returns a `JSON` object with the deleted formation's data. `x-access-token` header required.
+- `GET /formations/:id/groups`: Get all groups of a formation by ID. Returns a `JSON` array of all groups.
+- `GET /formations/:id/modules`: Get all modules of a formation by ID. Returns a `JSON` array of all modules.
+
+#### Module
+- `GET /modules`: Get all modules. Returns a `JSON` array of all modules.
+- `GET /modules/:id`: Get a module by ID. Returns a `JSON` object with the module's data.
+- `POST /modules`: Create a new module. Returns a `JSON` object with the new module's data. Requires a `JSON` object with the module's data. `x-access-token` header required.
+- `PUT /modules/:id`: Update a module by ID. Returns a `JSON` object with the updated module's data. Requires a `JSON` object with the module's data. `x-access-token` header required.
+- `DELETE /modules/:id`: Delete a module by ID. Returns a `JSON` object with the deleted module's data. `x-access-token` header required.
+
+#### Group
+- `GET /groups`: Get all groups. Returns a `JSON` array of all groups.
+- `GET /groups/:id`: Get a group by ID. Returns a `JSON` object with the group's data.
+- `POST /groups`: Create a new group. Returns a `JSON` object with the new group's data. Requires a `JSON` object with the group's data. `x-access-token` header required.
+- `PUT /groups/:id`: Update a group by ID. Returns a `JSON` object with the updated group's data. Requires a `JSON` object with the group's data. `x-access-token` header required.
+- `DELETE /groups/:id`: Delete a group by ID. Returns a `JSON` object with the deleted group's data. `x-access-token` header required.
+
+#### Lesson
+- `GET /lessons`: Get all lessons. Returns a `JSON` array of all lessons.
+- `GET /lessons/:id`: Get a lesson by ID. Returns a `JSON` object with the lesson's data.
+- `POST /lessons`: Create a new lesson. Returns a `JSON` object with the new lesson's data. Requires a `JSON` object with the lesson's data. `x-access-token` header required.
+- `PUT /lessons/:id`: Update a lesson by ID. Returns a `JSON` object with the updated lesson's data. Requires a `JSON` object with the lesson's data. `x-access-token` header required.
+- `DELETE /lessons/:id`: Delete a lesson by ID. Returns a `JSON` object with the deleted lesson's data. `x-access-token` header required.
+
+### Example
+```bash
+# Request
+GET /professors/
+
+# Response
+[
+  {
+    "id": 1,
+    "senecaUser": "josemariacampos",
+    "name": "José María",
+    "firstSurname": "Campos",
+    "lastSurname": "Trujillo",
+    "specialty": "FP",
+  },
+  {
+    "id": 2,
+    "senecaUser": "carloshernandez",
+    "name": "Carlos",
+    "firstSurname": "Hernández",
+    "lastSurname": "Palma",
+    "specialty": "Secundary",
+  },
+]
+
+# Request
+POST /professors/
+Headers: x-access-token: <token>
+{
+  "seneceUser": "davidluque",
+  "name": "David",
+  "firstSurname": "Luque",
+  "lastSurname": "Vegas",
+  "specialty": "FP"
+}
+
+# Response - 201 Created
+{
+  "id": 3,
+  "senecaUser": "davidluque",
+  "name": "David",
+  "firstSurname": "Luque",
+  "lastSurname": "Vegas",
+  "specialty": "FP"
+}
+```
 
 ## Key Features
 - Management of five tables: Professor, Formation, Module, Group, Lesson.
@@ -82,7 +269,13 @@ Insert the project diagram image here.
 This project is under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Authors
-Your Name - [Your GitHub Profile](https://github.com/your_username)
+Campos Trujillo, José María - [jmcamposdev](https://github.com/jmcamposdev)
+
+Carlos Hernandez Palma - [carloshpdev](https://github.com/carloshpdev)
+
+Luque Vegas, David - [Daviiid999](https://github.com/Daviiid999)
+
+Capdevila Rodríguez, Víctor - [vilacprd](https://github.com/vilacprd)
 
 ## Acknowledgments
 We appreciate the collaboration of IES Zaidín-Vergeles in this project.
