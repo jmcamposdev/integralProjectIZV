@@ -31,11 +31,11 @@ export const Formation = sequelize.define('formations', {
 })
 
 // Relation 1:N between Formation and Group
-Formation.hasMany(Group, { foreignKey: 'formationId', sourceKey: 'id' })
+Formation.hasMany(Group, { foreignKey: 'formationId', sourceKey: 'id', onDelete: 'CASCADE' })
 Group.belongsTo(Formation, { foreignKey: 'formationId', targetId: 'id' })
 
 // Relation 1:N between Formation and Module
-Formation.hasMany(Module, { foreignKey: 'formationId', sourceKey: 'id' })
+Formation.hasMany(Module, { foreignKey: 'formationId', sourceKey: 'id', onDelete: 'CASCADE' })
 Module.belongsTo(Formation, { foreignKey: 'formationId', targetId: 'id' })
 
 /** ------------------------------------------------------

@@ -39,5 +39,5 @@ export const Group = sequelize.define('groups', {
 })
 
 // Relation 1:N between Groups and Lessons
-Group.hasMany(Lesson, { foreignKey: { name: 'groupId', allowNull: false }, sourceKey: 'id' })
+Group.hasMany(Lesson, { foreignKey: { name: 'groupId', allowNull: false }, sourceKey: 'id', onDelete: 'CASCADE' })
 Lesson.belongsTo(Group, { foreignKey: { name: 'groupId', allowNull: false }, targetId: 'id' })
