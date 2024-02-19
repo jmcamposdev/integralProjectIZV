@@ -194,6 +194,11 @@ const ProfessorTable = () => {
       delete professorInputs.specialty
     }
 
+    // If the senecaUser is the same, remove it from the inputs
+    if (professorInputs.senecaUser === professors.find((prof) => prof.id === professorInputs.id).senecaUser) {
+      delete professorInputs.senecaUser
+    }
+
     try {
       const professor = await professorService.updateProfessor(professorInputs)
       const newProfessorsList = professors.map((prof) => {
