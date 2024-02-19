@@ -1,5 +1,4 @@
-import { Sequelize } from 'sequelize'
-import { Professor, professorExists, professorFieldsValidation, professorHasLessons } from '../models/Professor.js'
+import { Professor, professorExists, professorFieldsValidation, professorHasLessons, professorValidateSomeFields } from '../models/Professor.js'
 import { Lesson } from '../models/Lesson.js'
 
 /**
@@ -94,19 +93,26 @@ export const createProfessor = async (req, res) => {
   }
 }
 
+/**
+ * Update a professor in database by id
+ * - If the professor exists, update it and send it in the response
+ * - If the professor doesn't exist, send a 404 status code and a message
+ * - If the request body is empty or doesn't have the required fields, send a 400 status code and a message
+ * @param {Object} req The request object from Express
+ * @param {Object} res The response object from Express
+ * @returns
+ */
 export const updateProfessor = async (req, res) => {
   const { id } = req.params
 
   try {
-    // Validate that there isn't a professor with the same senecaUser
-    const existingProfessor = await Professor.findOne({
-      where: {
-        senecaUser: req.body.senecaUser,
-        id: { [Sequelize.Op.ne]: req.body.id }
-      }
-    })
+    // Validate all the fields
+    if (!professorValidateSomeFields(req.body)) {
+      return res.status(400).json({ message: 'All fields are required and not empty' })
+    }
 
-    if (existingProfessor) {
+    // If is defined the senecaUser, validate that there's no other professor with the same senecaUser
+    if (req.body.senecaUser && await professorExists(req.body.senecaUser)) {
       return res.status(400).json({ message: 'Already exists a professor with that senecaUser' })
     }
 
@@ -148,7 +154,7 @@ export const deleteProfessor = async (req, res) => {
 
   // Validate if the professor has assigned lessons before deleting it
   if (await professorHasLessons(id)) {
-    return res.status(400).json({ message: 'Cannot delete professor with assigned lessons, delete the lessons first' })
+    return res.status(400).json({ message: 'Cannot delete professor with assigned lessons, delete the lessons first or reassign the lessons' })
   }
 
   try {
