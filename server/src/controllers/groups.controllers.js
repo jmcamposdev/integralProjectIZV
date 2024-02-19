@@ -1,4 +1,4 @@
-import { Group } from '../models/Group.js'
+import { Group, groupFieldsValidation } from '../models/Group.js'
 
 /**
  * Get all groups from database
@@ -7,11 +7,14 @@ import { Group } from '../models/Group.js'
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const getGroups = (req, res) => {
+export const getGroups = async (req, res) => {
   // Get all groups from database
-  Group.findAll()
-    .then(groups => res.json(groups)) // Send the groups in the response as JSON
-    .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
+  try {
+    const groups = await Group.findAll()
+    res.json(groups)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
 }
 
 /**
@@ -22,18 +25,23 @@ export const getGroups = (req, res) => {
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const getGroup = (req, res) => {
+export const getGroup = async (req, res) => {
   const { id } = req.params // Destructuring the id from the request parameters
-  Group.findOne({ where: { id } })
-    .then(group => {
-      // If the group doesn't exist, send a 404 status code and a message
-      if (!group) {
-        return res.status(404).json({ message: 'Group not found' })
-      }
-      // Send the group in the response as JSON
-      res.json(group)
-    })
-    .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
+
+  try {
+    // Get the group from database
+    const group = await Group.findOne({ where: { id } })
+
+    // If the group doesn't exist, send a 404 status code and a message
+    if (!group) {
+      return res.status(404).json({ message: 'Group not found' })
+    }
+
+    // Send the group in the response as JSON
+    res.json(group)
+  } catch (err) {
+    res.status(500).json({ message: err.message }) // If there's an error, send it
+  }
 }
 
 /**
@@ -44,19 +52,24 @@ export const getGroup = (req, res) => {
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const createGroup = (req, res) => {
+export const createGroup = async (req, res) => {
   const { schoolYear, course, denomination, isMorning, formationId } = req.body
 
   // Validate the request body
-  if (!schoolYear || !course || !denomination || typeof isMorning !== 'boolean' || !formationId) {
+  if (!await groupFieldsValidation(schoolYear, course, denomination, isMorning, formationId)) {
     return res.status(400).json({ message: 'Please send schoolYear, course, denomination, formationId and isMorning' })
   }
 
   // Create the group
-  Group.create({ schoolYear, course, denomination, isMorning, formationId })
-    .then(group => res.json(group)) // Send the created group in the response
-    .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
+  try {
+    const group = await Group.create({ schoolYear, course, denomination, isMorning, formationId })
+    res.json(group) // Send the group in the response
+  } catch (err) {
+    res.status(500).json({ message: err.message }) // If there's an error, send it
+  }
 }
+
+// TODO - Me he quedado por aquí refactorizando las functiones to async/await y sacando las validaciones al Modelo
 
 /**
  * Update a group from database by id
