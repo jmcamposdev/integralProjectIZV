@@ -73,3 +73,8 @@ export const formationHasModules = async (formationId) => {
   const modules = await Module.findAll({ where: { formationId } })
   return modules.length > 0
 }
+
+export const formationExists = async (id) => {
+  const formation = await Formation.findOne({ where: { id } })
+  return !!formation
+}
