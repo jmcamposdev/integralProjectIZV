@@ -26,15 +26,21 @@ const Header = () => {
     signOut()
     window.location.reload()
   }
+
+  const openHideNav = () => {
+    const nav = document.getElementById('navbar-collapse-with-animation')
+    nav.classList.toggle('hidden')
+  }
+
   return (
-    <header className={`transition-all fixed flex flex-wrap sm:justify-start sm:flex-nowrap z-50 w-full  text-sm py-${isScrolled ? '1' : '3'} sm:py-0 ${isScrolled ? 'bg-white dark:bg-boxdark' : 'bg-transparent border-b border-gray-200'}`}>
-      <nav className='relative max-w-7xl w-full mx-auto px-4 sm:flex sm:items-center sm:justify-between sm:px-6 lg:px-8' aria-label='Global'>
+    <header className={`transition-all fixed flex flex-wrap lg:justify-start lg:flex-nowrap z-50 w-full  text-sm ${isScrolled ? 'py-1' : 'py-3'}  ${isScrolled ? 'bg-white dark:bg-boxdark' : 'bg-transparent border-b border-gray-200'}`}>
+      <nav className='relative max-w-7xl w-full mx-auto px-4 lg:flex sm:items-center lg:justify-between sm:px-6 lg:px-8' aria-label='Global'>
         <div className='flex items-center justify-between'>
           <a className='flex-none text-xl font-semibold dark:text-white' href='/'>
             <img className='flex-none text-xl font-semibold dark:text-white' href='#' aria-label='Brand' src={LogoIcon} />
           </a>
-          <div className='sm:hidden'>
-            <button type='button' className='hs-collapse-toggle size-9 flex justify-center items-center text-sm font-semibold rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' data-hs-collapse='#navbar-collapse-with-animation' aria-controls='navbar-collapse-with-animation' aria-label='Toggle navigation'>
+          <div className='lg:hidden'>
+            <button onClick={openHideNav} type='button' className='hs-collapse-toggle size-9 flex justify-center items-center text-sm font-semibold rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' data-hs-collapse='#navbar-collapse-with-animation' aria-controls='navbar-collapse-with-animation' aria-label='Toggle navigation'>
               <svg className='hs-collapse-open:hidden size-4' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>
                 <path fill-rule='evenodd' d='M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z' />
               </svg>
@@ -44,12 +50,10 @@ const Header = () => {
             </button>
           </div>
         </div>
-        <div id='navbar-collapse-with-animation' className='hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow sm:block'>
-          <div className='flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7'>
-            <a className={`text-base font-bold  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-gray-500 dark:text-white' : 'text-white'}`} href='/' aria-current='page'>Home</a>
-            <a className={`text-base font-bold  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-gray-500 dark:text-white' : 'text-white'}`} href='/' aria-current='page'>About us</a>
-            <a className={`text-base font-bold  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-gray-500 dark:text-white' : 'text-white'}`} href='/' aria-current='page'>Team</a>
-            <a className={`text-base font-bold  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-gray-500 dark:text-white' : 'text-white'}`} href='/' aria-current='page'>Contact</a>
+        <div id='navbar-collapse-with-animation' className='hs-collapse hidden overflow-hidden transition-all duration-600 basis-full grow lg:block'>
+          <div class='flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7'>            <a className={`font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-gray-500 dark:text-white' : 'text-white'}`} href='/' aria-current='page'>About us</a>
+            <a className={`font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-gray-500 dark:text-white' : 'text-white'}`} href='/' aria-current='page'>Team</a>
+            <a className={`font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-gray-500 dark:text-white' : 'text-white'}`} href='/' aria-current='page'>Contact</a>
             {isLogged
               ? (
                 <button
