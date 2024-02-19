@@ -1,4 +1,4 @@
-import { Formation, formationFieldsValidation, formationHasGroups, formationHasModules } from '../models/Formation.js'
+import { Formation, formationFieldsValidation } from '../models/Formation.js'
 import { Group } from '../models/Group.js'
 import { Module } from '../models/Module.js'
 
@@ -81,6 +81,11 @@ export const updateFormation = async (req, res) => {
   const { id } = req.params // Destructuring the id from the request parameters
 
   try {
+    // Validate all the fields to be not null or empty
+    if (!formationFieldsValidation(req.body.denomination, req.body.acronym)) {
+      return res.status(400).json({ message: 'All fields are required' })
+    }
+
     // Get the formation from database
     const formation = await Formation.findOne({ where: { id } })
 
@@ -110,14 +115,6 @@ export const updateFormation = async (req, res) => {
 export const deleteFormation = async (req, res) => {
   try {
     const { id } = req.params // Destructuring the id from the request parameters
-
-    // if (await formationHasGroups(id)) {
-    //   return res.status(400).json({ message: 'The formation has groups, please delete them first' })
-    // }
-
-    // if (await formationHasModules(id)) {
-    //   return res.status(400).json({ message: 'The formation has modules, please delete them first' })
-    // }
 
     // Delete the formation
     const deletedFormationCount = await Formation.destroy({ where: { id } })
