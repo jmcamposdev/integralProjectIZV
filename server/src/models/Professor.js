@@ -60,6 +60,30 @@ export const professorFieldsValidation = (senecaUser, name, firstSurname, lastSu
 }
 
 /**
+ * Validate some fields of the professor this is used to update
+ * @param {Array[Object]} params The object with the fields to validate
+ * @returns {boolean} true if all fields are valid
+ */
+export const professorValidateSomeFields = (params) => {
+  // Iterate over the object keys and validate the fields
+  for (const key in params) {
+    // If is the id, continue
+    if (key === 'id') {
+      continue
+    }
+    // Validate the specialty to be FP or Secondary
+    if (key === 'specialty' && (params[key] !== 'FP' && params[key] !== 'Secondary')) {
+      return false
+    }
+    // Validate the senecaUser, name, firstSurname and lastSurname to be not null or empty
+    if (key !== 'specialty' && (!params[key] || params[key].trim().length === 0)) {
+      return false
+    }
+  }
+  return true
+}
+
+/**
  * Validate if the professor exists
  * @param {string} senecaUser
  * @returns {boolean}

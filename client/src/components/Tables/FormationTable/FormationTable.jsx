@@ -212,7 +212,7 @@ const FormationTable = () => {
         }
 
       {/* <!-- ===== Start of Delete Modal ===== --> */}
-      {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={() => (setFormationIdToDelete(null))} handleConfirm={handleDeleteFormation} message='Are you sure you want to delete this formation?' />)}
+      {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={() => (setFormationIdToDelete(null))} handleConfirm={handleDeleteFormation} title='Delete Formation' message='Are you sure to delete this formation? You will delete all related Groups and Modules and also all Lessons related to the deleted groups and modules.' />)}
       {/* <!-- ===== End of Delete Modal ===== --> */}
 
       {/* <!-- ===== Start of Create|Update Formation Modal ===== --> */}

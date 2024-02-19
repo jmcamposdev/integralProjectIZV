@@ -1,75 +1,54 @@
-const ConfirmModal = ({ show, handleClose, handleConfirm, message }) => {
+const ConfirmModal = ({ show, handleClose, handleConfirm, title, message }) => {
   return (
     <div
-      id='popup-modal'
-      tabIndex={-1}
-      className={`${!show && 'hidden'} overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full`}
+      className={`fixed left-0 top-0 z-999999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5 ${show ? 'block' : 'hidden'}`}
     >
-      <div className='absolute top-0 right-0 bottom-0 left-0 bg-black bg-opacity-50' />
-      <div className='relative p-4 w-full max-w-md'>
-        <div className='relative bg-white rounded-lg shadow dark:bg-graydark'>
-          <button
-            onClick={handleClose}
-            type='button'
-            className='absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white'
-            data-modal-hide='popup-modal'
+      <div className='w-full max-w-142.5 rounded-lg bg-white px-8 py-12 text-center dark:bg-boxdark md:px-17.5 md:py-15'>
+        <span className='mx-auto inline-block'>
+          <svg
+            width={60}
+            height={60}
+            viewBox='0 0 60 60'
+            fill='none'
+            xmlns='http://www.w3.org/2000/svg'
           >
-            <svg
-              className='w-3 h-3'
-              aria-hidden='true'
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 14 14'
-            >
-              <path
-                stroke='currentColor'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6'
-              />
-            </svg>
-            <span className='sr-only'>Close modal</span>
-          </button>
-          <div className='p-4 md:p-5 text-center'>
-            <svg
-              className='mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200'
-              aria-hidden='true'
-              xmlns='http://www.w3.org/2000/svg'
-              fill='none'
-              viewBox='0 0 20 20'
-            >
-              <path
-                stroke='currentColor'
-                strokeLinecap='round'
-                strokeLinejoin='round'
-                strokeWidth={2}
-                d='M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z'
-              />
-            </svg>
-            <h3 className='mb-5 text-lg font-normal text-gray-500 dark:text-gray-400'>
-              {message}
-            </h3>
+            <rect opacity='0.1' width={60} height={60} rx={30} fill='#DC2626' />
+            <path
+              d='M30 27.2498V29.9998V27.2498ZM30 35.4999H30.0134H30ZM20.6914 41H39.3086C41.3778 41 42.6704 38.7078 41.6358 36.8749L32.3272 20.3747C31.2926 18.5418 28.7074 18.5418 27.6728 20.3747L18.3642 36.8749C17.3296 38.7078 18.6222 41 20.6914 41Z'
+              stroke='#DC2626'
+              strokeWidth='2.2'
+              strokeLinecap='round'
+              strokeLinejoin='round'
+            />
+          </svg>
+        </span>
+        <h3 className='mt-5.5 pb-2 text-xl font-bold text-black dark:text-white sm:text-2xl'>
+          {title}
+        </h3>
+        <p className='mb-10 font-medium'>
+          {message}
+        </p>
+        <div className='-mx-3 flex flex-wrap gap-y-4'>
+          <div className='w-full px-3 2xsm:w-1/2'>
             <button
-              onClick={handleConfirm}
-              data-modal-hide='popup-modal'
-              type='button'
-              className='text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2'
-            >
-              Yes, I'm sure
-            </button>
-            <button
+              className='block w-full rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition hover:border-meta-1 hover:bg-meta-1 hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-meta-1 dark:hover:bg-meta-1'
               onClick={handleClose}
-              data-modal-hide='popup-modal'
-              type='button'
-              className='text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600'
             >
-              No, cancel
+              Cancel
+            </button>
+          </div>
+          <div className='w-full px-3 2xsm:w-1/2'>
+            <button
+              className='block w-full rounded border border-meta-1 bg-meta-1 p-3 text-center font-medium text-white transition hover:bg-opacity-90'
+              onClick={handleConfirm}
+            >
+              Delete
             </button>
           </div>
         </div>
       </div>
     </div>
+
   )
 }
 

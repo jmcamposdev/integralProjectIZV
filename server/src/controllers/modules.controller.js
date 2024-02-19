@@ -89,6 +89,13 @@ export const createModule = async (req, res) => {
  */
 export const updateModule = async (req, res) => {
   const { id } = req.params
+  // Destructuring the request body to get the values of the fields
+  const { denomination, acronym, course, hours, specialty } = req.body
+
+  // Validate all the fields to be not null or empty and the specialty to be FP or Secondary
+  if (!moduleFieldsValidation(denomination, acronym, course, hours, specialty)) {
+    return res.status(400).json({ message: 'All fields are required please fill all the fields' })
+  }
 
   try {
     // Get the module from database

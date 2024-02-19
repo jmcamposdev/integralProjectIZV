@@ -208,7 +208,7 @@ const ModuleTable = ({ formations }) => {
         }
 
       {/* <!-- ===== Start of Delete Modal ===== --> */}
-      {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={() => (setModuleIdToDelete(null))} handleConfirm={handleDeleteModule} message='Are you sure you want to delete this module?' />)}
+      {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={() => (setModuleIdToDelete(null))} handleConfirm={handleDeleteModule} title='Delete Module' message='Are you sure you want to delete this Module? You will delete all the Lessons related to this module.' />)}
       {/* <!-- ===== End of Delete Modal ===== --> */}
 
       {/* <!-- ===== Start of Create|Update Modal ===== --> */}

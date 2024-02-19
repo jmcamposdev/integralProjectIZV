@@ -229,7 +229,7 @@ const GroupTable = ({ formations }) => {
         }
 
       {/* <!-- ===== Start of Delete Modal ===== --> */}
-      {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={() => (setGroupIdToDelete(null))} handleConfirm={handleDeleteGroup} message='Are you sure you want to delete this group?' />)}
+      {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={() => (setGroupIdToDelete(null))} handleConfirm={handleDeleteGroup} title='Delete Group' message='Are you sure you want to delete this group? You will delete all the Lessons related to this group.' />)}
       {/* <!-- ===== End of Delete Modal ===== --> */}
 
       {/* <!-- ===== Start of Create Modal ===== --> */}

@@ -194,6 +194,11 @@ const ProfessorTable = () => {
       delete professorInputs.specialty
     }
 
+    // If the senecaUser is the same, remove it from the inputs
+    if (professorInputs.senecaUser === professors.find((prof) => prof.id === professorInputs.id).senecaUser) {
+      delete professorInputs.senecaUser
+    }
+
     try {
       const professor = await professorService.updateProfessor(professorInputs)
       const newProfessorsList = professors.map((prof) => {
@@ -257,7 +262,7 @@ const ProfessorTable = () => {
         }
 
       {/* <!-- ===== Start of Delete Modal ===== --> */}
-      {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={handleCloseDeleteModal} handleConfirm={handleDeleteProfessor} message='Are you sure you want to delete this professor?' />)}
+      {isAdmin && (<ConfirmModal show={viewDeleteModal} handleClose={handleCloseDeleteModal} handleConfirm={handleDeleteProfessor} title='Delete Professor' message='Are you sure you want to delete this professor?' />)}
 
       {/* <!-- ===== Start of Add Professor Modal ===== --> */}
       {isAdmin && (
