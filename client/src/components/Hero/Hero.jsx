@@ -7,7 +7,7 @@ const Hero = () => {
   return (
     <section id='home' className='static bg-cover min-h-screen relative z-10 overflow-hidden pt-[120px] pb-16 md:pt-[150px] md:pb-[120px] xl:pt-[180px] xl:pb-[160px] 2xl:pt-[210px] 2xl:pb-[200px] dark:bg-boxdark dark:drop-shadow-none'>
       <div className='absolute w-[100%] h-[100%] top-0 left-0 -z-1 brightness-75' style={{ backgroundImage: `url(${HeroImg})` }} />
-      <div className='flex justify-start px-[7%] mt-[30%]'>
+      <div className='flex justify-start px-[7%]'>
         <div className='-mx-4 flex flex-wrap'>
           <div className='w-full px-4'>
             <div className='wow fadeInUp mx-auto max-w-[800px] ' data-wow-delay='.2s'>
