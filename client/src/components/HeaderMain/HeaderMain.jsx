@@ -28,45 +28,42 @@ const Header = () => {
   }
 
   const openHideNav = () => {
-    const nav = document.getElementById('navbar-collapse-with-animation')
+    const nav = document.getElementById('mobile-menu-2')
+    const ul = document.getElementById('ul')
+    if (ul.classList.contains('flex-row')) {
+      ul.classList.remove('flex-row')
+      ul.classList.add('flex-col')
+    } else {
+      ul.classList.add('flex-row')
+      ul.classList.remove('flex-col')
+    }
+    if (nav.classList.contains('hidden')) {
+      nav.style.minHeight = '0px'
+    }
     nav.classList.toggle('hidden')
   }
 
   return (
-    <header className={`transition-all fixed flex flex-wrap lg:justify-start lg:flex-nowrap z-50 w-full  text-sm ${isScrolled ? 'py-1' : 'py-3'}  ${isScrolled ? 'bg-white dark:bg-boxdark' : 'bg-transparent border-b border-gray-200'}`}>
-      <nav className='relative max-w-7xl w-full mx-auto px-4 lg:flex sm:items-center lg:justify-between sm:px-6 lg:px-8' aria-label='Global'>
-        <div className='flex items-center justify-between'>
-          <a className='flex-none text-xl font-semibold dark:text-white' href='/'>
-            <img className='flex-none text-xl font-semibold dark:text-white' href='#' aria-label='Brand' src={LogoIcon} />
+    <header className='fixed z-99 w-[100dvw]'>
+      <nav className={`bg-white border-gray-200 px-4 lg:px-6 dark:bg-gray-800 transition-all ${isScrolled ? 'py-4 bg-white dark:bg-boxdark' : 'bg-transparent py-8'}`}>
+        <div className='flex flex-wrap justify-between items-center mx-auto max-w-screen-xl'>
+          <a href='https://flowbite.com' className='flex items-center'>
+            <img src={LogoIcon} className='mr-3 h-6 sm:h-9' alt='Flowbite Logo' />
           </a>
-          <div className='lg:hidden'>
-            <button onClick={openHideNav} type='button' className='hs-collapse-toggle size-9 flex justify-center items-center text-sm font-semibold rounded-lg border border-gray-200 text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' data-hs-collapse='#navbar-collapse-with-animation' aria-controls='navbar-collapse-with-animation' aria-label='Toggle navigation'>
-              <svg className='hs-collapse-open:hidden size-4' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>
-                <path fill-rule='evenodd' d='M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z' />
-              </svg>
-              <svg className='hs-collapse-open:block flex-shrink-0 hidden size-4' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>
-                <path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z' />
-              </svg>
-            </button>
-          </div>
-        </div>
-        <div id='navbar-collapse-with-animation' className='hs-collapse hidden overflow-hidden transition-all duration-600 basis-full grow lg:block'>
-          <div class='flex flex-col gap-y-4 gap-x-0 mt-5 sm:flex-row sm:items-center sm:justify-end sm:gap-y-0 sm:gap-x-7 sm:mt-0 sm:ps-7'>            <a className={`font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-gray-500 dark:text-white' : 'text-white'}`} href='/' aria-current='page'>About us</a>
-            <a className={`font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-gray-500 dark:text-white' : 'text-white'}`} href='/' aria-current='page'>Team</a>
-            <a className={`font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-gray-500 dark:text-white' : 'text-white'}`} href='/' aria-current='page'>Contact</a>
+          <div className='flex items-center lg:order-2 gap-[20px]'>
             {isLogged
               ? (
-                <button
+                <a
                   onClick={handleSignOut}
-                  className='hidden py-3 px-7 text-base font-bold text-dark hover:opacity-70 dark:text-white md:block'
+                  className='py-3 px-7 text-base font-bold text-dark hover:opacity-70 dark:text-white md:block'
                 >
                   Sign Out
-                </button>
+                </a>
                 )
               : (
                 <a
                   href='/login'
-                  className='hidden py-3 px-7 text-base font-bold text-dark hover:opacity-70 dark:text-white md:block'
+                  className='py-3 px-7 text-base font-bold text-dark hover:opacity-70 dark:text-white md:block'
                 >
                   Sign In
                 </a>
@@ -75,7 +72,7 @@ const Header = () => {
               ? (
                 <a
                   href='/dashboard'
-                  className='ease-in-up hidden rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9'
+                  className='ease-in-up rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9'
                 >
                   Dashboard
                 </a>
@@ -85,21 +82,46 @@ const Header = () => {
               ? (
                 <a
                   href='/signup'
-                  className='ease-in-up hidden rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9'
+                  className='ease-in-up rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9'
                 >
                   Sign Up
                 </a>
                 )
               : null}
-
-            <ul className='flex items-center gap-2 2xsm:gap-4 mr-[60px] lg:mr-0'>
+            <ul className='items-center gap-2 2xsm:gap-4 hidden lg:flex'>
               <DarkModeSwitcher />
+            </ul>
+            <button onClick={openHideNav} id='button-nav' data-collapse-toggle='mobile-menu-2' type='button' className='inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600' aria-controls='mobile-menu-2' aria-expanded='false'>
+              <span className='sr-only'>Open main menu</span>
+              <svg className='w-6 h-6' fill='currentColor' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'><path fillRule='evenodd' d='M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z' clipRule='evenodd' /></svg>
+              <svg className='hidden w-6 h-6' fill='currentColor' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'><path fillRule='evenodd' d='M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z' clipRule='evenodd' /></svg>
+            </button>
+          </div>
+          <div className='hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1' id='mobile-menu-2'>
+            <ul id='ul' className='flex flex-row mt-4 font-medium  lg:space-x-8 lg:mt-0'>
+              <li>
+                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-gray-500 dark:text-white' : 'text-dark'}`} aria-current='page'>Home</a>
+              </li>
+              <li>
+                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-gray-500 dark:text-white' : 'text-dark'}`} aria-current='page'>About</a>
+              </li>
+              <li>
+                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-gray-500 dark:text-white' : 'text-dark'}`} aria-current='page'>Team</a>
+              </li>
+              <li>
+                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-gray-500 dark:text-white' : 'text-dark'}`} aria-current='page'>Contact</a>
+              </li>
+              <li>
+                <ul className='items-center gap-2 2xsm:gap-4 flex lg:hidden w-fit block ml-auto'>
+                  <DarkModeSwitcher />
+                </ul>
+              </li>
+
             </ul>
           </div>
         </div>
       </nav>
     </header>
-
   )
 }
 
