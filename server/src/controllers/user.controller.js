@@ -41,15 +41,19 @@ export const getUser = async (req, res) => {
 }
 
 export const createUser = async (req, res) => {
+  const { senecaUser, name, firstSurname, lastSurname, password, confirmPassword } = req.body
+
+  if (!User.validateAllFields(senecaUser, name, firstSurname, lastSurname, password, confirmPassword)) {
+    return res.status(400).json({ message: 'Necessary fields are empty' })
+  }
+
   try {
-    // Destructuring the request body to get the values of the fields
-    const { username, email, password, roleId } = req.body
-    // Create the user
-    const user = await User.create({ username, email, password: User.encryptPassword(password), roleId })
-    // Remove the password from the user object
-    delete user.dataValues.password
-    // Send the created user in the response
-    res.json({ message: 'User created successfully', user })
+    // Create a new user in the database
+    const newUser = await User.create(req.body)
+    // Delete the password from the user object
+    delete newUser.dataValues.password
+    // Send the new user in the response
+    res.status(201).json({ message: 'User created successfully', user: newUser })
   } catch (error) { // If there's an error, send it
     res.status(500).json({ message: error.message })
   }

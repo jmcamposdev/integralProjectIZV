@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import { signIn, signUp } from '../controllers/auth.controller.js'
+import { signIn } from '../controllers/auth.controller.js'
 
-import { verifySignUp, verifySignIn } from '../middlewares/index.js'
+import { verifySignIn } from '../middlewares/index.js'
 
 /**
  * ----------------------------------------------
@@ -12,12 +12,6 @@ import { verifySignUp, verifySignIn } from '../middlewares/index.js'
 
 // Create a new router to handle auth routes
 const router = Router()
-
-// Sign Up
-router.post(
-  '/auth/signup',
-  [verifySignUp.verifyNecessaryFields, verifySignUp.checkDuplicateUsernameOrEmail],
-  signUp)
 
 // Sign In
 router.post(

@@ -49,14 +49,17 @@ Lesson.belongsTo(Professor, { foreignKey: 'professorId', targetId: 'id' })
  * @param {string} specialty
  * @returns {boolean} true if all fields are valid
  */
-export const professorFieldsValidation = (senecaUser, name, firstSurname, lastSurname, specialty) => {
+export const professorFieldsValidation = (senecaUser, name, firstSurname, lastSurname, specialty, password, confirmPassword) => {
   // Valid all the fields to be not null or empty and the specialty to be FP or Secondary
   const validSenecaUser = senecaUser?.trim().length > 0
   const validName = name?.trim().length > 0
   const validFirstSurname = firstSurname?.trim().length > 0
   const validLastSurname = lastSurname?.trim().length > 0
   const validSpecialty = specialty === 'FP' || specialty === 'Secondary'
-  return validSenecaUser && validName && validFirstSurname && validLastSurname && validSpecialty
+  const validPassword = password?.trim().length > 0
+  const validConfirmPassword = confirmPassword?.trim().length > 0
+  const validPasswords = password === confirmPassword
+  return validSenecaUser && validName && validFirstSurname && validLastSurname && validSpecialty && validPassword && validConfirmPassword && validPasswords
 }
 
 /**

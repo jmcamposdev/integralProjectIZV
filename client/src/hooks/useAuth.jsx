@@ -9,8 +9,10 @@ const useAuth = () => {
   let isUser = null
   let role = null
   let isLogged = false
-  let email = null
+  const senecaUser = null
   let name = null
+  let firstSurname = null
+  let lastSurname = null
   let token = null
 
   // If the cookie is available, decode the token and check if it is expired
@@ -26,13 +28,14 @@ const useAuth = () => {
       isUser = decoded?.role === 'user' // Check if the user is a user
       role = decoded?.role // Get the user's role
       isLogged = true
-      email = decoded?.email
-      name = decoded?.name
+      name = decoded?.name // Get the user's name
+      firstSurname = decoded?.firstSurname // Get the user's first surname
+      lastSurname = decoded?.lastSurname // Get the user's last surname
       token = cookie
     }
   }
 
-  return { name, email, isAdmin, isUser, role, isLogged, token }
+  return { senecaUser, name, firstSurname, lastSurname, isAdmin, isUser, role, isLogged, token }
 }
 
 export default useAuth
