@@ -1,4 +1,4 @@
-import { Role } from '../models/Role.js'
+import { ROLES, Role } from '../models/Role.js'
 import { User } from '../models/User.js'
 
 export const initialSetup = async () => {
@@ -40,10 +40,12 @@ export const createAdminUser = async () => {
 
   // If there are no users, create the admin user
   const adminUser = {
+    senecaUser: 'admin',
     name: 'admin',
-    email: 'admin@gmail.com',
+    firstSurname: 'admin',
+    lastSurname: 'admin',
     password: await User.encryptPassword('admin'),
-    roleId: 2
+    roleId: ROLES.ADMIN
   }
 
   // Create the admin user

@@ -9,7 +9,7 @@ import { User } from '../models/User.js'
 
 /**
  * Verify that the necessary fields are not empty.
- * - Necessary fields: username, email, password
+ * - Necessary fields: senecaUser, name, firstSurname, lastSurname, password
  * - If the fields are empty, send a 400 status code and a message.
  * @param {*} req The request object
  * @param {*} res The response object
@@ -17,11 +17,10 @@ import { User } from '../models/User.js'
  */
 export const verifyNecessaryFields = (req, res, next) => {
   // Get the username, email and password from the request body
-  const { name, email, password } = req.body
+  const { senecaUser, name, firstSurname, lastSurname, password, confirmPassword } = req.body
 
-  // If the fields are undefined, null or empty, send a 400 status code and a message
-  if (!name?.trim() || !email?.trim() || !password?.trim()) {
-    res.status(400).json({ message: 'The fields username, email or password are required' })
+  if (!User.validateAllFields(senecaUser, name, firstSurname, lastSurname, password, confirmPassword)) {
+    res.status(400).json({ message: 'Necessary fields are empty' })
     return
   }
 
@@ -35,25 +34,15 @@ export const verifyNecessaryFields = (req, res, next) => {
  * @param {*} res The response object
  * @param {*} next The next middleware function
  */
-export const checkDuplicateUsernameOrEmail = async (req, res, next) => {
-  // Get the username and email from the request body
-  const { name, email } = req.body
+export const checkDuplicateSenecaUser = async (req, res, next) => {
+  // Get the username from the request body
+  const { senecaUser } = req.body
 
-  // Find the user in the database
-  const foundEmail = await User.findOne({ where: { email } })
+  // Check if the username already exists
+  const user = await User.exists(senecaUser)
 
-  // If the email is already in use, send a 400 status code and a message
-  if (foundEmail) {
-    res.status(400).json({ message: 'Email already in use' })
-    return
-  }
-
-  // Find the user in the database
-  const foundUsername = await User.findOne({ where: { name } })
-
-  // If the username is already in use, send a 400 status code and a message
-  if (foundUsername) {
-    res.status(400).json({ message: 'Name already in use' })
+  if (user) {
+    res.status(400).json({ message: 'The username already exists' })
     return
   }
 

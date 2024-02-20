@@ -1,5 +1,7 @@
 import { Professor, professorExists, professorFieldsValidation, professorHasLessons, professorValidateSomeFields } from '../models/Professor.js'
 import { Lesson } from '../models/Lesson.js'
+import { User } from '../models/User.js'
+import { ROLES } from '../models/Role.js'
 
 /**
  * Get all professors from database
@@ -59,16 +61,19 @@ export const getProfessor = async (req, res) => {
  * @param {*} res The response object from Express
  */
 export const createProfessor = async (req, res) => {
+  console.log(req.body)
   const {
     senecaUser,
     name,
     firstSurname,
     lastSurname,
-    specialty
+    specialty,
+    password,
+    confirmPassword
   } = req.body
 
   // Validate that all fields are not empty
-  if (!professorFieldsValidation(senecaUser, name, firstSurname, lastSurname, specialty)) {
+  if (!professorFieldsValidation(senecaUser, name, firstSurname, lastSurname, specialty, password, confirmPassword)) {
     return res.status(400).json({ message: 'All fields are required' })
   }
 
@@ -86,6 +91,22 @@ export const createProfessor = async (req, res) => {
       lastSurname,
       specialty
     })
+
+    // Create the user
+    const user = await User.create({
+      senecaUser,
+      name,
+      firstSurname,
+      lastSurname,
+      password: User.encryptPassword(password), // Encrypt the password
+      roleId: ROLES.USER // Set the default role
+    })
+
+    console.log(createdProfessor, user)
+
+    if (!createdProfessor || !user) {
+      return res.status(500).json({ message: 'Error creating the professor' })
+    }
 
     res.json(createdProfessor)
   } catch (err) {

@@ -17,7 +17,7 @@ router.post(
     authJwt.verifyToken,
     authJwt.isAdmin,
     verifySignUp.verifyNecessaryFields,
-    verifySignUp.checkDuplicateUsernameOrEmail,
+    verifySignUp.checkDuplicateSenecaUser,
     verifyRole.isValidRoleId
   ],
   createUser) // Create a new user

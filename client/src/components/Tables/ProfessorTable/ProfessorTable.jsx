@@ -24,7 +24,9 @@ const ProfessorTable = () => {
     firstSurname: '',
     lastSurname: '',
     specialty: '',
-    id: ''
+    id: '',
+    password: '',
+    confirmPassword: ''
   }) // Save the inputs from the create modal
 
   const resetCreateInputs = () => {
@@ -34,7 +36,9 @@ const ProfessorTable = () => {
       firstSurname: '',
       lastSurname: '',
       specialty: '',
-      id: ''
+      id: '',
+      password: '',
+      confirmPassword: ''
     })
   }
 
@@ -215,13 +219,7 @@ const ProfessorTable = () => {
       console.error('Error updating professor:', error.message)
     }
     // Reset the inputs
-    setCreateInputs({
-      senecaUser: '',
-      name: '',
-      firstSurname: '',
-      lastSurname: '',
-      specialty: ''
-    })
+    resetCreateInputs()
     // Reset the viewUpdateModal
     setViewUpdateModal(false)
   }
@@ -317,8 +315,26 @@ const ProfessorTable = () => {
                 { value: 'Secondary', label: 'Secondary' }
               ],
               disabled: isSpecialtyDisabled
+            },
+            !viewUpdateModal && {
+              colSpan: 2,
+              label: 'Password',
+              type: 'password',
+              name: 'password',
+              value: createInputs.password,
+              handleInputsChange: handleCreateInputs,
+              required: true
+            },
+            !viewUpdateModal && {
+              colSpan: 2,
+              label: 'Confirm Password',
+              type: 'password',
+              name: 'confirmPassword',
+              value: createInputs.confirmPassword,
+              handleInputsChange: handleCreateInputs,
+              required: true
             }
-          ]}
+          ].filter(Boolean)} // Remove the null values
         />)}
       {/* <!-- ===== End of Add Professor Modal ===== --> */}
     </>
