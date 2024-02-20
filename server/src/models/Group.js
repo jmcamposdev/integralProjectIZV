@@ -47,9 +47,19 @@ Lesson.belongsTo(Group, { foreignKey: { name: 'groupId', allowNull: false }, tar
  * Group Validation
  * ---------------------------------------------------- */
 
+/**
+ * Validate the fields of a group to create or update
+ * All the fields must be not null or empty
+ * @param {String} schoolYear The school year of the group
+ * @param {Number} course The course of the group
+ * @param {String} denomination The denomination of the group
+ * @param {Boolean} isMorning The turn of the group
+ * @param {Number} formationId The id of the formation of the group
+ * @return {Boolean} True if the fields are valid, false otherwise
+ */
 export const groupFieldsValidation = async (schoolYear, course, denomination, isMorning, formationId) => {
   const validSchoolYear = schoolYear?.trim().length > 0
-  const validCourse = course > 0
+  const validCourse = !isNaN(course) && course > 0
   const validDenomination = denomination?.trim().length > 0
   const validIsMorning = typeof isMorning === 'boolean'
   const validFormationId = await Formation.findByPk(formationId) !== null
