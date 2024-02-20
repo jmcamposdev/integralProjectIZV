@@ -49,6 +49,7 @@ Module.belongsTo(Formation, { foreignKey: 'formationId', targetId: 'id' })
  * @returns {Boolean} true if all fields are valid
  */
 export const formationFieldsValidation = (denomination, acronym) => {
+  // Validate that the fields are not null or empty
   const validDenomination = denomination?.trim().length > 0
   const validAcronym = acronym?.trim().length > 0
   return validDenomination && validAcronym
@@ -60,7 +61,9 @@ export const formationFieldsValidation = (denomination, acronym) => {
  * @returns {Boolean} true if the formation has groups
  */
 export const formationHasGroups = async (formationId) => {
+  // Get all groups of the formation
   const groups = await Group.findAll({ where: { formationId } })
+  // Return true if the formation has groups
   return groups.length > 0
 }
 
@@ -70,11 +73,20 @@ export const formationHasGroups = async (formationId) => {
  * @returns {Boolean} true if the formation has modules
  */
 export const formationHasModules = async (formationId) => {
+  // Get all modules of the formation
   const modules = await Module.findAll({ where: { formationId } })
+  // Return true if the formation has modules
   return modules.length > 0
 }
 
+/**
+ * Check if the formation exists
+ * @param {Number} id The formation id
+ * @return {Boolean} true if the formation exists
+ */
 export const formationExists = async (id) => {
+  // Get the formation from database
   const formation = await Formation.findOne({ where: { id } })
+  // Return true if the formation exists
   return !!formation
 }
