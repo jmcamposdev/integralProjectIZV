@@ -1,4 +1,5 @@
-import { Group, groupFieldsValidation } from '../models/Group.js'
+import { Group, groupFieldsValidation, groupHasLessons } from '../models/Group.js'
+import { Lesson } from '../models/Lesson.js'
 
 /**
  * Get all groups from database
@@ -95,6 +96,11 @@ export const updateGroup = async (req, res) => {
     return res.status(400).json({ message: 'Please send schoolYear, course, denomination, formationId and isMorning' })
   }
 
+  // If the group has lessons and the course or formationId has changed, send a 400 status code and a message
+  if (await groupHasLessons(id) && (course !== undefined || formationId !== undefined)) {
+    return res.status(400).json({ message: 'The group has lessons, you can\'t change the course or the formation' })
+  }
+
   try {
     // Get the group from database
     const group = await Group.findOne({ where: { id } })
@@ -139,6 +145,38 @@ export const deleteGroup = async (req, res) => {
     // Send a success message in the response
     res.json({ message: 'Group deleted successfully' })
   } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
+
+/**
+ * Get all lessons from a group
+ * - If the group exists, send all the lessons from the group in the response
+ * - If the group doesn't exist, send a 404 status code and a message
+ * - If there's an error, send it
+ * @param {Object} req The request object from Express
+ * @param {Object} res The response object from Express
+ */
+export const getGroupLessons = async (req, res) => {
+  // Destructuring the id from the request parameters
+  const { id } = req.params
+
+  try {
+    // Get the group from database
+    const group = await Group.findOne({ where: { id } })
+
+    // If the group doesn't exist, send a 404 status code and a message
+    if (!group) {
+      return res.status(404).json({ message: 'Group not found' })
+    }
+
+    // Get all lessons from the group
+    const lessons = await Lesson.findAll({ where: { groupId: id } })
+
+    // Send the lessons in the response as JSON
+    res.json(lessons)
+  } catch (err) {
+    // If there's an error, send it
     res.status(500).json({ message: err.message })
   }
 }
