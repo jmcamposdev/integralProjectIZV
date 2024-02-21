@@ -15,6 +15,8 @@ const ModuleTable = ({ formations }) => {
   const [viewDeleteModal, setViewDeleteModal] = useState(false) // Show or hide the delete modal
   const [viewCreateModal, setViewCreateModal] = useState(false) // Show or hide the create modal
   const [viewUpdateModal, setViewUpdateModal] = useState(false) // Show or hide the update modal
+  const [hasLessons, setHasLessons] = useState(false) // Save if the module has lessons or not
+  const [hasOtherModules, setHasOtherModules] = useState(false) // Save if the module has other modules or not
   const [modulesInputs, setModulesInputs] = useState({ // Save the inputs from the create modal and update modal
     denomination: '',
     acronym: '',
@@ -48,6 +50,23 @@ const ModuleTable = ({ formations }) => {
     const { name, value } = e.target
     // If the input is a number, save it as a number
     if (name === 'formationId' || name === 'hours' || name === 'course') {
+      if (name === 'formationId') {
+        // Get all the modules with the same formationId
+        const otherModules = modules.filter((module) => module.formationId === parseInt(value))
+        // If the module has other modules set the specialty to the same as the other modules
+        if (otherModules.length > 0) {
+          // Set the hasOtherModules state to true
+          setHasOtherModules(true)
+          // Set the specialty to the same as the other modules
+          setModulesInputs({
+            ...modulesInputs,
+            [name]: value.trim() === '' ? '' : parseInt(value),
+            specialty: otherModules[0].specialty
+          })
+          return
+        }
+      }
+
       setModulesInputs({
         ...modulesInputs,
         [name]: value.trim() === '' ? '' : parseInt(value)
@@ -134,6 +153,8 @@ const ModuleTable = ({ formations }) => {
     // If the create modal is closed, reset the moduleInputs
     if (!viewCreateModal) {
       setViewUpdateModal(false)
+      setHasLessons(false)
+      setHasOtherModules(false)
       // If the update modal is closed, reset the moduleInputs
     } else if (!viewUpdateModal) {
       resetModuleInputs()
@@ -183,10 +204,25 @@ const ModuleTable = ({ formations }) => {
    * This function shows the create modal and sets the formationInputs to the formation to update
    * @param {Object} formation The formation to update
    */
-  const handleUpdateClick = (module) => {
-    setViewUpdateModal(true) // Show the update modal
-    setViewCreateModal(true) // Show the create modal and active the useEffect to reset the formationInputs
-    setModulesInputs(module) // Set the formationInputs to the formation to update
+  const handleUpdateClick = async (module) => {
+    try {
+      // Get all the lessons of the module
+      const lessons = await moduleService.getModuleLessons(module.id)
+      // Set the hasLessons state to true if the module has lessons
+      setHasLessons(lessons.length > 0)
+
+      // Get all the modules with the same formationId
+      const otherModules = modules.filter((currentModule) => currentModule.formationId === module.formationId)
+      // Set the hasOtherModules state to true if the module has other modules
+      setHasOtherModules(otherModules.length > 1)
+
+      setViewUpdateModal(true) // Show the update modal
+      setViewCreateModal(true) // Show the create modal and active the useEffect to reset the formationInputs
+      setModulesInputs(module) // Set the formationInputs to the formation to update
+    } catch (error) {
+      // If there's an error, save the error message in the state
+      setError(error.message)
+    }
   }
 
   return (
@@ -240,7 +276,9 @@ const ModuleTable = ({ formations }) => {
               name: 'course',
               value: modulesInputs.course,
               handleInputsChange: handleModuleInputs,
-              required: true
+              required: true,
+              disabled: hasLessons,
+              disabledMessage: 'You can\t update the course of a module with lessons.'
             },
             {
               colSpan: 2,
@@ -249,7 +287,9 @@ const ModuleTable = ({ formations }) => {
               name: 'hours',
               value: modulesInputs.hours,
               handleInputsChange: handleModuleInputs,
-              required: true
+              required: true,
+              disabled: hasLessons,
+              disabledMessage: 'You can\t update the hours of a module with lessons.'
             },
             {
               colSpan: 2,
@@ -263,7 +303,8 @@ const ModuleTable = ({ formations }) => {
                 { value: 'FP', label: 'FP' },
                 { value: 'Secondary', label: 'Secondary' }
               ],
-              disabled: viewUpdateModal
+              disabled: hasOtherModules || hasLessons,
+              disabledMessage: hasLessons ? 'You can\t update the specialty of a module with lessons.' : hasOtherModules ? 'Get the specialty from the other modules with the same formation.' : ''
             },
             {
               colSpan: 2,
@@ -273,10 +314,12 @@ const ModuleTable = ({ formations }) => {
               value: modulesInputs.formationId,
               handleInputsChange: handleModuleInputs,
               options: [
-                { value: '', label: 'Select Formation' },
+                { value: '', label: 'Select Formation', disabled: true },
                 ...formations.map((formation) => ({ value: formation.id, label: formation.acronym }))
               ],
-              required: true
+              required: true,
+              disabled: hasLessons,
+              disabledMessage: 'You can\t update the formation of a module with lessons.'
             }
           ]}
         />
