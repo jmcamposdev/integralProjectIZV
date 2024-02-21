@@ -15,6 +15,7 @@ const GroupTable = ({ formations }) => {
   const [viewDeleteModal, setViewDeleteModal] = useState(false) // Show or hide the delete modal
   const [viewCreateModal, setViewCreateModal] = useState(false) // Show or hide the create modal
   const [viewUpdateModal, setViewUpdateModal] = useState(false) // Show or hide the update modal
+  const [hasLessons, setHasLessons] = useState(false) // Save if the group has lessons or not
   const [groupInputs, setGroupInputs] = useState({ // Save the inputs from the create modal and update modal
     schoolYear: '',
     formationId: '',
@@ -151,6 +152,7 @@ const GroupTable = ({ formations }) => {
     // If the create modal is closed, reset the moduleInputs
     if (!viewCreateModal) {
       setViewUpdateModal(false)
+      setHasLessons(false)
       // If the update modal is closed, reset the moduleInputs
     } else if (!viewUpdateModal) {
       resetGroupInputs()
@@ -204,10 +206,20 @@ const GroupTable = ({ formations }) => {
    * @param {Object} group The group to update
    * @returns {void}
   */
-  const handleUpdateClick = (group) => {
-    setViewCreateModal(true) // Show the create modal
-    setViewUpdateModal(true) // Show the update modal
-    setGroupInputs(group) // Set the groupInputs with the group to update
+  const handleUpdateClick = async (group) => {
+    try {
+      // Get the lessons from the group
+      const lessons = await groupService.getGroupLessons(group.id)
+      console.log(lessons)
+      // Set the hasLessons state with the lessons length
+      setHasLessons(lessons.length > 0)
+
+      setViewCreateModal(true) // Show the create modal
+      setViewUpdateModal(true) // Show the update modal
+      setGroupInputs(group) // Set the groupInputs with the group to update
+    } catch (error) {
+      setError(error.message)
+    }
   }
 
   return (
@@ -254,7 +266,8 @@ const GroupTable = ({ formations }) => {
                 { value: '', label: 'Select Formation', disabled: true },
                 ...formations.map((formation) => ({ value: formation.id, label: formation.acronym }))
               ],
-              required: true
+              required: true,
+              disabled: hasLessons
             },
             {
               label: 'Course',
@@ -262,7 +275,8 @@ const GroupTable = ({ formations }) => {
               name: 'course',
               value: groupInputs.course,
               handleInputsChange: handleGroupInputs,
-              required: true
+              required: true,
+              disabled: hasLessons
             },
             {
               label: 'Letter',
