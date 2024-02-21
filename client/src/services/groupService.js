@@ -38,6 +38,16 @@ const groupService = {
       console.error('Error deleting group:', error.message)
       throw error
     }
+  },
+
+  getGroupLessons: async (id) => {
+    try {
+      const lessons = await api.get(`groups/${id}/lessons`)
+      return lessons
+    } catch (error) {
+      console.error('Error getting group lessons:', error.message)
+      throw error
+    }
   }
 }
 
