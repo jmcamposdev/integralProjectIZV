@@ -1,4 +1,5 @@
-import { Group, groupFieldsValidation } from '../models/Group.js'
+import { Group, groupFieldsValidation, groupHasLessons } from '../models/Group.js'
+import { Lesson } from '../models/Lesson.js'
 
 /**
  * Get all groups from database
@@ -8,11 +9,13 @@ import { Group, groupFieldsValidation } from '../models/Group.js'
  * @param {*} res The response object from Express
  */
 export const getGroups = async (req, res) => {
-  // Get all groups from database
   try {
+    // Get all groups from database
     const groups = await Group.findAll()
+    // Send the groups in the response as JSON
     res.json(groups)
   } catch (err) {
+    // If there's an error, send it
     res.status(500).json({ message: err.message })
   }
 }
@@ -26,7 +29,8 @@ export const getGroups = async (req, res) => {
  * @param {*} res The response object from Express
  */
 export const getGroup = async (req, res) => {
-  const { id } = req.params // Destructuring the id from the request parameters
+  // Destructuring the id from the request parameters
+  const { id } = req.params
 
   try {
     // Get the group from database
@@ -40,7 +44,8 @@ export const getGroup = async (req, res) => {
     // Send the group in the response as JSON
     res.json(group)
   } catch (err) {
-    res.status(500).json({ message: err.message }) // If there's an error, send it
+    // If there's an error, send it
+    res.status(500).json({ message: err.message })
   }
 }
 
@@ -60,12 +65,14 @@ export const createGroup = async (req, res) => {
     return res.status(400).json({ message: 'Please send schoolYear, course, denomination, formationId and isMorning' })
   }
 
-  // Create the group
   try {
+    // Create the group
     const group = await Group.create({ schoolYear, course, denomination, isMorning, formationId })
-    res.json(group) // Send the group in the response
+    // Send the group in the response as JSON
+    res.json(group)
   } catch (err) {
-    res.status(500).json({ message: err.message }) // If there's an error, send it
+    // If there's an error, send it
+    res.status(500).json({ message: err.message })
   }
 }
 
@@ -79,22 +86,39 @@ export const createGroup = async (req, res) => {
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const updateGroup = (req, res) => {
-  const { id } = req.params // Destructuring the id from the request parameters
+export const updateGroup = async (req, res) => {
+  // Destructuring the id from the request parameters
+  const { id } = req.params
+  const { schoolYear, course, denomination, isMorning, formationId } = req.body
 
-  Group.findOne({ where: { id } })
-    .then(group => {
-      // If the group doesn't exist, send a 404 status code and a message
-      if (!group) {
-        return res.status(404).json({ message: 'Group not found' })
-      }
-      // Update the group
-      group.set(req.body)
-      group.save()
-        .then(group => res.json(group)) // Send the updated group in the response
-        .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
-    })
-    .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
+  // Validate the request body
+  if (!await groupFieldsValidation(schoolYear, course, denomination, isMorning, formationId)) {
+    return res.status(400).json({ message: 'Please send schoolYear, course, denomination, formationId and isMorning' })
+  }
+
+  // If the group has lessons and the course or formationId has changed, send a 400 status code and a message
+  if (await groupHasLessons(id) && (course !== undefined || formationId !== undefined)) {
+    return res.status(400).json({ message: 'The group has lessons, you can\'t change the course or the formation' })
+  }
+
+  try {
+    // Get the group from database
+    const group = await Group.findOne({ where: { id } })
+
+    // If the group doesn't exist, send a 404 status code and a message
+    if (!group) {
+      return res.status(404).json({ message: 'Group not found' })
+    }
+
+    // Update the group
+    group.set(req.body)
+    group.save()
+    // Send the updated group in the response
+    res.json(group)
+  } catch (err) {
+    // If there's an error, send it
+    res.status(500).json({ message: err.message })
+  }
 }
 
 /**
@@ -105,18 +129,54 @@ export const updateGroup = (req, res) => {
  * @param {*} req The request object from Express
  * @param {*} res The response object from Express
  */
-export const deleteGroup = (req, res) => {
-  const { id } = req.params // Destructuring the id from the request parameters
+export const deleteGroup = async (req, res) => {
+  // Destructuring the id from the request parameters
+  const { id } = req.params
 
-  // Delete the group but if it doesn't exist, send a 404 status code and a message
-  Group.destroy({ where: { id } })
-    .then(group => {
-      // If the group doesn't exist, send a 404 status code and a message
-      if (!group) {
-        return res.status(404).json({ message: 'Group not found' })
-      }
-      // Send the group in the response as JSON
-      res.json({ message: 'Group deleted successfully' })
-    })
-    .catch(err => res.status(500).json({ message: err.message }))
+  try {
+    // Delete the group from database
+    const deleted = await Group.destroy({ where: { id } })
+
+    // If the group doesn't exist, send a 404 status code and a message
+    if (deleted === 0) {
+      return res.status(404).json({ message: 'Group not found' })
+    }
+
+    // Send a success message in the response
+    res.json({ message: 'Group deleted successfully' })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
+
+/**
+ * Get all lessons from a group
+ * - If the group exists, send all the lessons from the group in the response
+ * - If the group doesn't exist, send a 404 status code and a message
+ * - If there's an error, send it
+ * @param {Object} req The request object from Express
+ * @param {Object} res The response object from Express
+ */
+export const getGroupLessons = async (req, res) => {
+  // Destructuring the id from the request parameters
+  const { id } = req.params
+
+  try {
+    // Get the group from database
+    const group = await Group.findOne({ where: { id } })
+
+    // If the group doesn't exist, send a 404 status code and a message
+    if (!group) {
+      return res.status(404).json({ message: 'Group not found' })
+    }
+
+    // Get all lessons from the group
+    const lessons = await Lesson.findAll({ where: { groupId: id } })
+
+    // Send the lessons in the response as JSON
+    res.json(lessons)
+  } catch (err) {
+    // If there's an error, send it
+    res.status(500).json({ message: err.message })
+  }
 }

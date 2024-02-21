@@ -12,12 +12,13 @@ import { ROLES } from '../models/Role.js'
  */
 export const getProfessors = async (req, res) => {
   try {
+    // Get all professors from database
     const professors = await Professor.findAll()
+    // Send the professors in the response as JSON
     res.json(professors)
   } catch (err) {
-    res.status(500).json({
-      message: err.message
-    })
+    // If there's an error, send it
+    res.status(500).json({ message: err.message })
   }
 }
 
@@ -31,24 +32,22 @@ export const getProfessors = async (req, res) => {
  */
 export const getProfessor = async (req, res) => {
   try {
-    const { id } = req.params // Destructuring the id from the request parameters
+    // Destructuring the id from the request parameters
+    const { id } = req.params
 
     // Get the professor from database
     const professor = await Professor.findOne({ where: { id } })
 
     // If the professor doesn't exist, send a 404 status code and a message
     if (!professor) {
-      return res.status(404).json({
-        message: 'Professor not found'
-      })
+      return res.status(404).json({ message: 'Professor not found' })
     }
 
     // Send the professor in the response as JSON
     res.json(professor)
   } catch (err) {
-    res.status(500).json({
-      message: err.message // If there's an error, send it
-    })
+    // If there's an error, send it
+    res.status(500).json({ message: err.message })
   }
 }
 
@@ -61,7 +60,7 @@ export const getProfessor = async (req, res) => {
  * @param {*} res The response object from Express
  */
 export const createProfessor = async (req, res) => {
-  console.log(req.body)
+  // Destructuring the request body to get the values of the fields
   const {
     senecaUser,
     name,
@@ -99,17 +98,18 @@ export const createProfessor = async (req, res) => {
       firstSurname,
       lastSurname,
       password: User.encryptPassword(password), // Encrypt the password
-      roleId: ROLES.USER // Set the default role
+      roleId: ROLES.USER // Set the default role a user
     })
 
-    console.log(createdProfessor, user)
-
+    // If there's an error creating the professor or the user, send a 500 status code and a message
     if (!createdProfessor || !user) {
       return res.status(500).json({ message: 'Error creating the professor' })
     }
 
+    // Send the created professor in the response
     res.json(createdProfessor)
   } catch (err) {
+    // If there's an error, send it
     res.status(500).json({ message: err.message })
   }
 }
@@ -124,6 +124,7 @@ export const createProfessor = async (req, res) => {
  * @returns
  */
 export const updateProfessor = async (req, res) => {
+  // Destructuring the id from the request parameters
   const { id } = req.params
 
   try {
@@ -151,12 +152,13 @@ export const updateProfessor = async (req, res) => {
     }
 
     // Update the professor only with the fields sent in the request body
-    // If the field doesn't exist, we don't update it
     professor.set(req.body)
     await professor.save()
 
-    res.json(professor) // Send the updated professor in the response
+    // Send the updated professor in the response
+    res.json(professor)
   } catch (err) {
+    // If there's an error, send it
     res.status(500).json({ message: err.message }) // If there's an error, send it
   }
 }
@@ -204,12 +206,7 @@ export const getProfessorLessons = async (req, res) => {
 
   try {
     // Get the lessons from the database
-    const lessons = await Lesson.findAll({
-      where: {
-        professorId: id
-      }
-    })
-
+    const lessons = await Lesson.findAll({ where: { professorId: id } })
     // Send the lessons in the response as JSON
     res.json(lessons)
   } catch (err) {

@@ -14,7 +14,7 @@ const ProfessorTable = () => {
   const [error, setError] = useState(null) // Save the error message if there is one
   const [professors, setProfessors] = useState([]) // Save all professors from the database
   const [professorIdToDelete, setProfessorIdToDelete] = useState(null) // Save the professor Id to delete
-  const [isSpecialtyDisabled, setIsSpecialtyDisabled] = useState(false)
+  const [hasLessons, setHasLessons] = useState(false)
   const [viewDeleteModal, setViewDeleteModal] = useState(false) // Show or hide the delete modal
   const [viewCreateModal, setViewCreateModal] = useState(false) // Show or hide the create modal
   const [viewUpdateModal, setViewUpdateModal] = useState(false) // Show or hide the update modal
@@ -103,7 +103,13 @@ const ProfessorTable = () => {
     handleCloseDeleteModal()
   }
 
-  const onDelete = (id) => {
+  const onDelete = async (id) => {
+    // Check if the professor has lessons
+    const hasLessons = await professorService.getProfessorLessons(id)
+    if (hasLessons.length > 0) {
+      setError('You can\'t delete a professor with assigned lessons.')
+      return
+    }
     setProfessorIdToDelete(id)
   }
 
@@ -121,22 +127,20 @@ const ProfessorTable = () => {
    */
 
   /**
-   * This function shows the create modal
+   * This runs when the viewCreateModal changes
+   * It resets the groupInputs when the create modal is closed
+   * and hides the update modal when the create modal is closed
    */
-  const handleShowCreateModal = () => {
-    setViewCreateModal(true)
-    isSpecialtyDisabled && setIsSpecialtyDisabled(false)
-  }
-
-  /**
-   * This function hides the create modal
-   */
-  const handleCloseCreateModal = () => {
-    setViewCreateModal(false)
-    setViewUpdateModal(false)
-    // Reset the inputs
-    resetCreateInputs()
-  }
+  useEffect(() => {
+    // If the create modal is closed, reset the moduleInputs
+    if (!viewCreateModal) {
+      setViewUpdateModal(false)
+      setHasLessons(false)
+      // If the update modal is closed, reset the moduleInputs
+    } else if (!viewUpdateModal) {
+      resetCreateInputs()
+    }
+  }, [viewCreateModal])
 
   /**
    * This function creates a new professor
@@ -149,26 +153,14 @@ const ProfessorTable = () => {
     try {
       const professor = await professorService.createProfessor(createInputs)
       setProfessors([...professors, professor])
-      handleCloseCreateModal()
     } catch (error) {
-      handleCloseCreateModal()
       setError(error.message)
       console.error('Error creating professor:', error.message)
     }
-    // Reset the inputs
-    resetCreateInputs()
+
+    // Close the create modal the useEffect will reset the inputs
+    setViewCreateModal(false)
   }
-
-  useEffect(() => {
-    const fetchProfessorLessons = async () => {
-      const lessons = await getProfessorLessons(createInputs.id)
-      setIsSpecialtyDisabled(lessons.length > 0)
-    }
-
-    if (viewUpdateModal) {
-      fetchProfessorLessons()
-    }
-  }, [createInputs.id, viewUpdateModal])
 
   /**
    * Handles the edit professor button
@@ -176,62 +168,52 @@ const ProfessorTable = () => {
    * to be edited
    * @param {Object} professor The professor to edit
    */
-  const handleEditProfessorButton = (professor) => {
-    setViewUpdateModal(true) // Set the viewUpdateModal to true
-    // Update the inputs with the professor data
-    setCreateInputs({
-      senecaUser: professor.senecaUser,
-      name: professor.name,
-      firstSurname: professor.firstSurname,
-      lastSurname: professor.lastSurname,
-      specialty: professor.specialty,
-      id: professor.id
-    })
-    // Show the create modal
-    setViewCreateModal(true)
+  const handleEditProfessorButton = async (professor) => {
+    try {
+      // Check if the professor has lessons
+      const lessons = await professorService.getProfessorLessons(professor.id)
+      // If the professor has lessons, disable the specialty input
+      setHasLessons(lessons.length > 0)
+      // Set the inputs with the professor data and the password and confirmPassword empty to prevent uncontrolled inputs warning
+      // Update the inputs with the professor data
+      setCreateInputs({ ...professor, password: '', confirmPassword: '' })
+
+      setViewCreateModal(true) // Show the create modal
+      setViewUpdateModal(true) // Set the viewUpdateModal to true
+    } catch (error) {
+      setError(error.message)
+    }
   }
 
   const handleUpdateProfessor = async (event) => {
     event.preventDefault() // Prevent the default form behavior
+    // Create a copy of the inputs
     const professorInputs = createInputs
-    if (isSpecialtyDisabled) {
+    // Remove the password and confirmPassword from the inputs if they are empty
+    if (professorInputs.password === '' && professorInputs.confirmPassword === '') {
+      delete professorInputs.password
+      delete professorInputs.confirmPassword
+    }
+    // If the professor has lessons, remove the specialty input to avoid changing it
+    if (hasLessons) {
       delete professorInputs.specialty
     }
-
     // If the senecaUser is the same, remove it from the inputs
     if (professorInputs.senecaUser === professors.find((prof) => prof.id === professorInputs.id).senecaUser) {
       delete professorInputs.senecaUser
     }
 
     try {
+      // Update the professor
       const professor = await professorService.updateProfessor(professorInputs)
-      const newProfessorsList = professors.map((prof) => {
-        if (prof.id === professor.id) {
-          return professor
-        }
-        return prof
-      })
-      setProfessors(newProfessorsList)
-      handleCloseCreateModal()
+      // Update the state with the new professor
+      setProfessors(professors.map((prof) => (prof.id === professor.id ? professor : prof)))
     } catch (error) {
-      handleCloseCreateModal()
       setError(error.message)
-      console.error('Error updating professor:', error.message)
     }
-    // Reset the inputs
-    resetCreateInputs()
-    // Reset the viewUpdateModal
-    setViewUpdateModal(false)
-  }
 
-  const getProfessorLessons = async (professorId) => {
-    try {
-      const lessons = await professorService.getProfessorLessons(professorId)
-      return lessons
-    } catch (error) {
-      setError(error.message)
-      console.error('Error getting professor lessons:', error.message)
-    }
+    // Close the create modal the useEffect will reset the inputs
+    setViewCreateModal(false)
   }
 
   return (
@@ -246,7 +228,7 @@ const ProfessorTable = () => {
               {// Only show the add professor button if the user is an admin
               isAdmin && (
                 <button
-                  onClick={handleShowCreateModal}
+                  onClick={() => setViewCreateModal(true)}
                   className='mt-8 flex ml-auto w-max items-center justify-center gap-2.5 rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10'
                 >
                   <span>
@@ -265,7 +247,7 @@ const ProfessorTable = () => {
       {/* <!-- ===== Start of Add Professor Modal ===== --> */}
       {isAdmin && (
         <FormModal
-          isOpen={viewCreateModal} onClose={handleCloseCreateModal} onSubmit={viewUpdateModal ? handleUpdateProfessor : handleCreateProfessor} title={viewUpdateModal ? 'Update Professor' : 'Create Professor'} submitText={viewUpdateModal ? 'Update Professor' : 'Add new Professor'} formFields={[ // Add the form fields
+          isOpen={viewCreateModal} onClose={() => setViewCreateModal(false)} onSubmit={viewUpdateModal ? handleUpdateProfessor : handleCreateProfessor} title={viewUpdateModal ? 'Update Professor' : 'Create Professor'} submitText={viewUpdateModal ? 'Update Professor' : 'Add new Professor'} formFields={[ // Add the form fields
             {
               colSpan: 2,
               label: 'Seneca User',
@@ -300,7 +282,8 @@ const ProfessorTable = () => {
               name: 'lastSurname',
               value: createInputs.lastSurname,
               handleInputsChange: handleCreateInputs,
-              required: true
+              required: true,
+              autoComplete: 'username'
             },
             {
               colSpan: 2,
@@ -314,7 +297,8 @@ const ProfessorTable = () => {
                 { value: 'FP', label: 'FP' },
                 { value: 'Secondary', label: 'Secondary' }
               ],
-              disabled: isSpecialtyDisabled
+              disabled: hasLessons,
+              disabledMessage: 'You can\'t change the specialty of a professor with assigned lessons.'
             },
             !viewUpdateModal && {
               colSpan: 2,
@@ -323,7 +307,8 @@ const ProfessorTable = () => {
               name: 'password',
               value: createInputs.password,
               handleInputsChange: handleCreateInputs,
-              required: true
+              required: true,
+              autoComplete: 'new-password'
             },
             !viewUpdateModal && {
               colSpan: 2,
@@ -332,7 +317,8 @@ const ProfessorTable = () => {
               name: 'confirmPassword',
               value: createInputs.confirmPassword,
               handleInputsChange: handleCreateInputs,
-              required: true
+              required: true,
+              autoComplete: 'new-password'
             }
           ].filter(Boolean)} // Remove the null values
         />)}

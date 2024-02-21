@@ -38,6 +38,16 @@ const moduleService = {
       console.error('Error deleting module:', error.message)
       throw error
     }
+  },
+
+  getModuleLessons: async (id) => {
+    try {
+      const lessons = await api.get(`modules/${id}/lessons`)
+      return lessons
+    } catch (error) {
+      console.error('Error getting module lessons:', error.message)
+      throw error
+    }
   }
 }
 

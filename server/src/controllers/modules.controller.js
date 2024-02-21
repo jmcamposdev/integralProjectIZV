@@ -1,5 +1,6 @@
 import { Module, moduleFieldsValidation } from '../models/Module.js'
 import { Formation } from '../models/Formation.js'
+import { Lesson } from '../models/Lesson.js'
 
 /**
  * Get all modules from database
@@ -139,4 +140,27 @@ export const deleteModule = (req, res) => {
       res.json({ message: 'Module deleted successfully' })
     })
     .catch((err) => res.status(500).json({ message: err.message }))
+}
+
+/**
+ * Get all lessons of a module from database by id
+ * - If the module exists, get all the lessons of the module and send them in the response
+ * - If the module doesn't exist, send a 404 status code and a message
+ * - If there's an error, send it
+ * @param {Object} req The request object from Express
+ * @param {Object} res The response object from Express
+ */
+export const getModuleLessons = async (req, res) => {
+  const { id } = req.params
+
+  try {
+    const module = await Module.findOne({ where: { id } })
+    if (!module) {
+      return res.status(404).json({ message: 'Module not found' })
+    }
+    const lessons = await Lesson.findAll({ where: { moduleId: id } })
+    res.json(lessons)
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
 }

@@ -93,9 +93,12 @@ export const professorValidateSomeFields = (params) => {
  */
 export const professorExists = async (senecaUser) => {
   try {
+    // Find the professor by senecaUser
     const professor = await Professor.findOne({ where: { senecaUser } })
+    // Return true if the professor exists
     return professor !== null
   } catch (err) {
+    // If there's an error, return false
     return false
   }
 }
@@ -107,9 +110,12 @@ export const professorExists = async (senecaUser) => {
  */
 export const professorHasLessons = async (professorId) => {
   try {
+    // Get all lessons of the professor
     const lessons = await Lesson.findAll({ where: { professorId } })
+    // Return true if the professor has lessons
     return lessons.length > 0
   } catch (err) {
+    // If there's an error, return false
     return false
   }
 }

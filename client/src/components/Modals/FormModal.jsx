@@ -22,35 +22,52 @@ const FormModal = ({ isOpen, onClose, onSubmit, title, submitText, formFields })
                   <label htmlFor={field.id} className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>{field.label}</label>
                   {field.type === 'select'
                     ? (
-                      <div className='relative z-20 bg-transparent dark:bg-form-input'>
-                        <select
-                          onChange={field.handleInputsChange}
-                          id={field.id}
-                          name={field.name}
-                          className='relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary '
-                          value={field.value}
-                          disabled={field.disabled}
-                          required={field.required}
-                        >
-                          {field.options.map((option, i) => (
-                            <option key={i} value={option.value} disabled={option.disabled}>{option.label}</option>
-                          ))}
-                        </select>
-                        <span className='absolute top-1/2 right-4 z-30 -translate-y-1/2 icon-[ep--arrow-down]' style={{ fontSize: '22px' }} />
+                      <div>
+                        <div className='relative z-20 bg-transparent dark:bg-form-input'>
+                          <select
+                            onChange={field.handleInputsChange}
+                            id={field.id}
+                            name={field.name}
+                            className='relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary '
+                            value={field.value}
+                            disabled={field.disabled}
+                            required={field.required}
+                          >
+                            {field.options.map((option, i) => (
+                              <option key={i} value={option.value} disabled={option.disabled}>{option.label}</option>
+                            ))}
+                          </select>
+                          <span className='absolute top-1/2 right-4 z-30 -translate-y-1/2 icon-[ep--arrow-down]' style={{ fontSize: '22px' }} />
+                        </div>
+                        {field.disabled && (
+                          <span className='flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1'>
+                            {field.disabledMessage}
+                          </span>
+                        )}
                       </div>
 
                       )
                     : (
-                      <input
-                        onChange={field.handleInputsChange}
-                        type={field.type}
-                        name={field.name}
-                        id={field.id}
-                        value={field.value}
-                        placeholder={`Enter ${field.label}`}
-                        className='w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
-                        required={field.required}
-                      />
+                      <>
+                        <input
+                          onChange={field.handleInputsChange}
+                          type={field.type}
+                          name={field.name}
+                          id={field.id}
+                          value={field.value}
+                          placeholder={`Enter ${field.label}`}
+                          autoComplete={field.autoComplete}
+                          className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white disabled:text-bodydark disabled:dark:text-bodydark dark:focus:border-primary dark:disabled:bg-black'
+                          required={field.required}
+                          disabled={field.disabled}
+                        />
+                        {field.disabled && (
+                          <span className='flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1'>
+                            {field.disabledMessage}
+                          </span>
+                        )}
+                      </>
+
                       )}
                 </div>
               ))}

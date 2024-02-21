@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { createModule, deleteModule, getModule, getModules, updateModule } from '../controllers/modules.controller.js'
+import { createModule, deleteModule, getModule, getModuleLessons, getModules, updateModule } from '../controllers/modules.controller.js'
 import { authJwt } from '../middlewares/index.js'
 
 /**
@@ -17,6 +17,7 @@ router.post('/modules', [authJwt.verifyToken, authJwt.isAdmin], createModule) //
 router.put('/modules/:id', [authJwt.verifyToken, authJwt.isAdmin], updateModule) // Update a module
 router.delete('/modules/:id', [authJwt.verifyToken, authJwt.isAdmin], deleteModule) // Delete a module
 router.get('/modules/:id', getModule) // Get a module by id
+router.get('/modules/:id/lessons', getModuleLessons) // Get all lessons of a module
 
 // Export router to use it in the app
 export default router

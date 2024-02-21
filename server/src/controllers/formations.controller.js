@@ -11,9 +11,12 @@ import { Module } from '../models/Module.js'
  */
 export const getFormations = async (req, res) => {
   try {
+    // Get all formations from database
     const formations = await Formation.findAll()
+    // Send the formations in the response as JSON
     res.json(formations)
   } catch (err) {
+    // If there's an error, send it
     res.status(500).json({ message: err.message })
   }
 }
@@ -28,16 +31,16 @@ export const getFormations = async (req, res) => {
  */
 export const getFormation = async (req, res) => {
   try {
-    const { id } = req.params // Destructuring the id from the request parameters
+    // Destructuring the id from the request parameters
+    const { id } = req.params
     // Get the formation from database
     const formation = await Formation.findOne({ where: { id } })
-
     // If the formation doesn't exist, send a 404 status code and a message
     if (!formation) {
       return res.status(404).json({ message: 'Formation not found' })
     }
-
-    res.json(formation) // Send the formation in the response as JSON
+    // Send the formation in the response as JSON
+    res.json(formation)
   } catch (err) {
     res.status(500).json({ message: err.message }) // If there's an error, send it
   }
@@ -55,7 +58,7 @@ export const createFormation = async (req, res) => {
   // Destructuring the request body to get the values of the fields
   const { denomination, acronym } = req.body
 
-  // Validate the request body
+  // If the fields are not valid, send a 400 status code and a message
   if (!formationFieldsValidation(denomination, acronym)) {
     return res.status(400).json({ message: 'Please send denomination and acronym' })
   }
@@ -63,9 +66,11 @@ export const createFormation = async (req, res) => {
   try {
     // Create the formation
     const formation = await Formation.create({ denomination, acronym })
-    res.json(formation) // Send the created formation in the response
+    // Send the created formation in the response
+    res.json(formation)
   } catch (err) {
-    res.status(500).json({ message: err.message }) // If there's an error, send it
+    // If there's an error, send it
+    res.status(500).json({ message: err.message })
   }
 }
 
@@ -78,7 +83,8 @@ export const createFormation = async (req, res) => {
  * @param {*} res The response object from Express
  */
 export const updateFormation = async (req, res) => {
-  const { id } = req.params // Destructuring the id from the request parameters
+  // Destructuring the id from the request parameters
+  const { id } = req.params
 
   try {
     // Validate all the fields to be not null or empty
@@ -89,18 +95,20 @@ export const updateFormation = async (req, res) => {
     // Get the formation from database
     const formation = await Formation.findOne({ where: { id } })
 
+    // If the formation doesn't exist, send a 404 status code and a message
     if (!formation) {
       return res.status(404).json({ message: 'Formation not found' })
     }
 
     // Update the formation with the new values from the request body
     formation.set(req.body)
+    // Save the updated formation
     await formation.save()
-
     // Send the updated formation in the response
     res.json(formation)
   } catch (err) {
-    res.status(500).json({ message: err.message }) // If there's an error, send it
+    // If there's an error, send it
+    res.status(500).json({ message: err.message })
   }
 }
 
@@ -119,7 +127,7 @@ export const deleteFormation = async (req, res) => {
     // Delete the formation
     const deletedFormationCount = await Formation.destroy({ where: { id } })
 
-    // If no formation was deleted, send a 404 status code
+    // If the formation doesn't exist, send a 404 status code and a message
     if (deletedFormationCount === 0) {
       return res.status(404).json({ message: 'Formation not found' })
     }
@@ -139,12 +147,16 @@ export const deleteFormation = async (req, res) => {
  */
 export const getFormationGroups = async (req, res) => {
   try {
+    // Destructuring the id from the request parameters
     const { id } = req.params
 
+    // Get all groups from the formation
     const groups = await Group.findAll({ where: { formationId: id } })
 
+    // Send the groups in the response as JSON
     res.json(groups)
   } catch (err) {
+    // If there's an error, send it
     res.status(500).json({ message: err.message })
   }
 }
@@ -156,12 +168,16 @@ export const getFormationGroups = async (req, res) => {
  */
 export const getFormationsModules = async (req, res) => {
   try {
+    // Destructuring the id from the request parameters
     const { id } = req.params
 
+    // Get all modules from the formation
     const modules = await Module.findAll({ where: { formationId: id } })
 
+    // Send the modules in the response as JSON
     res.json(modules)
   } catch (err) {
+    // If there's an error, send it
     res.status(500).json({ message: err.message })
   }
 }
