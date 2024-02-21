@@ -47,6 +47,15 @@ const LessonTable = ({ lessons, professors, modules, groups }) => {
         setCreateLessonInput({ ...createLessonInput, module: null })
         return
       }
+
+      // Get the professors that are available for the module with the same specialty
+      const filteredProfessors = professors.filter((professor) => professor.specialty === module.specialty)
+      if (filteredProfessors.length <= 0) {
+        setError('No professors available for this module. Please add a professor with the same specialty.')
+        setCreateLessonInput({ ...createLessonInput, module: null })
+        return
+      }
+
       setCreateLessonInput({ ...createLessonInput, module })
     }
   }
@@ -97,7 +106,7 @@ const LessonTable = ({ lessons, professors, modules, groups }) => {
                         <i className='absolute top-1/2 right-4 z-30 -translate-y-1/2 icon-[ep--arrow-down]' style={{ fontSize: '22px' }} />
                       </div>
                       <div className='flex justify-end '>
-                        <button type='submit' className='bg-primary text-white py-2 px-4 rounded-md' disabled={createLessonInput.group === null || createLessonInput.module === null}>
+                        <button type='submit' className={`inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 duration-300 ease-in-out ${createLessonInput.group === null || createLessonInput.module === null ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={createLessonInput.group === null || createLessonInput.module === null}>
                           Create Lesson
                         </button>
                       </div>
