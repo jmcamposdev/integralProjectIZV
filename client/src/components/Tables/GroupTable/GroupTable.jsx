@@ -267,7 +267,8 @@ const GroupTable = ({ formations }) => {
                 ...formations.map((formation) => ({ value: formation.id, label: formation.acronym }))
               ],
               required: true,
-              disabled: hasLessons
+              disabled: hasLessons,
+              disabledMessage: 'You can\'t change the formation if the group has lessons'
             },
             {
               label: 'Course',
@@ -276,7 +277,8 @@ const GroupTable = ({ formations }) => {
               value: groupInputs.course,
               handleInputsChange: handleGroupInputs,
               required: true,
-              disabled: hasLessons
+              disabled: hasLessons,
+              disabledMessage: 'You can\'t change the course if the group has lessons'
             },
             {
               label: 'Letter',
