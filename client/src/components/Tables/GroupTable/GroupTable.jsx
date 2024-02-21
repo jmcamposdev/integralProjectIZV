@@ -210,7 +210,6 @@ const GroupTable = ({ formations }) => {
     try {
       // Get the lessons from the group
       const lessons = await groupService.getGroupLessons(group.id)
-      console.log(lessons)
       // Set the hasLessons state with the lessons length
       setHasLessons(lessons.length > 0)
 
