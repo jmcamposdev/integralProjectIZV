@@ -65,3 +65,7 @@ export const groupFieldsValidation = async (schoolYear, course, denomination, is
   const validFormationId = await Formation.findByPk(formationId) !== null
   return validSchoolYear && validCourse && validDenomination && validIsMorning && validFormationId
 }
+
+export const groupHasLessons = async (groupId) => {
+  return await Lesson.findOne({ where: { groupId } }) !== null
+}
