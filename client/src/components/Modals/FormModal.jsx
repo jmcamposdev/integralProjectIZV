@@ -56,6 +56,7 @@ const FormModal = ({ isOpen, onClose, onSubmit, title, submitText, formFields })
                           id={field.id}
                           value={field.value}
                           placeholder={`Enter ${field.label}`}
+                          autoComplete={field.autoComplete}
                           className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white disabled:text-bodydark disabled:dark:text-bodydark dark:focus:border-primary dark:disabled:bg-black'
                           required={field.required}
                           disabled={field.disabled}
