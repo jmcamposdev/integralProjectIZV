@@ -12,12 +12,11 @@ const Footer = () => {
           {/* End Col */}
 
           <div className='col-span-1'>
-            <h4 className='mb-7.5 lg:text-2xl font-medium text-black dark:text-white'>Product</h4>
+            <h4 className='mb-7.5 lg:text-2xl font-medium text-black dark:text-white'>Legal</h4>
 
             <div className='mt-3 grid space-y-3'>
-              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/'>Pricing</a></p>
-              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/'>Changelog</a></p>
-              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/'>Docs</a></p>
+              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/'>Privacy Policy</a></p>
+              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/'>Cookie Policy</a></p>
             </div>
           </div>
           {/* End Col */}
