@@ -5,19 +5,9 @@ const Footer = () => {
       <div className='w-full max-w-[85rem] py-20 px-4 sm:px-6 lg:px-8 lg:pt-20 mx-auto'>
         {/* Grid */}
         <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-[80px]'>
-          <div className='col-span-full lg:col-span-1 lg:block'>
+          <div className='col-span-2'>
             <a className=' h-[34px] w-[100%] flex-none text-xl font-semibold dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/' aria-label='Brand'><img src={Logo} alt='' /></a>
-            <p className='mt-7 text-gray-600 dark:text-gray-400'>Page description and what we do and stuff i dont know what else to add here.</p>
-          </div>
-          {/* End Col */}
-
-          <div className='col-span-1'>
-            <h4 className='mb-7.5 lg:text-2xl font-medium text-black dark:text-white'>Legal</h4>
-
-            <div className='mt-3 grid space-y-3'>
-              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/'>Privacy Policy</a></p>
-              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/'>Cookie Policy</a></p>
-            </div>
+            <p className='max-w-[370px] mt-7 text-gray-600 dark:text-gray-400'>Page description and what we do and stuff i dont know what else to add here.</p>
           </div>
           {/* End Col */}
 
@@ -45,7 +35,7 @@ const Footer = () => {
                   <label htmlFor='hero-input' className='sr-only'>Search</label>
                   <input type='text' id='hero-input' name='hero-input' className='dark:border-form-stroke-dark border border-stroke py-3 px-4 block w-full rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-700 dark:border-transparent dark:text-gray-400 dark:focus:ring-gray-600 bg-slate-50' placeholder='Enter your email' />
                 </div>
-                <button type='submit' aria-label='submit button' id='submit' class='flex h-11.5 w-full max-w-11.5 items-center justify-center rounded-md bg-primary text-white' name='submit'><svg class='fill-current' width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M16.6357 13.6701L18.3521 8.5208C19.8516 4.02242 20.6013 1.77322 19.414 0.585953C18.2268 -0.601315 15.9776 0.148415 11.4792 1.64788L6.32987 3.36432C2.69923 4.57453 0.883919 5.17964 0.368059 6.06698C-0.122686 6.91112 -0.122686 7.95369 0.368058 8.79783C0.883919 9.68518 2.69923 10.2903 6.32987 11.5005C6.77981 11.6505 7.28601 11.5434 7.62294 11.2096L13.1286 5.75495C13.4383 5.44808 13.9382 5.45041 14.245 5.76015C14.5519 6.06989 14.5496 6.56975 14.2398 6.87662L8.82312 12.2432C8.45175 12.6111 8.3342 13.1742 8.49951 13.6701C9.70971 17.3007 10.3148 19.1161 11.2022 19.6319C12.0463 20.1227 13.0889 20.1227 13.933 19.6319C14.8204 19.1161 15.4255 17.3008 16.6357 13.6701Z' fill='' /></svg></button>
+                <button type='submit' aria-label='submit button' id='submit' className='flex h-11.5 w-full max-w-11.5 items-center justify-center rounded-md bg-primary text-white' name='submit'><svg className='fill-current' width='20' height='20' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'><path d='M16.6357 13.6701L18.3521 8.5208C19.8516 4.02242 20.6013 1.77322 19.414 0.585953C18.2268 -0.601315 15.9776 0.148415 11.4792 1.64788L6.32987 3.36432C2.69923 4.57453 0.883919 5.17964 0.368059 6.06698C-0.122686 6.91112 -0.122686 7.95369 0.368058 8.79783C0.883919 9.68518 2.69923 10.2903 6.32987 11.5005C6.77981 11.6505 7.28601 11.5434 7.62294 11.2096L13.1286 5.75495C13.4383 5.44808 13.9382 5.45041 14.245 5.76015C14.5519 6.06989 14.5496 6.56975 14.2398 6.87662L8.82312 12.2432C8.45175 12.6111 8.3342 13.1742 8.49951 13.6701C9.70971 17.3007 10.3148 19.1161 11.2022 19.6319C12.0463 20.1227 13.0889 20.1227 13.933 19.6319C14.8204 19.1161 15.4255 17.3008 16.6357 13.6701Z' fill='' /></svg></button>
               </div>
             </form>
           </div>
@@ -89,7 +79,17 @@ const Footer = () => {
               </svg>
             </a>
           </div>
+
           {/* End Social Brands */}
+        </div>
+        <div className='mt-2 sm:mt-6 grid gap-y-2 sm:gap-y-0 sm:flex sm:justify-between sm:items-center'>
+          <div className='flex justify-between items-center'>
+            <a href='/' className='text-sm text-gray-400 hover:text-black dark:hover:text-white'>Privacy Policy</a>
+          </div>
+          <div className='flex justify-between items-center'>
+            <a href='/' className='text-sm text-gray-400 hover:text-black dark:hover:text-white'>Cookie Policy</a>
+          </div>
+
         </div>
       </div>
     </footer>
