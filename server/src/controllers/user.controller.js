@@ -90,7 +90,7 @@ export const updateUser = async (req, res) => {
     // Delete the password from the user object
     delete user.dataValues.password
     // Send the updated user in the response
-    res.json({ message: 'User updated successfully', user })
+    res.json({ ...user.dataValues })
   } catch (error) { // If there's an error, send it
     res.status(500).json({ message: error.message })
   }
