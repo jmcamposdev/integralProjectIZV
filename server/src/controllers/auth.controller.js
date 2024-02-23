@@ -31,23 +31,9 @@ export const signIn = async (req, res) => {
  * @param {Object} res The response object
  */
 export const refreshToken = async (req, res) => {
-  const { token } = req.body
+  const { senecaUser } = req.body
 
-  if (!token) {
-    return res.status(401).json({ message: 'No token provided' })
-  }
-
-  const decoded = jwt.verify(token, process.env.JWT_SECRET)
-
-  if (!decoded) {
-    return res.status(401).json({ message: 'Unauthorized' })
-  }
-
-  if (decoded.exp < Date.now() / 1000) {
-    return res.status(401).json({ message: 'Token expired' })
-  }
-
-  const { id, role, senecaUser, name, firstSurname, lastSurname } = decoded
+  const { id, role, name, firstSurname, lastSurname } = req.user
 
   const newToken = jwt.sign({ id, role, senecaUser, name, firstSurname, lastSurname }, process.env.JWT_SECRET, {
     expiresIn: 86400 // 24 hours
