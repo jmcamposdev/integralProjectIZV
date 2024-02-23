@@ -73,6 +73,16 @@ export const updateUser = async (req, res) => {
       return res.status(400).json({ message: 'Necessary fields are empty' })
     }
 
+    // Validate that only exist one user with the same senecaUser
+    const newSenecaUser = req.body?.senecaUser
+
+    if (newSenecaUser) {
+      const alreadyExist = await User.findOne({ where: { senecaUser: newSenecaUser } })
+      if (alreadyExist) {
+        return res.status(400).json({ message: 'There is already a user with the same senecaUser' })
+      }
+    }
+
     // Get the user
     const user = await User.findOne({ where: { senecaUser } })
     // If the user doesn't exist, send a 404 status code and a message
