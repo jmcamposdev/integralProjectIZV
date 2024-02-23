@@ -76,7 +76,7 @@ const Header = () => {
                   <li>
                     <a
                       onClick={handleSignOut}
-                      className='w-fit text-3xl block py-3 px-7 font-bold text-dark hover:opacity-70 dark:text-white md:block'
+                      className='w-fit text-3xl block ease-in-up rounded-md bg-primary py-3 px-8 font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9'
                     >
                       Sign Out
                     </a>
