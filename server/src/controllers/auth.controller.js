@@ -33,9 +33,11 @@ export const signIn = async (req, res) => {
 export const refreshToken = async (req, res) => {
   const { senecaUser } = req.body
 
-  const { id, role, name, firstSurname, lastSurname } = req.user
+  const { id, roleId, name, firstSurname, lastSurname } = req.user
 
-  const newToken = jwt.sign({ id, role, senecaUser, name, firstSurname, lastSurname }, process.env.JWT_SECRET, {
+  const role = await Role.findOne({ where: { id: roleId } })
+
+  const newToken = jwt.sign({ id, role: role.name, senecaUser, name, firstSurname, lastSurname }, process.env.JWT_SECRET, {
     expiresIn: 86400 // 24 hours
   })
 
