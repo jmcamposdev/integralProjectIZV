@@ -9,7 +9,7 @@ import {
 import { useState } from 'react'
 import useAuth from '../../hooks/useAuth'
 
-const TableTemplate = ({ data, columns, onDelete, onEdit }) => {
+const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword }) => {
   const { isAdmin } = useAuth() // Get the isAdmin value from the useAuth hook
 
   // Remove the Action column if exists to prevent unexpected actions
@@ -41,6 +41,18 @@ const TableTemplate = ({ data, columns, onDelete, onEdit }) => {
                 onClick={() => onDelete(row.cell.row.original.id)}
               >
                 <i className='icon-[material-symbols-light--delete] fill-current duration-300 ease-in-out text-white' />
+              </button>
+            )
+          }
+
+          {
+            // Only show the change password button if the onChangePassword function is provided
+            onChangePassword && (
+              <button
+                className='flex justify-center items-center w-8 h-8 rounded-md bg-meta-3 hover:bg-opacity-70' title='Change Password'
+                onClick={() => onChangePassword(row.cell.row.original)}
+              >
+                <i className='icon-[material-symbols-light--lock] fill-current duration-300 ease-in-out text-white' />
               </button>
             )
           }
