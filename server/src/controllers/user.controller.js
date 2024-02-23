@@ -68,6 +68,16 @@ export const updateUser = async (req, res) => {
   try {
     // Destructuring the id from the request parameters
     const { id } = req.params
+    // Validate the fields to be not null or empty
+    if (!User.validateSomeFields(req.body)) {
+      return res.status(400).json({ message: 'Necessary fields are empty' })
+    }
+
+    // If the password exists validate that the confirmPassword is the same
+    if (req.body.password && req.body.confirmPassword !== req.body.password) {
+      return res.status(400).json({ message: 'Passwords do not match' })
+    }
+
     // Get the user
     const user = await User.findOne({ where: { id } })
     // If the user doesn't exist, send a 404 status code and a message
