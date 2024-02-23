@@ -31,6 +31,16 @@ const professorService = {
     }
   },
 
+  changeProfessorPassword: async (senecaUser, password) => {
+    try {
+      const updatedProfessor = await api.put(`users/${senecaUser}`, { password })
+      return updatedProfessor
+    } catch (error) {
+      console.error('Error changing professor password:', error.message)
+      throw error
+    }
+  },
+
   deleteProfessor: async (id) => {
     try {
       await api.delete(`professors/${id}`)

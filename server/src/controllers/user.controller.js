@@ -67,9 +67,14 @@ export const createUser = async (req, res) => {
 export const updateUser = async (req, res) => {
   try {
     // Destructuring the id from the request parameters
-    const { id } = req.params
+    const { senecaUser } = req.params
+    // Validate the fields to be not null or empty
+    if (!User.validateSomeFields(req.body)) {
+      return res.status(400).json({ message: 'Necessary fields are empty' })
+    }
+
     // Get the user
-    const user = await User.findOne({ where: { id } })
+    const user = await User.findOne({ where: { senecaUser } })
     // If the user doesn't exist, send a 404 status code and a message
     if (!user) {
       return res.status(404).json({ message: 'User not found' })
@@ -78,6 +83,8 @@ export const updateUser = async (req, res) => {
     if (req.body.password) {
       req.body.password = User.encryptPassword(req.body.password)
     }
+
+    // Update the user in the database
     user.set(req.body)
     await user.save()
     // Delete the password from the user object

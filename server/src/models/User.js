@@ -31,6 +31,16 @@ export const User = sequelize.define('user', {
   }
 })
 
+/**
+ * Validate all fields are not null or empty and the passwords are the same to create a new user
+ * @param {String} senecaUser The seneca user to validate
+ * @param {String} name The name to validate
+ * @param {String} firstSurname The first surname to validate
+ * @param {String} lastSurname The last surname to validate
+ * @param {String} password The password to validate
+ * @param {String} confirmPassword The confirm password to validate
+ * @return {Boolean} True if all fields are valid
+ */
 User.validateAllFields = (senecaUser, name, firstSurname, lastSurname, password, confirmPassword) => {
   // Validate all the fields to be not null or empty
   const validSenecaUser = senecaUser?.trim().length > 0
@@ -44,6 +54,26 @@ User.validateAllFields = (senecaUser, name, firstSurname, lastSurname, password,
   return validSenecaUser && validName && validFirstSurname && validLastSurname && validPassword && validConfirmPassword && validPasswords
 }
 
+/**
+ * Validate some fields are not null or empty and the passwords are the same to update a user
+ * @param {Object} params The parameters to validate
+ * @return {Boolean} True if all fields are valid
+ */
+User.validateSomeFields = (params) => {
+  for (const key in params) {
+    if (key === 'id') continue
+    if (params[key] === null || params[key] === undefined || params[key]?.trim().length === 0) {
+      return false
+    }
+  }
+  return true
+}
+
+/**
+ * Validate the seneca user is unique in the database
+ * @param {String} senecaUser The seneca user to validate
+ * @return {Boolean} True if the seneca user is valid
+ */
 User.exists = async (senecaUser) => {
   const user = await User.findOne({ where: { senecaUser } })
   return user

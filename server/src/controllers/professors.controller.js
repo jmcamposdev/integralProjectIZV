@@ -143,8 +143,9 @@ export const updateProfessor = async (req, res) => {
       return res.status(400).json({ message: 'Cannot change the specialty of a professor with assigned lessons, delete the lessons first' })
     }
 
-    // Get the professor from the database
+    // Get the professor and the user from the database
     const professor = await Professor.findOne({ where: { id } })
+    const user = await User.findOne({ where: { senecaUser: professor.senecaUser } })
 
     // If the professor doesn't exist, send a 404 status code and a message
     if (!professor) {
@@ -154,6 +155,14 @@ export const updateProfessor = async (req, res) => {
     // Update the professor only with the fields sent in the request body
     professor.set(req.body)
     await professor.save()
+
+    // Update the user only with the fields sent in the request body
+    user.set(req.body)
+    await user.save()
+
+    // Remove the password and confirmPassword from the response
+    delete professor.dataValues.password
+    delete professor.dataValues.confirmPassword
 
     // Send the updated professor in the response
     res.json(professor)
@@ -182,9 +191,15 @@ export const deleteProfessor = async (req, res) => {
 
   try {
     // Delete the professor
+    const professor = await Professor.findOne({ where: { id } })
+    // Extract the senecaUser from the professor
+    const { senecaUser } = professor
+    // Delete the professor from the database
     const deletedProfessor = await Professor.destroy({ where: { id } })
+    // Delete the user from the database
+    const deletedUser = await User.destroy({ where: { senecaUser } })
     // If no rows were deleted, the professor was not found
-    if (deletedProfessor === 0) {
+    if (deletedProfessor === 0 || deletedUser === 0) {
       return res.status(404).json({ message: 'Professor not found' })
     }
     // Send success message

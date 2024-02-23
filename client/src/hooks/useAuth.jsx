@@ -7,9 +7,10 @@ const useAuth = () => {
 
   let isAdmin = null
   let isUser = null
+  let authId = null
   let role = null
   let isLogged = false
-  const senecaUser = null
+  let senecaUser = null
   let name = null
   let firstSurname = null
   let lastSurname = null
@@ -24,6 +25,8 @@ const useAuth = () => {
     if (isExpired) {
       Cookies.remove('_auth')
     } else {
+      senecaUser = decoded?.senecaUser // Get the user's senecaUser
+      authId = decoded?.id // Get the user's id
       isAdmin = decoded?.role === 'admin' // Check if the user is an admin
       isUser = decoded?.role === 'user' // Check if the user is a user
       role = decoded?.role // Get the user's role
@@ -35,7 +38,7 @@ const useAuth = () => {
     }
   }
 
-  return { senecaUser, name, firstSurname, lastSurname, isAdmin, isUser, role, isLogged, token }
+  return { senecaUser, name, firstSurname, lastSurname, isAdmin, isUser, role, isLogged, token, authId }
 }
 
 export default useAuth

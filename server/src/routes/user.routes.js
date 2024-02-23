@@ -21,7 +21,7 @@ router.post(
     verifyRole.isValidRoleId
   ],
   createUser) // Create a new user
-router.put('/users/:id', [authJwt.verifyToken, authJwt.isAdmin], updateUser) // Update a user
+router.put('/users/:senecaUser', [authJwt.verifyToken, authJwt.isAdmin], updateUser) // Update a user
 router.delete('/users/:id', [authJwt.verifyToken, authJwt.isAdmin], deleteUser) // Delete a user
 router.get('/users/:id', [authJwt.verifyToken, authJwt.isAdmin], getUser) // Get a user by id
 
