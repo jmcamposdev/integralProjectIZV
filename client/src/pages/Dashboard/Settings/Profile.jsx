@@ -4,9 +4,13 @@ import useAuth from '../../../hooks/useAuth'
 import userThree from '../../../images/user/user-03.png'
 import DefaultLayout from '../../../layout/DefaultLayout'
 import ErrorAlert from '../../../components/Alerts/ErrorAlert'
+import authService from '../../../services/authService'
+import userService from '../../../services/userService'
+import useSignIn from 'react-auth-kit/hooks/useSignIn'
 
 const Profile = () => {
   const { authId, name, firstSurname, lastSurname, senecaUser } = useAuth()
+  const signIn = useSignIn()
   const [error, setError] = useState(null)
   const [user, setUser] = useState({
     id: authId,
@@ -15,7 +19,6 @@ const Profile = () => {
     lastSurname,
     senecaUser
   })
-
   const handleInputsChange = (e) => {
     setUser({
       ...user,
@@ -23,9 +26,32 @@ const Profile = () => {
     })
   }
 
-  // TODO Implementar el service api para users y actualizar el user endpoint del servidor
   const handleUpdateProfile = async (e) => {
     e.preventDefault()
+    try {
+      // Update user profile
+      const updatedUser = await userService.updateUser(user)
+      // Refresh token
+      const refresedToken = await authService.refreshToken(updatedUser.senecaUser)
+
+      signIn({
+        auth: {
+          token: refresedToken,
+          type: 'Bearer'
+        },
+        user: {
+          id: updatedUser.id,
+          name: updatedUser.name,
+          firstSurname: updatedUser.firstSurname,
+          lastSurname: updatedUser.lastSurname,
+          senecaUser: updatedUser.senecaUser
+        }
+      })
+
+      window.location.reload()
+    } catch (error) {
+      setError(error.message)
+    }
   }
 
   return (
@@ -133,6 +159,7 @@ const Profile = () => {
                     <button
                       className='flex justify-center rounded bg-primary py-2 px-6 font-medium text-gray hover:bg-opacity-90'
                       type='submit'
+                      onClick={handleUpdateProfile}
                     >
                       Save
                     </button>
