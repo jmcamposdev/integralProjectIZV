@@ -153,6 +153,9 @@ const ProfessorTable = () => {
 
     try {
       const professor = await professorService.createProfessor(createInputs)
+      // Add the password and confirmPassword to the professor object
+      professor.password = ''
+      professor.confirmPassword = ''
       setProfessors([...professors, professor])
     } catch (error) {
       setError(error.message)
@@ -209,6 +212,7 @@ const ProfessorTable = () => {
       const professor = await professorService.updateProfessor(professorInputs)
       // Update the state with the new professor
       setProfessors(professors.map((prof) => (prof.id === professor.id ? professor : prof)))
+      resetCreateInputs() // Reset the inputs
     } catch (error) {
       setError(error.message)
     }
