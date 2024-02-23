@@ -18,6 +18,7 @@ const ProfessorTable = () => {
   const [viewDeleteModal, setViewDeleteModal] = useState(false) // Show or hide the delete modal
   const [viewCreateModal, setViewCreateModal] = useState(false) // Show or hide the create modal
   const [viewUpdateModal, setViewUpdateModal] = useState(false) // Show or hide the update modal
+  const [viewChangePasswordModal, setViewChangePasswordModal] = useState(false) // Show or hide the change password modal
   const [createInputs, setCreateInputs] = useState({
     senecaUser: '',
     name: '',
@@ -216,6 +217,40 @@ const ProfessorTable = () => {
     setViewCreateModal(false)
   }
 
+  const handleChangePasswordButton = (professor) => {
+    setCreateInputs({ ...professor, password: '', confirmPassword: '' }) // Clear the inputs
+    setViewChangePasswordModal(true) // Show the change password modal
+  }
+
+  const handleChangePassword = async (event) => {
+    event.preventDefault() // Prevent the default form behavior
+    // Extract the password and confirmPassword from the inputs
+    const { password, confirmPassword } = createInputs
+
+    // Check if the password or confirmPassword are empty
+    if (password.trim() === '' || confirmPassword.trim() === '') {
+      setError('The password and confirmPassword can\'t be empty.')
+      setViewChangePasswordModal(false) // Close the change password modal
+      return
+    }
+
+    // Check if the password and confirmPassword are the same
+    if (password !== confirmPassword) {
+      setError('The passwords do not match.')
+      setViewChangePasswordModal(false) // Close the change password modal
+      return
+    }
+
+    try {
+      // Update the professor password
+      await professorService.changeProfessorPassword(createInputs.senecaUser, password)
+      // Close the change password modal
+      setViewChangePasswordModal(false)
+    } catch (error) {
+      setError(error.message)
+    }
+  }
+
   return (
     <>
       {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
@@ -224,7 +259,7 @@ const ProfessorTable = () => {
           ? <TableRowLoading columns={professorColumns.length} />
           : (
             <>
-              <TableTemplate data={professors} columns={professorColumns} onDelete={onDelete} onEdit={handleEditProfessorButton} />
+              <TableTemplate data={professors} columns={professorColumns} onDelete={onDelete} onEdit={handleEditProfessorButton} onChangePassword={handleChangePasswordButton} />
               {// Only show the add professor button if the user is an admin
               isAdmin && (
                 <button
@@ -323,6 +358,41 @@ const ProfessorTable = () => {
           ].filter(Boolean)} // Remove the null values
         />)}
       {/* <!-- ===== End of Add Professor Modal ===== --> */}
+
+      {/* <!-- ===== Start Change Password Modal ===== --> */}
+      {isAdmin && (
+        <FormModal
+          isOpen={viewChangePasswordModal}
+          onClose={() => setViewChangePasswordModal(false)}
+          onSubmit={handleChangePassword}
+          title='Change Password'
+          submitText='Change Password'
+          formFields={[
+            {
+              colSpan: 2,
+              label: 'Password',
+              type: 'password',
+              name: 'password',
+              value: createInputs.password,
+              handleInputsChange: handleCreateInputs,
+              required: true,
+              autoComplete: 'new-password'
+            },
+            {
+              colSpan: 2,
+              label: 'Confirm Password',
+              type: 'password',
+              name: 'confirmPassword',
+              value: createInputs.confirmPassword,
+              handleInputsChange: handleCreateInputs,
+              required: true,
+              autoComplete: 'new-password'
+            }
+          ]}
+        />
+      )}
+      {/* <!-- ===== End Change Password Modal ===== --> */}
+
     </>
   )
 }
