@@ -19,6 +19,17 @@ const Profile = () => {
     lastSurname,
     senecaUser
   })
+
+  const resetUserInputs = () => {
+    setUser({
+      id: authId,
+      name,
+      firstSurname,
+      lastSurname,
+      senecaUser
+    })
+  }
+
   const handleInputsChange = (e) => {
     setUser({
       ...user,
@@ -28,9 +39,11 @@ const Profile = () => {
 
   const handleUpdateProfile = async (e) => {
     e.preventDefault()
+
     try {
       // Update user profile
       const updatedUser = await userService.updateUser(user)
+      console.log(updatedUser)
       // Refresh token
       const refresedToken = await authService.refreshToken(updatedUser.senecaUser)
 
@@ -48,7 +61,7 @@ const Profile = () => {
         }
       })
 
-      window.location.reload()
+      resetUserInputs()
     } catch (error) {
       setError(error.message)
     }
