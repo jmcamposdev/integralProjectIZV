@@ -1,22 +1,11 @@
-import useSignIn from 'react-auth-kit/hooks/useSignIn'
-import useAuth from '../hooks/useAuth'
 import api from './api'
 
 const authService = {
-  refreshToken: async () => {
-    const { token } = useAuth()
+  refreshToken: async (senecaUser) => {
     try {
-      const response = await api.post('auth/refresh-token', { token })
-      console.log(response)
-      // const signIn = useSignIn()
-      // signIn({
-      //   auth: {
-      //     token: response.data.accessToken,
-      //     type: 'Bearer'
-      //   },
-      //   userState: {senecaUser}
-      // })
-      return response
+      const response = await api.post('auth/refresh-token', { senecaUser })
+      const { token } = response
+      return token
     } catch (error) {
       console.error('Error refreshing token:', error.message)
       throw error
