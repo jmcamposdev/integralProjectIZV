@@ -155,6 +155,10 @@ export const updateProfessor = async (req, res) => {
     professor.set(req.body)
     await professor.save()
 
+    // Remove the password and confirmPassword from the response
+    delete professor.dataValues.password
+    delete professor.dataValues.confirmPassword
+
     // Send the updated professor in the response
     res.json(professor)
   } catch (err) {
