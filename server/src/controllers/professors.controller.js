@@ -186,9 +186,15 @@ export const deleteProfessor = async (req, res) => {
 
   try {
     // Delete the professor
+    const professor = await Professor.findOne({ where: { id } })
+    // Extract the senecaUser from the professor
+    const { senecaUser } = professor
+    // Delete the professor from the database
     const deletedProfessor = await Professor.destroy({ where: { id } })
+    // Delete the user from the database
+    const deletedUser = await User.destroy({ where: { senecaUser } })
     // If no rows were deleted, the professor was not found
-    if (deletedProfessor === 0) {
+    if (deletedProfessor === 0 || deletedUser === 0) {
       return res.status(404).json({ message: 'Professor not found' })
     }
     // Send success message
