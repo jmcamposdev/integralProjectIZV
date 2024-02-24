@@ -24,3 +24,22 @@ export const signIn = async (req, res) => {
     res.status(500).json({ message: error.message, token: null })
   }
 }
+
+/**
+ * Refresh the token for the user. This is used when the token is expired.
+ * @param {Object} req The request object
+ * @param {Object} res The response object
+ */
+export const refreshToken = async (req, res) => {
+  const { senecaUser } = req.body
+
+  const { id, roleId, name, firstSurname, lastSurname } = req.user
+
+  const role = await Role.findOne({ where: { id: roleId } })
+
+  const newToken = jwt.sign({ id, role: role.name, senecaUser, name, firstSurname, lastSurname }, process.env.JWT_SECRET, {
+    expiresIn: 86400 // 24 hours
+  })
+
+  res.json({ token: newToken })
+}

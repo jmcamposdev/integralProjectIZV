@@ -26,7 +26,7 @@ const AboutUSSection = () => {
           <div className='space-y-6 lg:space-y-10'>
             <div className='flex'>
               <span className='  flex-shrink-0 inline-flex justify-center items-center size-[46px] shadow-sm mx-auto  bg-primary rounded-xl text-white'>
-                <svg className='flex-shrink-0 size-5' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z' /><path d='M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z' /></svg>
+                <svg className='flex-shrink-0 size-5' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z' /><path d='M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z' /></svg>
               </span>
               <div className='ms-5 sm:ms-8'>
                 <h3 className='text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200'>
@@ -40,7 +40,7 @@ const AboutUSSection = () => {
 
             <div className='flex'>
               <span className='  flex-shrink-0 inline-flex justify-center items-center size-[46px] shadow-sm mx-auto  bg-primary rounded-xl text-white'>
-                <svg className='flex-shrink-0 size-5' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M14 9a2 2 0 0 1-2 2H6l-4 4V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v5Z' />
+                <svg className='flex-shrink-0 size-5' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='M14 9a2 2 0 0 1-2 2H6l-4 4V4c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v5Z' />
                   <path d='M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1' />
                 </svg>
               </span>
@@ -56,7 +56,7 @@ const AboutUSSection = () => {
 
             <div className='flex'>
               <span className=' flex-shrink-0 inline-flex justify-center items-center size-[46px] shadow-sm mx-auto  bg-primary rounded-xl text-white'>
-                <svg className='flex-shrink-0 size-5' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M7 10v12' /><path d='M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z' /></svg>
+                <svg className='flex-shrink-0 size-5' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='M7 10v12' /><path d='M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z' /></svg>
               </span>
               <div className='ms-5 sm:ms-8'>
                 <h3 className='text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200'>
@@ -79,7 +79,7 @@ const AboutUSSection = () => {
         <div className='z-2 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3 lg:gap-6 items-center'>
           <div className='relative p-4 md:p-7 bg-gray-100 rounded-lg dark:text-white group'>
             <div className='absolute w-[100%] -bottom-5 flex left-0'>
-              <span className='group-hover:opacity-100 opacity-0 transition duration-100 group-hover:delay-50  ease-in-out absolute -top-1 left-1/2 block h-2 w-2 -translate-x-1/2 rotate-45 bg-black dark:bg-white' />
+              <span style={{ clipPath: 'polygon(100% 0%, 0% 0%, 100% 100%)' }} className='group-hover:opacity-100 opacity-0 transition duration-300 group-hover:delay-0  ease-in-out absolute top-[-4px] left-1/2 block h-2 w-2 -translate-x-1/2 rotate-[315deg] bg-black dark:bg-white' />
               <span className='group-hover:opacity-100 opacity-0 transition duration-300 delay-50 group-hover:delay-0 ease-in-out rounded-md bg-black px-3.5 py-1.5 text-custom-sm text-white group-hover:block dark:bg-white dark:text-black text-center mx-auto'>HTML 5</span>
             </div>
 
@@ -101,7 +101,7 @@ const AboutUSSection = () => {
 
           <div className='relative p-4 md:p-7 bg-gray-100 rounded-lg dark:text-white group'>
             <div className='absolute w-[100%] -bottom-2 flex left-0'>
-              <span className='group-hover:opacity-100 opacity-0 transition duration-100 group-hover:delay-50  ease-in-out absolute -top-1 left-1/2 block h-2 w-2 -translate-x-1/2 rotate-45 bg-black dark:bg-white' />
+              <span style={{ clipPath: 'polygon(100% 0%, 0% 0%, 100% 100%)' }} className='group-hover:opacity-100 opacity-0 transition duration-300 group-hover:delay-0  ease-in-out absolute top-[-4px] left-1/2 block h-2 w-2 -translate-x-1/2 rotate-[315deg] bg-black dark:bg-white' />
               <span className='group-hover:opacity-100 opacity-0 transition duration-300 delay-50 group-hover:delay-0 ease-in-out rounded-md bg-black px-3.5 py-1.5 text-custom-sm text-white group-hover:block dark:bg-white dark:text-black text-center mx-auto'>React</span>
             </div>
 
@@ -120,7 +120,7 @@ const AboutUSSection = () => {
 
           <div className='relative p-4 md:p-7 bg-gray-100 rounded-lg text-sky-500 dark:text-white group'>
             <div className='absolute w-[100%] -bottom-5 flex left-0'>
-              <span className='group-hover:opacity-100 opacity-0 transition duration-100 group-hover:delay-50  ease-in-out absolute -top-1 left-1/2 block h-2 w-2 -translate-x-1/2 rotate-45 bg-black dark:bg-white' />
+              <span style={{ clipPath: 'polygon(100% 0%, 0% 0%, 100% 100%)' }} className='group-hover:opacity-100 opacity-0 transition duration-300 group-hover:delay-0  ease-in-out absolute top-[-4px] left-1/2 block h-2 w-2 -translate-x-1/2 rotate-[315deg] bg-black dark:bg-white' />
               <span className='group-hover:opacity-100 opacity-0 transition duration-300 delay-50 group-hover:delay-0 ease-in-out rounded-md bg-black px-3.5 py-1.5 text-custom-sm text-white group-hover:block dark:bg-white dark:text-black text-center mx-auto'>Tailwind</span>
             </div>
 
@@ -129,7 +129,7 @@ const AboutUSSection = () => {
 
           <div className='relative p-4 md:p-7 bg-gray-100 rounded-lg text-sky-500 dark:text-white group'>
             <div className=' absolute w-[100%] -bottom-5 flex left-0 '>
-              <span className='group-hover:opacity-100 opacity-0 transition duration-100 group-hover:delay-50  ease-in-out absolute -top-1 left-1/2 block h-2 w-2 -translate-x-1/2 rotate-45 bg-black dark:bg-white' />
+              <span style={{ clipPath: 'polygon(100% 0%, 0% 0%, 100% 100%)' }} className='group-hover:opacity-100 opacity-0 transition duration-300 group-hover:delay-0  ease-in-out absolute top-[-4px] left-1/2 block h-2 w-2 -translate-x-1/2 rotate-[315deg] bg-black dark:bg-white' />
               <span className='group-hover:opacity-100 opacity-0 transition duration-300 delay-50 group-hover:delay-0 ease-in-out rounded-md bg-black px-3.5 py-1.5 text-custom-sm text-white group-hover:block dark:bg-white dark:text-black text-center mx-auto'>JavaScript</span>
             </div>
 
@@ -146,7 +146,7 @@ const AboutUSSection = () => {
 
           <div className='p-4 md:p-7 bg-gray-100 rounded-lg dark:text-white relative group'>
             <div className='absolute w-[100%] -bottom-5 flex left-0'>
-              <span className='group-hover:opacity-100 opacity-0 transition duration-100 group-hover:delay-50  ease-in-out absolute -top-1 left-1/2 block h-2 w-2 -translate-x-1/2 rotate-45 bg-black dark:bg-white' />
+              <span style={{ clipPath: 'polygon(100% 0%, 0% 0%, 100% 100%)' }} className='group-hover:opacity-100 opacity-0 transition duration-300 group-hover:delay-0  ease-in-out absolute top-[-4px] left-1/2 block h-2 w-2 -translate-x-1/2 rotate-[315deg] bg-black dark:bg-white' />
               <span className='group-hover:opacity-100 opacity-0 transition duration-300 delay-50 group-hover:delay-0 ease-in-out rounded-md bg-black px-3.5 py-1.5 text-custom-sm text-white group-hover:block dark:bg-white dark:text-black text-center mx-auto'>Node Js</span>
             </div>
             <svg className='min-w-21 w-[50%] max-w-[70px] py-3 lg:py-5  h-auto  mx-auto text-sky-500 dark:text-white' xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 32 32' preserveAspectRatio='xMidYMid'>
@@ -203,8 +203,8 @@ const AboutUSSection = () => {
         </div>
       </div>
       <div className='-z-1 bg-no-repeat w-[100%] relative h-[0] left-0 top-[70%] md:top-[130%] bg-center flex justify-center items-center overflow-visible'>
-        <div className='absolute w-[100%] h-[500px] absolute bg-top scale-150' style={{ backgroundImage: `url(${LightMesh})`, top: '-640px' }} alt='' />
-        <div className='absolute w-[100%] h-[500px] absolute bg-top scale-150' style={{ backgroundImage: `url(${LightMesh2})`, top: '107px', transform: 'translateX(5px) rotate(180deg) scale(1.5)' }} alt='' />
+        <div className='absolute w-[100%] h-[500px] bg-top scale-150' style={{ backgroundImage: `url(${LightMesh})`, top: '-640px' }} alt='' />
+        <div className='absolute w-[100%] h-[500px] bg-top scale-150' style={{ backgroundImage: `url(${LightMesh2})`, top: '107px', transform: 'translateX(5px) rotate(180deg) scale(1.5)' }} alt='' />
         <svg
           className='scale-x-[-1] absolute'
           xmlns='http://www.w3.org/2000/svg' width='1758' height='1500' viewBox='0 0 1758 473'
@@ -220,10 +220,10 @@ const AboutUSSection = () => {
               <circle cx='1046.7' cy='711' r='311' fill='#48DCFF' />
             </g>
 
-            <g className='hidden dark:block' filter='url(#filter0_f_974_6198)'>
+            <g className='hidden dark:block opacity-80' filter='url(#filter0_f_974_6198)'>
               <circle cx='1046.7' cy='711' r='311' fill='#1027F7' />
             </g>
-            <g className='hidden dark:block' filter='url(#filter1_f_974_6198)'>
+            <g className='hidden dark:block opacity-80' filter='url(#filter1_f_974_6198)'>
               <circle cx='711' cy='711' r='311' fill='#FD10BA' />
             </g>
           </g>

@@ -2,13 +2,16 @@ import '../../css/style.css'
 import '../../css/satoshi.css'
 import React, { useState, useEffect } from 'react'
 import DarkModeSwitcher from '../Header/DarkModeSwitcher'
-import LogoIcon from '../../images/logo/logo-dark.svg'
+import LogoZaweeWhite from '../../images/logo/logo-zawee-white.svg'
+import LogoZaweeDark from '../../images/logo/logo-zawee-dark.svg'
 import useSignOut from 'react-auth-kit/hooks/useSignOut'
 import useAuth from '../../hooks/useAuth'
+import useColorMode from '../../hooks/useColorMode'
 
 const Header = () => {
   const { isLogged } = useAuth()
   const signOut = useSignOut()
+  const [colorMode, setColorMode] = useColorMode()
 
   const handleSignOut = () => {
     signOut()
@@ -16,6 +19,7 @@ const Header = () => {
   }
 
   const [isScrolled, setIsScrolled] = useState(false)
+  const [logo, setLogo] = useState(LogoZaweeWhite)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +30,17 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Set the logo if isScrolled or if is a dark mode if is added the dark class to the body put the dark logo else put the white logo
+  useEffect(() => {
+    if (!isScrolled) { // If is not scrolled
+      setLogo(LogoZaweeWhite)
+    } else if (document.body.classList.contains('dark')) { // If is scrolled and is dark mode
+      setLogo(LogoZaweeDark)
+    } else { // If is scrolled and is not dark mode
+      setLogo(LogoZaweeWhite)
+    }
+  }, [isScrolled, colorMode])
 
   const openHideNav = () => {
     const backNavPhone = document.getElementById('back-nav-phone')
@@ -76,7 +91,7 @@ const Header = () => {
                   <li>
                     <a
                       onClick={handleSignOut}
-                      className='w-fit text-3xl block py-3 px-7 font-bold text-dark hover:opacity-70 dark:text-white md:block'
+                      className='w-fit text-3xl block ease-in-up rounded-md bg-primary py-3 px-8 font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9'
                     >
                       Sign Out
                     </a>
@@ -98,7 +113,10 @@ const Header = () => {
         </div>
         <div className='flex flex-wrap justify-between items-center mx-auto max-w-screen-xl'>
           <a href='/' className='flex items-center'>
-            <img src={LogoIcon} className='mr-3 h-6 sm:h-9' alt='Flowbite Logo' />
+            <img
+              src={logo}
+              className='mr-3 h-9' alt='Flowbite Logo'
+            />
           </a>
           <div className='flex items-center lg:order-2 gap-[20px]'>
             {isLogged
@@ -119,7 +137,7 @@ const Header = () => {
                 </a>
                 )}
             <ul className='items-center gap-2 2xsm:gap-4 flex'>
-              <DarkModeSwitcher />
+              <DarkModeSwitcher importedColorMode={colorMode} importedSetColorMode={setColorMode} />
             </ul>
             <button onClick={openHideNav} id='button-nav' data-collapse-toggle='mobile-menu-2' type='button' className='relative w-[40px] h-[36px] inline-flex justify-center flex-col p-1.5 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600' aria-controls='mobile-menu-2' aria-expanded='false'>
               <div className='absolute top-[15%] transition-all block origin-center w-[30px] h-[2px] dark:bg-white bg-stone-400' />
@@ -142,7 +160,7 @@ const Header = () => {
                 <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-gray-500 dark:text-white' : 'text-dark'}`} aria-current='page'>Contact</a>
               </li>
               <li>
-                <ul className='items-center gap-2 2xsm:gap-4 flex lg:hidden w-fit block ml-auto'>
+                <ul className='items-center gap-2 2xsm:gap-4 lg:hidden w-fit block ml-auto'>
                   <DarkModeSwitcher />
                 </ul>
               </li>
