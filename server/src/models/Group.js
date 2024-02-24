@@ -66,6 +66,30 @@ export const groupFieldsValidation = async (schoolYear, course, denomination, is
   return validSchoolYear && validCourse && validDenomination && validIsMorning && validFormationId
 }
 
+export const groupValidateSomeFields = (params) => {
+  for (const key in params) {
+    // If is the id, continue
+    if (key === 'id') {
+      continue
+    }
+
+    // If the parameter is course must be a number positive and greater than 0
+    if (key === 'course') {
+      if (isNaN(params[key]) || params[key] <= 0) {
+        return false
+      }
+    } else if (key === 'isMorning') {
+      if (typeof params[key] !== 'boolean') {
+        return false
+      }
+    } else {
+      if (!params[key] || params[key].trim().length === 0) {
+        return false
+      }
+    }
+  }
+}
+
 export const groupHasLessons = async (groupId) => {
   return await Lesson.findOne({ where: { groupId } }) !== null
 }

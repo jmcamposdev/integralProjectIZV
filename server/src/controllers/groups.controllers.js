@@ -1,4 +1,4 @@
-import { Group, groupFieldsValidation, groupHasLessons } from '../models/Group.js'
+import { Group, groupFieldsValidation, groupHasLessons, groupValidateSomeFields } from '../models/Group.js'
 import { Lesson } from '../models/Lesson.js'
 
 /**
@@ -89,10 +89,10 @@ export const createGroup = async (req, res) => {
 export const updateGroup = async (req, res) => {
   // Destructuring the id from the request parameters
   const { id } = req.params
-  const { schoolYear, course, denomination, isMorning, formationId } = req.body
+  const { course, formationId } = req.body
 
   // Validate the request body
-  if (!await groupFieldsValidation(schoolYear, course, denomination, isMorning, formationId)) {
+  if (groupValidateSomeFields(req.body)) {
     return res.status(400).json({ message: 'Please send schoolYear, course, denomination, formationId and isMorning' })
   }
 
