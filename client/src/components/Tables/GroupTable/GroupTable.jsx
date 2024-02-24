@@ -185,11 +185,21 @@ const GroupTable = ({ formations }) => {
    */
   const handleUpdateGroup = async (event) => {
     event.preventDefault()
+
+    // Remove the formationId and course if the group has lessons
+    if (hasLessons) {
+      delete groupInputs.formationId
+      delete groupInputs.course
+    }
+
     try {
       // Create the group in the database
       const updatedGroup = await groupService.updateGroup(groupInputs)
+      // Set the letter to the updated group
+      updatedGroup.letter = updatedGroup.denomination.slice(-1)
       // Add the group to the state
       setGroups(groups.map(group => (group.id === updatedGroup.id ? updatedGroup : group)))
+      resetGroupInputs()
     } catch (error) {
       // If there's an error, save the error message in the state
       setError(error.message)
