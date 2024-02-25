@@ -15,6 +15,7 @@ const DarkModeSwitcher = ({ importedColorMode, importedSetColorMode }) => {
           onChange={() => {
             if (typeof importedSetColorMode === 'function') {
               importedSetColorMode(importedColorMode === 'light' ? 'dark' : 'light')
+              setColorMode(colorMode === 'light' ? 'dark' : 'light')
             } else if (typeof setColorMode === 'function') {
               setColorMode(colorMode === 'light' ? 'dark' : 'light')
             }

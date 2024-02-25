@@ -1,3 +1,4 @@
+import { Op } from 'sequelize'
 import { Group } from '../models/Group.js'
 import { Lesson } from '../models/Lesson.js'
 import { Module } from '../models/Module.js'
@@ -153,4 +154,36 @@ export const deleteLesson = (req, res) => {
       res.json({ message: 'Lesson deleted successfully' })
     })
     .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
+}
+
+export const getCurrentYearLessons = async (req, res) => {
+  const currentYear = new Date().getFullYear()
+
+  // Get all lessons, professors, modules from the current year
+  // The currentYear field are in the Group and the format is '2021/2022'
+  const lessons = await Lesson.findAll({
+    include: [
+      {
+        model: Group,
+        where: {
+          schoolYear: {
+            // Must include the current year in the Group currentYear field in first position (2021/2022)
+            [Op.startsWith]: `${currentYear}/`
+          }
+        }
+      },
+      {
+        model: Module
+      },
+      {
+        model: Professor
+      }
+    ]
+  })
+
+  if (lessons.length === 0) {
+    return res.status(404).json({ message: 'Lessons not found' })
+  }
+
+  res.json(lessons)
 }

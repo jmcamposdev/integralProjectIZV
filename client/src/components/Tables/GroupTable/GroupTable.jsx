@@ -105,15 +105,15 @@ const GroupTable = ({ formations }) => {
    */
 
   /**
-   * This runs when the moduleIdToDelete changes
-   * If the moduleIdToDelete is not null, show the delete modal
-   * If the moduleIdToDelete is null, hide the delete modal
+   * This runs when the groupIdToDelete changes
+   * If the groupIdToDelete is not null, show the delete modal
+   * If the groupIdToDelete is null, hide the delete modal
    */
   useEffect(() => {
-    // If the moduleIdToDelete is not null, show the delete modal
+    // If the groupIdToDelete is not null, show the delete modal
     if (groupIdToDelete) {
       setViewDeleteModal(true)
-    } else { // If the moduleIdToDelete is null, hide the delete modal
+    } else { // If the groupIdToDelete is null, hide the delete modal
       setViewDeleteModal(false)
     }
   }, [groupIdToDelete])
@@ -121,7 +121,7 @@ const GroupTable = ({ formations }) => {
   /**
    * This deletes a group from the database and the state
    * Get the group id from the state and delete the group
-   * Then set the moduleIdToDelete to null
+   * Then set the groupIdToDelete to null
    */
   const handleDeleteGroup = async () => {
     try {
@@ -129,7 +129,7 @@ const GroupTable = ({ formations }) => {
       await groupService.deleteGroup(groupIdToDelete)
       // Remove the group from the state
       setGroups(groups.filter(group => group.id !== groupIdToDelete))
-      // Reset the moduleIdToDelete
+      // Reset the groupIdToDelete
       setGroupIdToDelete(null)
     } catch (error) {
       // If there's an error, save the error message in the state
@@ -149,11 +149,11 @@ const GroupTable = ({ formations }) => {
    * and hides the update modal when the create modal is closed
    */
   useEffect(() => {
-    // If the create modal is closed, reset the moduleInputs
+    // If the create modal is closed, reset the groupInputs
     if (!viewCreateModal) {
       setViewUpdateModal(false)
       setHasLessons(false)
-      // If the update modal is closed, reset the moduleInputs
+      // If the update modal is closed, reset the groupInputs
     } else if (!viewUpdateModal) {
       resetGroupInputs()
     }
@@ -185,11 +185,21 @@ const GroupTable = ({ formations }) => {
    */
   const handleUpdateGroup = async (event) => {
     event.preventDefault()
+
+    // Remove the formationId and course if the group has lessons
+    if (hasLessons) {
+      delete groupInputs.formationId
+      delete groupInputs.course
+    }
+
     try {
       // Create the group in the database
       const updatedGroup = await groupService.updateGroup(groupInputs)
+      // Set the letter to the updated group
+      updatedGroup.letter = updatedGroup.denomination.slice(-1)
       // Add the group to the state
       setGroups(groups.map(group => (group.id === updatedGroup.id ? updatedGroup : group)))
+      resetGroupInputs()
     } catch (error) {
       // If there's an error, save the error message in the state
       setError(error.message)
@@ -234,7 +244,7 @@ const GroupTable = ({ formations }) => {
             >
               <span>
                 <svg xmlns='http://www.w3.org/2000/svg' width='24px' height='24px' viewBox='0 0 24 24'><path fill='currentColor' d='M11 13H5v-2h6V5h2v6h6v2h-6v6h-2z' /></svg>
-              </span>Add Module
+              </span>Add Group
             </button>
           )
         }

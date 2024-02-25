@@ -7,7 +7,7 @@ import LightMesh2 from '../../images/frontpage/mesh2light.svg'
 const AboutUSSection = () => {
   return (
 
-    <section className=' overflow-hidden z-0 relative py-17.5 sm:py-22.5 xl:py-27.5 bg-white dark:bg-boxdark flex flex-col gap-[2.5rem] font-medium leading-relaxed font-satoshi bg-primary text-white bg-gray  text-black dark:text-white justify-center items-center'>
+    <section className=' overflow-hidden z-0 relative py-17.5 sm:py-22.5 xl:py-27.5 bg-white  dark:bg-boxdark-2 flex flex-col gap-[2.5rem] font-medium leading-relaxed font-satoshi  text-black dark:text-white justify-center items-center'>
 
       <div className='z-2 max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto text-black dark:text-white'>
         <div className='z-1 mx-auto max-w-[55rem] px-4 text-center sm:px-8 xl:px-0 mb-20'>
@@ -208,7 +208,7 @@ const AboutUSSection = () => {
         <svg
           className='scale-x-[-1] absolute'
           xmlns='http://www.w3.org/2000/svg' width='1758' height='1500' viewBox='0 0 1758 473'
-          style={{ backgroundColor: 'tansparent' }}
+          style={{ backgroundColor: 'transparent' }}
           fill='none'
         >
 

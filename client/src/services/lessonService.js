@@ -11,6 +11,16 @@ const lessonService = {
     }
   },
 
+  getCurrentYearLessons: async () => {
+    try {
+      const lessons = await api.get('lessons-current-year')
+      return lessons
+    } catch (error) {
+      console.error('Error getting current year lessons:', error.message)
+      throw error
+    }
+  },
+
   createLesson: async (lesson) => {
     try {
       const newLesson = await api.post('lessons', lesson)
