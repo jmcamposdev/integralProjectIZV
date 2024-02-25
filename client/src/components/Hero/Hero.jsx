@@ -12,7 +12,7 @@ const Hero = () => {
   }
 
   return (
-    <section id='home' className='flex items-center static bg-cover min-h-screen relative z-10 overflow-hidden dark:bg-boxdark dark:drop-shadow-none'>
+    <section id='home' className='flex items-center bg-cover min-h-screen relative z-10 overflow-hidden dark:bg-boxdark dark:drop-shadow-none'>
       <div className='absolute w-[100%] h-[100%] top-0 left-0 -z-1 brightness-75 bg-center bg-no-repeat bg-cover' style={{ backgroundImage: `url(${HeroImg})` }} />
       <div className='flex justify-start px-[7%] h-fit'>
         <div className='-mx-4 flex flex-wrap'>
