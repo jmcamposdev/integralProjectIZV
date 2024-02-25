@@ -126,6 +126,10 @@ export const deleteFormation = async (req, res) => {
 
     // Delete the formation
     const deletedFormationCount = await Formation.destroy({ where: { id } })
+    // Delete all related groups
+    await Group.destroy({ where: { formationId: id } })
+    // Delete all related modules
+    await Module.destroy({ where: { formationId: id } })
 
     // If the formation doesn't exist, send a 404 status code and a message
     if (deletedFormationCount === 0) {
