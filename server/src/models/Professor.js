@@ -79,6 +79,10 @@ export const professorValidateSomeFields = (params) => {
     if (key === 'specialty' && (params[key] !== 'FP' && params[key] !== 'Secondary')) {
       return false
     }
+    // Validate the senecaUser to be not null or empty and cant contain UpperCase letters, spaces or special characters
+    if (key === 'senecaUser' && (!params[key] || params[key].trim().length === 0 || /[A-Z\s!@#$%^&*(),.?":{}|<>]/.test(params[key]))) {
+      return false
+    }
     // Validate the senecaUser, name, firstSurname and lastSurname to be not null or empty
     if (key !== 'specialty' && (!params[key] || params[key].trim().length === 0)) {
       return false
