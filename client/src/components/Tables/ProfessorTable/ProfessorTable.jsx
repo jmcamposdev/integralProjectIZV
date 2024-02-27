@@ -44,6 +44,11 @@ const ProfessorTable = () => {
   }
 
   const handleCreateInputs = (event) => {
+    // If is the senecaUser input, convert the value to lowercase and remove the spaces and only letters and numbers
+    if (event.target.name === 'senecaUser') {
+      event.target.value = event.target.value.toLowerCase().replace(/[^a-z0-9]/g, '')
+    }
+
     setCreateInputs({
       ...createInputs,
       [event.target.name]: event.target.value
