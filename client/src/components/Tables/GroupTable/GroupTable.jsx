@@ -7,7 +7,7 @@ import FormModal from '../../Modals/FormModal'
 import TableTemplate from '../TableTemplate'
 import groupColumns from './groupColumns'
 
-const GroupTable = ({ formations }) => {
+const GroupTable = ({ formations, allGroups }) => {
   const { isAdmin } = useAuth() // Get the user role
   const [error, setError] = useState(null) // Save the error message
   const [groups, setGroups] = useState([]) // Save the groups
@@ -95,7 +95,18 @@ const GroupTable = ({ formations }) => {
         setError(error.message)
       }
     }
-    getGroups()
+
+    // If allGroups is not declared, get the groups from the database
+    if (!allGroups) {
+      getGroups()
+    } else {
+      // If allGroups is declared, add the letter to the groups
+      allGroups.forEach(group => {
+        group.letter = group.denomination.slice(-1)
+      })
+      // Save the groups in the state
+      setGroups(allGroups)
+    }
   }, [])
 
   /**
