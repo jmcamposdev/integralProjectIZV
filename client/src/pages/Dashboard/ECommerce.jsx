@@ -12,7 +12,7 @@ import TableRowLoading from '../../components/Loading/TableRowLoading.jsx'
 import ErrorAlert from '../../components/Alerts/ErrorAlert.jsx'
 
 const ECommerce = () => {
-  const { isAdmin, isUser, name } = useAuth() // Get the user info
+  const { isAdmin, isUser, authId, senecaUser, name } = useAuth() // Get the user info
   const [error, setError] = useState(null) // Save the error message
   const [professors, setProfessors] = useState([]) // Save the professors
   const [formations, setFormations] = useState([]) // Save the formations
@@ -53,6 +53,13 @@ const ECommerce = () => {
         // Save the lessons in the state
         setLessons(lessonData)
 
+        // Validate if the user is a professor only show the lessons of the professor
+        if (isUser) {
+          const professor = professorData.find((professor) => professor.senecaUser === senecaUser)
+          const userLessons = lessonData.filter((lesson) => lesson.professorId === professor.id)
+          setLessons(userLessons)
+        }
+
         // Set the loading state to false
         setIsLoading(false)
       } catch (error) {
@@ -61,7 +68,6 @@ const ECommerce = () => {
         setError(error.message)
       }
     }
-
     // Call the function to get all the data
     getAllData()
   }, [])
@@ -101,8 +107,14 @@ const ECommerce = () => {
             )
           : (
             <>
-              <h2 className='text-2xl font-semibold mb-5'>Lessons</h2>
-              <LessonTable lessons={lessons} professors={professors} modules={modules} groups={groups} />
+              <h2 className='text-2xl font-semibold mb-5'>{isUser && ('Your')} Lessons</h2>
+              {isUser && lessons.length <= 0
+                ? (
+                  <p className='text-lg font-medium text-center'>You don't have any lessons yet.</p>
+                  )
+                : (
+                  <LessonTable lessons={lessons} professors={professors} modules={modules} groups={groups} />
+                  )}
             </>
             )}
       </div>
