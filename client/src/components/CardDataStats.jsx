@@ -11,7 +11,7 @@ const CardDataStats = ({
     loading
       ? (
         <div className='rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark'>
-          <div class='rounded-full bg-slate-200 dark:bg-slate-700 h-11.5 w-11.5' />
+          <div className='rounded-full bg-slate-200 dark:bg-slate-700 h-11.5 w-11.5' />
           <div className='mt-4 flex items-end justify-between'>
             <div className='animate-pulse'>
               <div className='h-4 w-34 bg-slate-200 dark:bg-slate-700 rounded' />
