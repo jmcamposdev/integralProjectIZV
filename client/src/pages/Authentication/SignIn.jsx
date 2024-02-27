@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import LogoDark from '../../images/logo/logo-dark.svg'
 import Logo from '../../images/logo/logo.svg'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
-import Header from '../../components/Header'
+import Header from '../../components/HeaderMain/HeaderMain.jsx'
 import ErrorAlert from '../../components/Alerts/ErrorAlert'
 
 const SignIn = () => {
