@@ -81,9 +81,9 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword }) =>
   })
 
   return (
-    <section className='data-table-common rounded-sm border border-stroke bg-white py-4 shadow-default dark:border-strokedark dark:bg-boxdark'>
+    <section className='data-table-common rounded-sm border border-stroke bg-white py-4 shadow-default dark:border-strokedark dark:bg-boxdark overflow-x-scroll'>
       {/* Start of Search and Entries per page */}
-      <div className='flex justify-between border-b border-stroke px-8 pb-4 dark:border-strokedark'>
+      <div className='flex justify-between border-b border-stroke px-8 pb-4 dark:border-strokedark min-w-[700px]'>
         <div className='w-100'>
           <input
             type='text'
@@ -113,7 +113,7 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword }) =>
       {/* End of Search and Entries per page */}
 
       {/* Start Table */}
-      <table role='table' className='datatable-table w-full table-auto !border-collapse overflow-hidden break-words px-4 md:table-fixed md:overflow-auto md:px-8'>
+      <table role='table' className='datatable-table w-full table-auto !border-collapse overflow-hidden break-words px-4 md:table-fixed md:overflow-auto md:px-8 min-w-[700px]'>
         <thead>
           {
             table.getHeaderGroups().map(headerGroup => (
@@ -164,7 +164,7 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword }) =>
       {/* End Table */}
 
       {/* Pagination Section */}
-      <div className='flex justify-between border-t border-stroke px-8 pt-5 dark:border-strokedark'>
+      <div className='flex justify-between border-t border-stroke px-8 pt-5 dark:border-strokedark min-w-[700px]'>
         <p className='font-medium'>
           Showing {table.getState().pagination.pageIndex + 1} 0f {table.getPageCount()} pages
         </p>
