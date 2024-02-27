@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
+import useSignOut from 'react-auth-kit/hooks/useSignOut'
 import SidebarLinkGroup from './SidebarLinkGroup'
 import LogoWhite from '../../images/logo/logo-zawee-white.svg'
 import LogoDark from '../../images/logo/logo-zawee-dark.svg'
@@ -15,8 +16,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   const [sidebarExpanded, setSidebarExpanded] = useState(
     storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true'
   )
+  const navigate = useNavigate()
+  const signOut = useSignOut()
+  const handleSignOut = () => {
+    signOut()
+    navigate('/login')
+  }
 
-  // close on click outside
+  // close on click handleSignOut
   useEffect(() => {
     const clickHandler = ({ target }) => {
       if (!sidebar.current || !trigger.current) return
@@ -53,8 +60,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <>
       <div className='flex justify-start items-center w-72.5 h-[80px] fixed left-0 top-0 bg-white dark:bg-boxdark z-50 px-4 py-4 md:px-6 2xl:px-11 gap-2 2xsm:gap-4'>
-        <img className='h-[42px] dark:hidden mr-3 ' alt='Logo of our webpage' src={LogoWhite} />
-        <img className='h-[42px] dark:block hidden mr-3 ' alt='Logo of our webpage' src={LogoDark} />
+        <a href='/' className='dark:hidden'>
+          <img className='h-[42px]  mr-3 ' alt='Logo of our webpage' src={LogoWhite} />
+        </a>
+        <a href='/' className='dark:block hidden'>
+          <img className='h-[42px]  mr-3 ' alt='Logo of our webpage' src={LogoDark} />
+        </a>
+
       </div>
       <aside
         style={{ height: 'calc(100dvh - 80px)', marginTop: '80px' }}
@@ -84,7 +96,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     to='/dashboard'
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
                     pathname.includes('calendar') &&
-                    'bg-gray dark:bg-meta-4'
+                    'bg-gray dark:bg-meta-4 text-bodydark3'
                   }`}
                   >
                     <svg
@@ -123,7 +135,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     to='/dashboard/professors'
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
                     pathname.includes('professors') &&
-                    'bg-gray dark:bg-meta-4'
+                    'bg-gray dark:bg-meta-4 text-bodydark3'
                   }`}
                   >
                     <i className='icon-[lucide--user]' style={{ fontSize: '18px' }} />
@@ -138,7 +150,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     to='/dashboard/formations'
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
                     pathname.includes('formations') &&
-                    'bg-gray dark:bg-meta-4'
+                    'bg-gray dark:bg-meta-4 text-bodydark3'
                   }`}
                   >
                     <i className='icon-[cil--education]' style={{ fontSize: '18px' }} />
@@ -153,7 +165,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     to='/dashboard/modules'
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
                     pathname.includes('modules') &&
-                    'bg-gray dark:bg-meta-4'
+                    'bg-gray dark:bg-meta-4 text-bodydark3'
                   }`}
                   >
                     <i className='icon-[heroicons--book-open]' style={{ fontSize: '18px' }} />
@@ -168,7 +180,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     to='/dashboard/groups'
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
                     pathname.includes('groups') &&
-                    'bg-gray dark:bg-meta-4'
+                    'bg-gray dark:bg-meta-4 text-bodydark3'
                   }`}
                   >
                     <i className='icon-[tabler--users-group]' style={{ fontSize: '18px' }} />
@@ -183,7 +195,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     to='/dashboard/lessons'
                     className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
                     pathname.includes('lessons') &&
-                    'bg-gray dark:bg-meta-4'
+                    'bg-gray dark:bg-meta-4 text-bodydark3'
                   }`}
                   >
                     <i className='icon-[octicon--tasklist-24]' style={{ fontSize: '18px' }} />
@@ -206,8 +218,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 <li>
                   <NavLink
                     to='/profile'
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark3 duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
-                    pathname.includes('profile') && 'bg-gray dark:bg-meta-4'
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
+                    pathname.includes('profile') && 'bg-gray dark:bg-meta-4 text-bodydark3'
                   }`}
                   >
                     <svg
@@ -230,112 +242,35 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                     Profile
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink
+                    className='group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4'
+                    onClick={handleSignOut}
+                  >
+                    <svg
+                      className='fill-current translate-x-[-5px]'
+                      width='22'
+                      height='22'
+                      viewBox='0 0 22 22'
+                      fill='none'
+                      xmlns='http://www.w3.org/2000/svg'
+                    >
+                      <path
+                        d='M15.5375 0.618744H11.6531C10.7594 0.618744 10.0031 1.37499 10.0031 2.26874V4.64062C10.0031 5.05312 10.3469 5.39687 10.7594 5.39687C11.1719 5.39687 11.55 5.05312 11.55 4.64062V2.23437C11.55 2.16562 11.5844 2.13124 11.6531 2.13124H15.5375C16.3625 2.13124 17.0156 2.78437 17.0156 3.60937V18.3562C17.0156 19.1812 16.3625 19.8344 15.5375 19.8344H11.6531C11.5844 19.8344 11.55 19.8 11.55 19.7312V17.3594C11.55 16.9469 11.2062 16.6031 10.7594 16.6031C10.3125 16.6031 10.0031 16.9469 10.0031 17.3594V19.7312C10.0031 20.625 10.7594 21.3812 11.6531 21.3812H15.5375C17.2219 21.3812 18.5625 20.0062 18.5625 18.3562V3.64374C18.5625 1.95937 17.1875 0.618744 15.5375 0.618744Z'
+                        fill=''
+                      />
+                      <path
+                        d='M6.05001 11.7563H12.2031C12.6156 11.7563 12.9594 11.4125 12.9594 11C12.9594 10.5875 12.6156 10.2438 12.2031 10.2438H6.08439L8.21564 8.07813C8.52501 7.76875 8.52501 7.2875 8.21564 6.97812C7.90626 6.66875 7.42501 6.66875 7.11564 6.97812L3.67814 10.4844C3.36876 10.7938 3.36876 11.275 3.67814 11.5844L7.11564 15.0906C7.25314 15.2281 7.45939 15.3312 7.66564 15.3312C7.87189 15.3312 8.04376 15.2625 8.21564 15.125C8.52501 14.8156 8.52501 14.3344 8.21564 14.025L6.05001 11.7563Z'
+                        fill=''
+                      />
+                    </svg>
+                    Log Out
+                  </NavLink>
+                </li>
                 {/* <!-- Menu Item Profile --> */}
 
                 {/* <!-- Menu Item Auth Pages --> */}
-                <SidebarLinkGroup
-                  activeCondition={
-                  pathname === '/auth' || pathname.includes('auth')
-                }
-                >
-                  {(handleClick, open) => {
-                    return (
-                      <>
-                        <NavLink
-                          to='#'
-                          className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
-                          (pathname === '/auth' || pathname.includes('auth')) &&
-                          'bg-gray dark:bg-meta-4'
-                        }`}
-                          onClick={(e) => {
-                            e.preventDefault()
-                            sidebarExpanded
-                              ? handleClick()
-                              : setSidebarExpanded(true)
-                          }}
-                        >
-                          <svg
-                            className='fill-current'
-                            width='18'
-                            height='19'
-                            viewBox='0 0 18 19'
-                            fill='none'
-                            xmlns='http://www.w3.org/2000/svg'
-                          >
-                            <g clipPath='url(#clip0_130_9814)'>
-                              <path
-                                d='M12.7127 0.55835H9.53457C8.80332 0.55835 8.18457 1.1771 8.18457 1.90835V3.84897C8.18457 4.18647 8.46582 4.46772 8.80332 4.46772C9.14082 4.46772 9.45019 4.18647 9.45019 3.84897V1.88022C9.45019 1.82397 9.47832 1.79585 9.53457 1.79585H12.7127C13.3877 1.79585 13.9221 2.33022 13.9221 3.00522V15.0709C13.9221 15.7459 13.3877 16.2802 12.7127 16.2802H9.53457C9.47832 16.2802 9.45019 16.2521 9.45019 16.1959V14.2552C9.45019 13.9177 9.16894 13.6365 8.80332 13.6365C8.43769 13.6365 8.18457 13.9177 8.18457 14.2552V16.1959C8.18457 16.9271 8.80332 17.5459 9.53457 17.5459H12.7127C14.0908 17.5459 15.1877 16.4209 15.1877 15.0709V3.03335C15.1877 1.65522 14.0627 0.55835 12.7127 0.55835Z'
-                                fill=''
-                              />
-                              <path
-                                d='M10.4346 8.60205L7.62207 5.7333C7.36895 5.48018 6.97519 5.48018 6.72207 5.7333C6.46895 5.98643 6.46895 6.38018 6.72207 6.6333L8.46582 8.40518H3.45957C3.12207 8.40518 2.84082 8.68643 2.84082 9.02393C2.84082 9.36143 3.12207 9.64268 3.45957 9.64268H8.49395L6.72207 11.4427C6.46895 11.6958 6.46895 12.0896 6.72207 12.3427C6.83457 12.4552 7.00332 12.5114 7.17207 12.5114C7.34082 12.5114 7.50957 12.4552 7.62207 12.3145L10.4346 9.4458C10.6877 9.24893 10.6877 8.85518 10.4346 8.60205Z'
-                                fill=''
-                              />
-                            </g>
-                            <defs>
-                              <clipPath id='clip0_130_9814'>
-                                <rect
-                                  width='18'
-                                  height='18'
-                                  fill='white'
-                                  transform='translate(0 0.052124)'
-                                />
-                              </clipPath>
-                            </defs>
-                          </svg>
-                          Authentication
-                          <svg
-                            className={`absolute right-4 top-1/2 -translate-y-1/2 fill-current ${
-                            open && 'rotate-180'
-                          }`}
-                            width='20'
-                            height='20'
-                            viewBox='0 0 20 20'
-                            fill='none'
-                            xmlns='http://www.w3.org/2000/svg'
-                          >
-                            <path
-                              fillRule='evenodd'
-                              clipRule='evenodd'
-                              d='M4.41107 6.9107C4.73651 6.58527 5.26414 6.58527 5.58958 6.9107L10.0003 11.3214L14.4111 6.91071C14.7365 6.58527 15.2641 6.58527 15.5896 6.91071C15.915 7.23614 15.915 7.76378 15.5896 8.08922L10.5896 13.0892C10.2641 13.4147 9.73651 13.4147 9.41107 13.0892L4.41107 8.08922C4.08563 7.76378 4.08563 7.23614 4.41107 6.9107Z'
-                              fill=''
-                            />
-                          </svg>
-                        </NavLink>
-                        {/* <!-- Dropdown Menu Start --> */}
-                        <div
-                          className={`translate transform overflow-hidden ${
-                          !open && 'hidden'
-                        }`}
-                        >
-                          <ul className='mt-4 mb-5.5 flex flex-col gap-2.5 pl-6'>
-                            <li>
-                              <NavLink
-                                to='/auth/signin'
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark3 duration-300 ease-in-out hover:text-white ' +
-                                (isActive && '!text-white')}
-                              >
-                                Sign In
-                              </NavLink>
-                            </li>
-                            <li>
-                              <NavLink
-                                to='/auth/signup'
-                                className={({ isActive }) =>
-                                  'group relative flex items-center gap-2.5 rounded-md px-4 font-medium text-bodydark3 duration-300 ease-in-out hover:text-white ' +
-                                (isActive && '!text-white')}
-                              >
-                                Sign Up
-                              </NavLink>
-                            </li>
-                          </ul>
-                        </div>
-                        {/* <!-- Dropdown Menu End --> */}
-                      </>
-                    )
-                  }}
-                </SidebarLinkGroup>
+
                 {/* <!-- Menu Item Auth Pages --> */}
               </ul>
             </div>

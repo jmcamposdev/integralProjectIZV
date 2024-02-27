@@ -23,6 +23,9 @@ const Header = (props) => {
         </div>
 
         <div className='ml-auto flex items-center gap-3 2xsm:gap-7'>
+          {/* <!-- User Area --> */}
+          <DropdownUser />
+          {/* <!-- User Area --> */}
           <ul className='flex items-center gap-2 2xsm:gap-4'>
             {/* <!-- Dark Mode Toggler --> */}
             <DarkModeSwitcher />
@@ -72,9 +75,6 @@ const Header = (props) => {
 
           </ul>
 
-          {/* <!-- User Area --> */}
-          <DropdownUser />
-          {/* <!-- User Area --> */}
         </div>
       </div>
     </header>
