@@ -7,7 +7,10 @@ const Footer = () => {
         {/* Grid */}
         <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-[80px]'>
           <div className='col-span-2 flex flex-col'>
-            <a className=' h-[34px] w-[100%] flex-none text-xl font-semibold dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/' aria-label='Brand'><img src={Logo} alt='' /></a>
+            <a className=' h-[36px] w-[100%] flex-none text-xl font-semibold dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/' aria-label='Brand'>
+              <img className='h-[36px] hidden dark:block' src={LogoZaweeDark} alt='Zawee Logo' />
+              <img className='h-[36px] dark:hidden' src={LogoZaweeWhite} alt='Zawee Logo' />
+            </a>
             <p className='max-w-[370px] mt-7 text-gray-600 dark:text-gray-400'>Page description and what we do and stuff i dont know what else to add here.</p>
             {/* Social Brands */}
             <div className='sm:mt-auto mt-7'>
