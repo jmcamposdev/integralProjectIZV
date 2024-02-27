@@ -8,7 +8,7 @@ import { initialSetup } from './libs/initialSetup.js'
  */
 async function main () {
   try {
-    await sequelize.sync({ alter: false }) // If force is true, all tables are dropped and recreated
+    await sequelize.sync({ force: true }) // If force is true, all tables are dropped and recreated
     // Create the roles
     await initialSetup()
     // Start the server listening on port 3001
