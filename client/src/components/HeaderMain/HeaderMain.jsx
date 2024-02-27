@@ -86,27 +86,33 @@ const Header = () => {
               <li>
                 <a href='/' className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-dark dark:text-white' aria-current='page'>Contact</a>
               </li>
-              {isLogged
-                ? (
-                  <li>
-                    <a
-                      onClick={handleSignOut}
-                      className='w-fit text-3xl block ease-in-up rounded-md bg-primary py-3 px-8 font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9'
-                    >
-                      Sign Out
-                    </a>
-                  </li>
-                  )
-                : (
-                  <li className='py-6'>
-                    <a
-                      href='/login'
-                      className='w-fit text-3xl block ease-in-up rounded-md bg-primary py-3 px-8 font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9'
-                    >
-                      Sign In
-                    </a>
-                  </li>
-                  )}
+              {
+                window.location.pathname === '/'
+                  ? (
+                      isLogged
+                        ? (
+                          <li>
+                            <a
+                              onClick={handleSignOut}
+                              className='w-fit text-3xl block ease-in-up rounded-md bg-primary py-3 px-8 font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9'
+                            >
+                              Sign Out
+                            </a>
+                          </li>
+                          )
+                        : (
+                          <li className='py-6'>
+                            <a
+                              href='/login'
+                              className='w-fit text-3xl block ease-in-up rounded-md bg-primary py-3 px-8 font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9'
+                            >
+                              Sign In
+                            </a>
+                          </li>
+                          )
+                    )
+                  : ''
+}
 
             </ul>
           </div>
@@ -119,23 +125,28 @@ const Header = () => {
             />
           </a>
           <div className='flex items-center lg:order-2 gap-[20px]'>
-            {isLogged
-              ? (
-                <a
-                  onClick={handleSignOut}
-                  className=' hidden lg:block ease-in-up rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp  md:px-9 lg:px-6 xl:px-9'
-                >
-                  Sign Out
-                </a>
-                )
-              : (
-                <a
-                  href='/login'
-                  className=' hidden lg:block ease-in-up rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp  md:px-9 lg:px-6 xl:px-9'
-                >
-                  Sign In
-                </a>
-                )}
+            {
+              window.location.pathname === '/'
+                ? (
+                    isLogged
+                      ? (
+                        <a
+                          onClick={handleSignOut}
+                          className=' hidden lg:block ease-in-up rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp  md:px-9 lg:px-6 xl:px-9'
+                        >
+                          Sign Out
+                        </a>
+                        )
+                      : (
+                        <a
+                          href='/login'
+                          className=' hidden lg:block ease-in-up rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp  md:px-9 lg:px-6 xl:px-9'
+                        >
+                          Sign In
+                        </a>
+                        ))
+                : ''
+}
             <ul className='items-center gap-2 2xsm:gap-4 flex'>
               <DarkModeSwitcher importedColorMode={colorMode} importedSetColorMode={setColorMode} />
             </ul>
