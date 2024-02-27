@@ -1,4 +1,5 @@
-import Logo from '../../images/logo/logo-dark.svg'
+import LogoZaweeWhite from '../../images/logo/logo-zawee-white.svg'
+import LogoZaweeDark from '../../images/logo/logo-zawee-dark.svg'
 const Footer = () => {
   return (
     <footer className='mt-auto bg-white dark:bg-boxdark w-full'>
