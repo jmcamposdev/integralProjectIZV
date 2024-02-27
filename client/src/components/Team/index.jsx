@@ -190,6 +190,19 @@ const Team = () => {
               </a>
             </div>
           </div>
+
+          <a className='flex-col justify-center text-center hover:shadow-sm flex flex-col rounded-xl p-4 md:p-6 border dark:border-form-strokedark border-stroke dark:bg-boxdark2 text-black black:text-white' href='/'>
+            <h3 className='text-lg text-gray-800 dark:text-white'>
+              We are hiring!
+            </h3>
+            <div>
+              <span className='inline-flex items-center gap-x-2 text-blue-600 group-hover:text-blue-700 dark:text-blue-500 dark:group-hover:text-blue-400'>
+                See all opening positions
+                <svg className='flex-shrink-0 size-4' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='m9 18 6-6-6-6' /></svg>
+              </span>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
