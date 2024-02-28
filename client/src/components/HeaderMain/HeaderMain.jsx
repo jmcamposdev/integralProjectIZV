@@ -9,6 +9,7 @@ import useAuth from '../../hooks/useAuth'
 import useColorMode from '../../hooks/useColorMode'
 
 const Header = () => {
+  const isLandingPage = window.location.pathname === '/'
   const { isLogged } = useAuth()
   const signOut = useSignOut()
   const [colorMode, setColorMode] = useColorMode()
@@ -33,7 +34,13 @@ const Header = () => {
 
   // Set the logo if isScrolled or if is a dark mode if is added the dark class to the body put the dark logo else put the white logo
   useEffect(() => {
-    if (!isScrolled && !isOpenNav) {
+    if (!isLandingPage) {
+      if (colorMode === 'dark') {
+        setLogo(LogoZaweeWhite)
+      } else {
+        setLogo(LogoZaweeDark)
+      }
+    } else if (!isScrolled && !isOpenNav) {
       // If is not scrolled and is not open nav and is in mobile ver
       setLogo(LogoZaweeWhite)
     } else if (!isScrolled && isOpenNav && colorMode === 'dark') { // If is not scrolled and is open nav and is dark mode
@@ -174,16 +181,16 @@ const Header = () => {
           <div className='hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1' id='mobile-menu-2'>
             <ul id='ul' className='hidden lg:flex flex-row mt-4 font-medium  lg:space-x-8 lg:mt-0'>
               <li>
-                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Home</a>
+                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Home</a>
               </li>
               <li>
-                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>About</a>
+                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>About</a>
               </li>
               <li>
-                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Team</a>
+                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Team</a>
               </li>
               <li>
-                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Contact</a>
+                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Contact</a>
               </li>
               <li>
                 <ul className='items-center gap-2 2xsm:gap-4 lg:hidden w-fit block ml-auto'>
