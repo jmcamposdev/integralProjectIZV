@@ -81,7 +81,7 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword }) =>
   })
 
   return (
-    <section className='data-table-common rounded-sm border border-stroke bg-white py-4 shadow-default dark:border-strokedark dark:bg-boxdark overflow-x-scroll'>
+    <section className='data-table-common rounded-sm border border-stroke bg-white py-4 shadow-default dark:border-strokedark dark:bg-boxdark overflow-x-auto'>
       {/* Start of Search and Entries per page */}
       <div className='flex justify-between border-b border-stroke px-8 pb-4 dark:border-strokedark min-w-[700px]'>
         <div className='w-100'>

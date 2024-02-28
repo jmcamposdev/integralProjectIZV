@@ -2,24 +2,25 @@ import '../../css/style.css'
 import '../../css/satoshi.css'
 import React, { useState, useEffect } from 'react'
 import DarkModeSwitcher from '../Header/DarkModeSwitcher'
-import LogoZaweeWhite from '../../images/logo/logo-zawee-white.svg'
-import LogoZaweeDark from '../../images/logo/logo-zawee-dark.svg'
+import LogoZaweeDark from '../../images/logo/logo-zawee-white.svg'
+import LogoZaweeWhite from '../../images/logo/logo-zawee-dark.svg'
 import useSignOut from 'react-auth-kit/hooks/useSignOut'
 import useAuth from '../../hooks/useAuth'
 import useColorMode from '../../hooks/useColorMode'
 
 const Header = () => {
+  const isLandingPage = window.location.pathname === '/'
   const { isLogged } = useAuth()
   const signOut = useSignOut()
   const [colorMode, setColorMode] = useColorMode()
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isOpenNav, setIsOpenNav] = useState(false)
+  const [logo, setLogo] = useState(LogoZaweeWhite)
 
   const handleSignOut = () => {
     signOut()
     window.location.reload()
   }
-
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [logo, setLogo] = useState(LogoZaweeWhite)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,18 +34,31 @@ const Header = () => {
 
   // Set the logo if isScrolled or if is a dark mode if is added the dark class to the body put the dark logo else put the white logo
   useEffect(() => {
-    if (!isScrolled) { // If is not scrolled
+    if (!isLandingPage) {
+      if (colorMode === 'dark') {
+        setLogo(LogoZaweeWhite)
+      } else {
+        setLogo(LogoZaweeDark)
+      }
+    } else if (!isScrolled && !isOpenNav) {
+      // If is not scrolled and is not open nav and is in mobile ver
+      setLogo(LogoZaweeWhite)
+    } else if (!isScrolled && isOpenNav && colorMode === 'dark') { // If is not scrolled and is open nav and is dark mode
+      setLogo(LogoZaweeWhite)
+    } else if (!isScrolled && isOpenNav && colorMode === 'light') { // If is not scrolled and is open nav and is light mode
       setLogo(LogoZaweeDark)
     } else if (document.body.classList.contains('dark') && isScrolled) { // If is scrolled and is dark mode
-      setLogo(LogoZaweeDark)
-    } else { // If is scrolled and is not dark mode
       setLogo(LogoZaweeWhite)
+    } else { // If is scrolled and is not dark mode
+      setLogo(LogoZaweeDark)
     }
-  }, [isScrolled, colorMode])
+  }, [isScrolled, colorMode, isOpenNav])
 
   const openHideNav = () => {
     const backNavPhone = document.getElementById('back-nav-phone')
     const buttonNav = document.getElementById('button-nav')
+
+    setIsOpenNav(!isOpenNav)
 
     buttonNav.children.item(0).classList.toggle('rotate-45')
     buttonNav.children.item(0).classList.toggle('top-[15%]')
@@ -58,6 +72,14 @@ const Header = () => {
     buttonNav.classList.toggle('justify-between')
     backNavPhone.classList.toggle('h-0')
     backNavPhone.classList.toggle('h-[100dvh]')
+
+    if (!isScrolled && !isOpenNav && colorMode === 'light') { // If is not scrolled and is open nav
+      buttonNav.children.item(0).classList.toggle('!bg-stone-400')
+      buttonNav.children.item(2).classList.toggle('!bg-stone-400')
+    } else if (!isScrolled && isOpenNav && colorMode === 'light') { // if is not scrolled and is not open nav
+      buttonNav.children.item(0).classList.toggle('!bg-stone-400')
+      buttonNav.children.item(2).classList.toggle('!bg-stone-400')
+    }
 
     if (document.body.style.overflow === 'hidden') {
       document.body.style.overflow = 'visible'
@@ -150,25 +172,25 @@ const Header = () => {
             <ul className='items-center gap-2 2xsm:gap-4 flex'>
               <DarkModeSwitcher importedColorMode={colorMode} importedSetColorMode={setColorMode} />
             </ul>
-            <button onClick={openHideNav} id='button-nav' data-collapse-toggle='mobile-menu-2' type='button' className='relative w-[40px] h-[36px] inline-flex justify-center flex-col p-1.5 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600' aria-controls='mobile-menu-2' aria-expanded='false'>
-              <div className='absolute top-[15%] transition-all block origin-center w-[30px] h-[2px] dark:bg-white bg-stone-400' />
-              <div className='transition-all w-[24px] h-[2px] dark:bg-white bg-stone-400 ml-auto' />
-              <div className='absolute bottom-[15%] transition-all block origin-center w-[30px] h-[2px] dark:bg-white bg-stone-400' />
+            <button onClick={openHideNav} id='button-nav' data-collapse-toggle='mobile-menu-2' type='button' className='relative w-[40px] h-[36px] inline-flex justify-center flex-col p-1.5 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100' aria-controls='mobile-menu-2' aria-expanded='false'>
+              <div className={`absolute top-[15%] transition-all block origin-center w-[30px] h-[2px] dark:bg-white ${isScrolled ? 'bg-stone-400' : 'bg-white'}`} />
+              <div className={`transition-all w-[24px] h-[2px] dark:bg-white ml-auto ${isScrolled ? 'bg-stone-400' : 'bg-white'}`} />
+              <div className={`absolute bottom-[15%] transition-all block origin-center w-[30px] h-[2px] dark:bg-white ${isScrolled ? 'bg-stone-400' : 'bg-white'}`} />
             </button>
           </div>
           <div className='hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1' id='mobile-menu-2'>
             <ul id='ul' className='hidden lg:flex flex-row mt-4 font-medium  lg:space-x-8 lg:mt-0'>
               <li>
-                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Home</a>
+                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Home</a>
               </li>
               <li>
-                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>About</a>
+                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>About</a>
               </li>
               <li>
-                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Team</a>
+                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Team</a>
               </li>
               <li>
-                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Contact</a>
+                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Contact</a>
               </li>
               <li>
                 <ul className='items-center gap-2 2xsm:gap-4 lg:hidden w-fit block ml-auto'>

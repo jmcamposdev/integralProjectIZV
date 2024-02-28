@@ -51,7 +51,8 @@ Lesson.belongsTo(Professor, { foreignKey: 'professorId', targetId: 'id' })
  */
 export const professorFieldsValidation = (senecaUser, name, firstSurname, lastSurname, specialty, password, confirmPassword) => {
   // Valid all the fields to be not null or empty and the specialty to be FP or Secondary
-  const validSenecaUser = senecaUser?.trim().length > 0
+  // To be valid seneca user must be not null or empty and cant contain UpperCase letters, spaces or special characters
+  const validSenecaUser = senecaUser?.trim().length > 0 && !/[A-Z\s!@#$%^&*(),.?":{}|<>]/.test(senecaUser)
   const validName = name?.trim().length > 0
   const validFirstSurname = firstSurname?.trim().length > 0
   const validLastSurname = lastSurname?.trim().length > 0
@@ -76,6 +77,10 @@ export const professorValidateSomeFields = (params) => {
     }
     // Validate the specialty to be FP or Secondary
     if (key === 'specialty' && (params[key] !== 'FP' && params[key] !== 'Secondary')) {
+      return false
+    }
+    // Validate the senecaUser to be not null or empty and cant contain UpperCase letters, spaces or special characters
+    if (key === 'senecaUser' && (!params[key] || params[key].trim().length === 0 || /[A-Z\s!@#$%^&*(),.?":{}|<>]/.test(params[key]))) {
       return false
     }
     // Validate the senecaUser, name, firstSurname and lastSurname to be not null or empty

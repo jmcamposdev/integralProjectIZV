@@ -7,7 +7,7 @@ import FormModal from '../../Modals/FormModal'
 import TableTemplate from '../TableTemplate'
 import moduleColumns from './moduleColumns'
 
-const ModuleTable = ({ formations }) => {
+const ModuleTable = ({ formations, allModules }) => {
   const { isAdmin } = useAuth()
   const [error, setError] = useState(null) // Save the error message
   const [modules, setModules] = useState([]) // Save the modules
@@ -97,7 +97,13 @@ const ModuleTable = ({ formations }) => {
         setError(error.message)
       }
     }
-    getModules()
+
+    // If allModules is null, get the modules from the database
+    if (!allModules) {
+      getModules()
+    } else { // If allModules is not null, save the modules in the state
+      setModules(allModules)
+    }
   }, [])
 
   /**
