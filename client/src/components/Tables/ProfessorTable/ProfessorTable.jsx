@@ -157,6 +157,13 @@ const ProfessorTable = () => {
   const handleCreateProfessor = async (event) => {
     event.preventDefault()
 
+    // Validate that the password and confirmPassword are the same
+    if (createInputs.password !== createInputs.confirmPassword) {
+      setViewCreateModal(false)
+      setError('The passwords do not match.')
+      return
+    }
+
     try {
       const professor = await professorService.createProfessor(createInputs)
       // Add the password and confirmPassword to the professor object
