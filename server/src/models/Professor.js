@@ -72,7 +72,7 @@ export const professorValidateSomeFields = (params) => {
   // Iterate over the object keys and validate the fields
   for (const key in params) {
     // If is the id, continue
-    if (key === 'id') {
+    if (key === 'id' || key === 'isAdmin' || key === 'roleId') {
       continue
     }
     // Validate the specialty to be FP or Secondary
