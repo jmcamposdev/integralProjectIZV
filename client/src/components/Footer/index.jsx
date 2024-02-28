@@ -11,7 +11,7 @@ const Footer = () => {
               <img className='h-[36px] hidden dark:block' src={LogoZaweeDark} alt='Zawee Logo' />
               <img className='h-[36px] dark:hidden' src={LogoZaweeWhite} alt='Zawee Logo' />
             </a>
-            <p className='max-w-[370px] mt-7 text-gray-600 dark:text-gray-400'>Page description and what we do and stuff i dont know what else to add here.</p>
+            <p className='max-w-[370px] mt-7 text-gray-600 dark:text-gray-400'>The best app to manage your educational center successfully! If you want to take your educational center to the forefront, join us.</p>
             {/* Social Brands */}
             <div className='sm:mt-auto mt-7'>
               <a className='size-10 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-500 hover:text-black dark:text-white hover:bg-white/10 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600 ' href='/'>
@@ -48,13 +48,13 @@ const Footer = () => {
           {/* End Col */}
 
           <div className='col-span-1'>
-            <h4 className='mb-7.5 lg:text-2xl font-medium text-black dark:text-white'>Company</h4>
+            <h4 className='mb-7.5 lg:text-2xl font-medium text-black dark:text-white'>Site Map</h4>
 
             <div className='mt-3 grid space-y-3'>
-              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/'>About Us</a></p>
-              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/'>Blog</a></p>
-              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/'>Career</a></p>
-              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/'>Something</a></p>
+              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='#home'>Home</a></p>
+              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='#about'>About</a></p>
+              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='#team'>Team</a></p>
+              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='#classes'>Classes</a></p>
             </div>
           </div>
           {/* End Col */}
