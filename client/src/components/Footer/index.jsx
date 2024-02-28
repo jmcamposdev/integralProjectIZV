@@ -1,6 +1,8 @@
 import LogoZaweeWhite from '../../images/logo/logo-zawee-white.svg'
 import LogoZaweeDark from '../../images/logo/logo-zawee-dark.svg'
 const Footer = () => {
+  const isLandingPage = window.location.pathname === '/'
+
   return (
     <footer className='mt-auto bg-white dark:bg-boxdark w-full'>
       <div className='w-full max-w-[85rem] py-20 px-4 sm:px-6 lg:px-8 lg:pt-20 mx-auto'>
@@ -11,7 +13,9 @@ const Footer = () => {
               <img className='h-[36px] hidden dark:block' src={LogoZaweeDark} alt='Zawee Logo' />
               <img className='h-[36px] dark:hidden' src={LogoZaweeWhite} alt='Zawee Logo' />
             </a>
-            <p className='max-w-[370px] mt-7 text-gray-600 dark:text-gray-400'>Page description and what we do and stuff i dont know what else to add here.</p>
+            <p className='max-w-[370px] mt-7 text-gray-600 dark:text-gray-400'>
+              Zawee stands as a premier solutio for efficient timetable management tailored for schools of all sizes.
+            </p>
             {/* Social Brands */}
             <div className='sm:mt-auto mt-7'>
               <a className='size-10 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-500 hover:text-black dark:text-white hover:bg-white/10 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600 ' href='/'>
@@ -22,13 +26,13 @@ const Footer = () => {
                 </svg>
               </a>
               <a className='size-10 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-500 hover:text-black dark:text-white hover:bg-white/10 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600' href='/'>
-                <svg className='flex-shrink-0 size-4' xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>
-                  <path d='M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z' />
+                <svg style={{ scale: '1.35' }} className='flex-shrink-0 size-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24px' height='24px' fill='currentColor'>
+                  <path d='M 8 3 C 5.243 3 3 5.243 3 8 L 3 16 C 3 18.757 5.243 21 8 21 L 16 21 C 18.757 21 21 18.757 21 16 L 21 8 C 21 5.243 18.757 3 16 3 L 8 3 z M 8 5 L 16 5 C 17.654 5 19 6.346 19 8 L 19 16 C 19 17.654 17.654 19 16 19 L 8 19 C 6.346 19 5 17.654 5 16 L 5 8 C 5 6.346 6.346 5 8 5 z M 17 6 A 1 1 0 0 0 16 7 A 1 1 0 0 0 17 8 A 1 1 0 0 0 18 7 A 1 1 0 0 0 17 6 z M 12 7 C 9.243 7 7 9.243 7 12 C 7 14.757 9.243 17 12 17 C 14.757 17 17 14.757 17 12 C 17 9.243 14.757 7 12 7 z M 12 9 C 13.654 9 15 10.346 15 12 C 15 13.654 13.654 15 12 15 C 10.346 15 9 13.654 9 12 C 9 10.346 10.346 9 12 9 z' />
                 </svg>
               </a>
               <a className='size-10 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-500 hover:text-black dark:text-white hover:bg-white/10 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600' href='/'>
-                <svg className='flex-shrink-0 size-4' xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>
-                  <path d='M5.026 15c0 .926-.756 1.681-1.681 1.681S0 15.926 0 15.001C0 14.076.756 13.32 1.68 13.32h1.682v1.68zm.846 0c0-.924.756-1.68 1.681-1.68s1.681.756 1.681 1.68v4.21c0 .924-.756 1.68-1.68 1.68a1.685 1.685 0 0 1-1.682-1.68v-4.21zM5.89 3.362c-.926 0-1.682-.756-1.682-1.681S4.964 0 5.89 0s1.68.756 1.68 1.68v1.682H5.89zm0 .846c.924 0 1.68.756 1.68 1.681S6.814 7.57 5.89 7.57H1.68C.757 7.57 0 6.814 0 5.89c0-.926.756-1.682 1.68-1.682h4.21zm6.749 1.682c0-.926.755-1.682 1.68-1.682.925 0 1.681.756 1.681 1.681s-.756 1.681-1.68 1.681h-1.681V5.89zm-.848 0c0 .924-.755 1.68-1.68 1.68A1.685 1.685 0 0 1 8.43 5.89V1.68C8.43.757 9.186 0 10.11 0c.926 0 1.681.756 1.681 1.68v4.21zm-1.681 6.748c.926 0 1.682.756 1.682 1.681S11.036 16 10.11 16s-1.681-.756-1.681-1.68v-1.682h1.68zm0-.847c-.924 0-1.68-.755-1.68-1.68 0-.925.756-1.681 1.68-1.681h4.21c.924 0 1.68.756 1.68 1.68 0 .926-.756 1.681-1.68 1.681h-4.21z' />
+                <svg className='scale-[1.3] flex-shrink-0 size-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24px' height='24px' fill='currentColor'>
+                  <path d='M 2.3671875 3 L 9.4628906 13.140625 L 2.7402344 21 L 5.3808594 21 L 10.644531 14.830078 L 14.960938 21 L 21.871094 21 L 14.449219 10.375 L 20.740234 3 L 18.140625 3 L 13.271484 8.6875 L 9.2988281 3 L 2.3671875 3 z M 6.2070312 5 L 8.2558594 5 L 18.033203 19 L 16.001953 19 L 6.2070312 5 z' />
                 </svg>
               </a>
               <a className='size-10 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-500 hover:text-black dark:text-white hover:bg-white/10 disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600' href='/'>
@@ -37,8 +41,8 @@ const Footer = () => {
                 </svg>
               </a>
               <a className='size-10 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-gray-500 hover:text-black dark:text-white hover:bg-white/10 dark:hover-bg disabled:opacity-50 disabled:pointer-events-none focus:outline-none focus:ring-1 focus:ring-gray-600' href='/'>
-                <svg className='flex-shrink-0 size-4' xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' viewBox='0 0 16 16'>
-                  <path d='M3.362 10.11c0 .926-.756 1.681-1.681 1.681S0 11.036 0 10.111C0 9.186.756 8.43 1.68 8.43h1.682v1.68zm.846 0c0-.924.756-1.68 1.681-1.68s1.681.756 1.681 1.68v4.21c0 .924-.756 1.68-1.68 1.68a1.685 1.685 0 0 1-1.682-1.68v-4.21zM5.89 3.362c-.926 0-1.682-.756-1.682-1.681S4.964 0 5.89 0s1.68.756 1.68 1.68v1.682H5.89zm0 .846c.924 0 1.68.756 1.68 1.681S6.814 7.57 5.89 7.57H1.68C.757 7.57 0 6.814 0 5.89c0-.926.756-1.682 1.68-1.682h4.21zm6.749 1.682c0-.926.755-1.682 1.68-1.682.925 0 1.681.756 1.681 1.681s-.756 1.681-1.68 1.681h-1.681V5.89zm-.848 0c0 .924-.755 1.68-1.68 1.68A1.685 1.685 0 0 1 8.43 5.89V1.68C8.43.757 9.186 0 10.11 0c.926 0 1.681.756 1.681 1.68v4.21zm-1.681 6.748c.926 0 1.682.756 1.682 1.681S11.036 16 10.11 16s-1.681-.756-1.681-1.68v-1.682h1.68zm0-.847c-.924 0-1.68-.755-1.68-1.68 0-.925.756-1.681 1.68-1.681h4.21c.924 0 1.68.756 1.68 1.68 0 .926-.756 1.681-1.68 1.681h-4.21z' />
+                <svg className='flex-shrink-0 size-4' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24px' height='24px' fill='currentColor'>
+                  <path d='M 21.800781 0 L 2.199219 0 C 1 0 0 1 0 2.199219 L 0 21.800781 C 0 23 1 24 2.199219 24 L 21.800781 24 C 23 24 24 23 24 21.800781 L 24 2.199219 C 24 1 23 0 21.800781 0 Z M 7 20 L 3 20 L 3 9 L 7 9 Z M 5 7.699219 C 3.800781 7.699219 3 6.898438 3 5.898438 C 3 4.800781 3.800781 4 5 4 C 6.199219 4 7 4.800781 7 5.800781 C 7 6.898438 6.199219 7.699219 5 7.699219 Z M 21 20 L 17 20 L 17 14 C 17 12.398438 15.898438 12 15.601563 12 C 15.300781 12 14 12.199219 14 14 C 14 14.199219 14 20 14 20 L 10 20 L 10 9 L 14 9 L 14 10.601563 C 14.601563 9.699219 15.601563 9 17.5 9 C 19.398438 9 21 10.5 21 14 Z' />
                 </svg>
               </a>
             </div>
@@ -51,10 +55,10 @@ const Footer = () => {
             <h4 className='mb-7.5 lg:text-2xl font-medium text-black dark:text-white'>Company</h4>
 
             <div className='mt-3 grid space-y-3'>
-              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/'>About Us</a></p>
-              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/'>Blog</a></p>
-              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/'>Career</a></p>
-              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href='/'>Something</a></p>
+              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href={isLandingPage ? '#home' : '/#home'}>Home</a></p>
+              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href={isLandingPage ? '#about' : '/#about'}>About</a></p>
+              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href={isLandingPage ? '#team' : '/#team'}>Team</a></p>
+              <p><a className='inline-flex gap-x-2 text-gray-400 hover:text-black dark:hover:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600' href={isLandingPage ? '#classes' : '/#classes'}>Classes</a></p>
             </div>
           </div>
           {/* End Col */}
