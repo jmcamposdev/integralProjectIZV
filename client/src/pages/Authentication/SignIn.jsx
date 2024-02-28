@@ -4,6 +4,7 @@ import LogoZaweeDark from '../../images/logo/logo-zawee-white.svg'
 import LogoZaweeWhite from '../../images/logo/logo-zawee-dark.svg'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
 import Header from '../../components/HeaderMain/HeaderMain.jsx'
+import Footer from '../../components/Footer/index.jsx'
 import ErrorAlert from '../../components/Alerts/ErrorAlert'
 
 const SignIn = () => {
@@ -70,7 +71,7 @@ const SignIn = () => {
   return (
     <div className='dark:bg-boxdark-2 dark:text-bodydark h-screen flex flex-col'>
       <Header />
-      <div className='rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark flex-1 flex flex-col'>
+      <div style={{ minHeight: '90dvh' }} className='rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark flex-1 flex flex-col'>
         <div className='flex flex-wrap items-center flex-1'>
           <div className='hidden w-full xl:block xl:w-1/2'>
             <div className='py-17.5 px-26 text-center'>
@@ -79,7 +80,7 @@ const SignIn = () => {
                 <img className='dark:hidden' src={LogoZaweeDark} alt='Logo' />
               </Link>
 
-              <p className='2xl:px-20'>
+              <p className='2xl:px-20 mx-auto max-w-[623px]'>
                 Welcome to our platform! Sign in to access your assigned modules, manage classes, and more.
               </p>
 
@@ -301,6 +302,7 @@ const SignIn = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }
