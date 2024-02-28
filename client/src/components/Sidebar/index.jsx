@@ -243,7 +243,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
+                  <a
                     className='group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4'
                     onClick={handleSignOut}
                   >
@@ -265,7 +265,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                       />
                     </svg>
                     Log Out
-                  </NavLink>
+                  </a>
                 </li>
                 {/* <!-- Menu Item Profile --> */}
 
