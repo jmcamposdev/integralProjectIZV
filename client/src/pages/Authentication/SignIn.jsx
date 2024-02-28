@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import LogoDark from '../../images/logo/logo-dark.svg'
-import Logo from '../../images/logo/logo.svg'
+import LogoZaweeDark from '../../images/logo/logo-zawee-white.svg'
+import LogoZaweeWhite from '../../images/logo/logo-zawee-dark.svg'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
 import Header from '../../components/HeaderMain/HeaderMain.jsx'
 import ErrorAlert from '../../components/Alerts/ErrorAlert'
@@ -74,14 +74,13 @@ const SignIn = () => {
         <div className='flex flex-wrap items-center flex-1'>
           <div className='hidden w-full xl:block xl:w-1/2'>
             <div className='py-17.5 px-26 text-center'>
-              <Link className='mb-5.5 inline-block' to='/'>
-                <img className='hidden dark:block' src={Logo} alt='Logo' />
-                <img className='dark:hidden' src={LogoDark} alt='Logo' />
+              <Link className='h-[40px] w-[120px] mb-5.5 inline-block' to='/'>
+                <img className='hidden dark:block' src={LogoZaweeWhite} alt='Logo' />
+                <img className='dark:hidden' src={LogoZaweeDark} alt='Logo' />
               </Link>
 
               <p className='2xl:px-20'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit
-                suspendisse.
+                Welcome to our platform! Sign in to access your assigned modules, manage classes, and more.
               </p>
 
               <span className='mt-15 inline-block'>
@@ -214,7 +213,7 @@ const SignIn = () => {
               {error && (<ErrorAlert message={error} onClose={() => setError(null)} />)}
               <span className='mb-1.5 block font-medium'>Start for free</span>
               <h2 className='mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2'>
-                Sign In to TailAdmin
+                Sign In to Zawee
               </h2>
 
               <form onSubmit={handleSubmit}>
