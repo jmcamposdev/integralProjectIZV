@@ -1,6 +1,3 @@
-import { Link } from 'react-router-dom'
-import DropdownMessage from './DropdownMessage'
-import DropdownNotification from './DropdownNotification'
 import DropdownUser from './DropdownUser'
 import LogoWhite from '../../images/logo/logo-zawee-white.svg'
 import LogoDark from '../../images/logo/logo-zawee-dark.svg'
