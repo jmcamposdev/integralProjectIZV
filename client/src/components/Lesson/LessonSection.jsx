@@ -96,7 +96,7 @@ const LessonSection = () => {
   }
 
   return (
-    <section className='overflow-hidden z-0 relative py-17.5 sm:py-22.5 xl:py-27.5 bg-white dark:bg-boxdark-2 flex flex-col gap-[2.5rem] font-medium leading-relaxed font-satoshi text-black dark:text-white justify-center items-center'>
+    <section id='classes' className='overflow-hidden z-0 relative py-17.5 sm:py-22.5 xl:py-27.5 bg-white dark:bg-boxdark-2 flex flex-col gap-[2.5rem] font-medium leading-relaxed font-satoshi text-black dark:text-white justify-center items-center'>
       <div className='z-1 mx-auto max-w-[55rem] px-4 text-center sm:px-8 xl:px-0'>
         <span className='text-2xl font-heading mb-5 inline-block text-title-6 font-medium text-primary'>Classes</span><h2 className='text-4xl xl:text-5xl font-semibold text-black dark:text-white'>Explore your classes meet the teachers and modules</h2>
       </div>
