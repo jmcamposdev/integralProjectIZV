@@ -9,7 +9,7 @@ import {
 import { useState } from 'react'
 import useAuth from '../../hooks/useAuth'
 
-const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword }) => {
+const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword, onUpgrade, onDowngrade }) => {
   const { isAdmin } = useAuth() // Get the isAdmin value from the useAuth hook
 
   // Remove the Action column if exists to prevent unexpected actions
@@ -56,6 +56,31 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword }) =>
               </button>
             )
           }
+
+          {
+            // Show the downgrade button if the user is an admin and the onDowngrade function is provided
+            <>
+              {row.cell.row.original.isAdmin && onDowngrade && (
+                <button
+                  className='flex justify-center items-center w-8 h-8 rounded-md bg-emerald-800 hover:bg-opacity-70' title='Downgrade to User'
+                  onClick={() => onDowngrade(row.cell.row.original)}
+                >
+                  <i className='icon-[material-symbols-light--arrow-downward-alt-rounded] fill-current duration-300 ease-in-out text-white' style={{ fontSize: '22px' }} />
+                </button>
+              )}
+
+              {!row.cell.row.original.isAdmin && onUpgrade && (
+                <button
+                  className='flex justify-center items-center w-8 h-8 rounded-md bg-cyan-600 hover:bg-opacity-70' title='Upgrade to Admin'
+                  onClick={() => onUpgrade(row.cell.row.original)}
+                >
+                  <i className='icon-[material-symbols-light--arrow-upward-alt-rounded] fill-current duration-300 ease-in-out text-white' style={{ fontSize: '22px' }} />
+                </button>
+              )}
+            </>
+
+          }
+
         </div>
       )
     })
