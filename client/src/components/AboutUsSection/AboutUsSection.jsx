@@ -17,10 +17,10 @@ const AboutUSSection = () => {
         <div className=' z-2 grid md:grid-cols-2 gap-12'>
           <div className='lg:w-3/4'>
             <h2 className='text-gray-800 font-bold text-4xl dark:text-white'>
-            Automate the assignment of lessons to your staff
+              Automate the assignment of lessons to your staff
             </h2>
             <p className='mt-7 text-gray-800 dark:text-gray-400'>
-            We will help you create, modify and assign lessons quickly and efficiently, stop worrying about the unexpected and quickly meet your school's needs.
+              We will help you create, modify and assign lessons quickly and efficiently, stop worrying about the unexpected and quickly meet your school's needs.
             </p>
           </div>
           <div className='space-y-6 lg:space-y-10'>
@@ -30,10 +30,10 @@ const AboutUSSection = () => {
               </span>
               <div className='ms-5 sm:ms-8'>
                 <h3 className='text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200'>
-                Integrated lesson management
+                  Integrated lesson management
                 </h3>
                 <p className='mt-1 text-gray-600 dark:text-gray-400'>
-                Our software will help you through the process from start to finish saving you time and improving your management.
+                  Our software will help you through the process from start to finish saving you time and improving your management.
                 </p>
               </div>
             </div>
@@ -46,10 +46,10 @@ const AboutUSSection = () => {
               </span>
               <div className='ms-5 sm:ms-8'>
                 <h3 className='text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200'>
-                Keep communication turned on
+                  Keep communication turned on
                 </h3>
                 <p className='mt-1 text-gray-600 dark:text-gray-400'>
-                Let integrated management work its magic. Classroom hours are allocated more fairly and equitably, keeping your staff happy and motivated.
+                  Let integrated management work its magic. Classroom hours are allocated more fairly and equitably, keeping your staff happy and motivated.
                 </p>
               </div>
             </div>
@@ -63,7 +63,7 @@ const AboutUSSection = () => {
                   Simple and affordable
                 </h3>
                 <p className='mt-1 text-gray-600 dark:text-gray-400'>
-                A very flat difficulty curve that will make the change from your old management system almost instantaneous and very pleasant.
+                  A very flat difficulty curve that will make the change from your old management system almost instantaneous and very pleasant.
                 </p>
               </div>
             </div>
@@ -163,10 +163,10 @@ const AboutUSSection = () => {
               <div className='space-y-2 md:space-y-4'>
                 <h4 className='mb-2.5 text-lg font-medium text-primary'>Created without limits</h4>
                 <h2 className='font-bold text-4xl text-gray-800 dark:text-gray-200'>
-                By teachers for teachers
+                  By teachers for teachers
                 </h2>
                 <p className='text-gray-500'>
-                We have consulted in more than 50 educational centers and we have learned what the problems are. So we have developed the best solutions. We know firsthand how frustrating it is to waste time on management instead of focusing on educating students.
+                  We have consulted in more than 50 educational centers and we have learned what the problems are. So we have developed the best solutions. We know firsthand how frustrating it is to waste time on management instead of focusing on educating students.
                 </p>
               </div>
 
@@ -250,7 +250,7 @@ const AboutUSSection = () => {
       <div className='z-2 max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto'>
         <div style={{ transform: 'scaleY(-1)' }} className='md:grid md:grid-cols-2 md:items-center md:gap-12 xl:gap-32'>
           <div style={{ transform: 'scaleY(-1)' }} className='order-2 md:order-none'>
-            <img className='rounded-xl' src='https://images.unsplash.com/photo-1648737963503-1a26da876aca?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=900&amp;h=900&amp;q=80' alt='Image Description' />
+            <img className='rounded-xl' src='https://images.unsplash.com/photo-1580894732444-8ecded7900cd?q=80&w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=900&amp;h=900&amp;q=80' alt='Image Description' />
           </div>
 
           <div style={{ transform: 'scaleY(-1)' }} className='mt-5 sm:mt-10 lg:mt-0'>
@@ -258,10 +258,10 @@ const AboutUSSection = () => {
               <div className='space-y-2 md:space-y-4'>
                 <h4 className='mb-2.5 text-lg font-medium text-primary'>The keys to Zawee</h4>
                 <h2 className='font-bold text-4xl text-black dark:text-white'>
-                The keys: robustness and versatility
+                  The keys: robustness and versatility
                 </h2>
                 <p className='text-black dark:text-white'>
-                Your school's databases have never been so secure and fail-safe.
+                  Your school's databases have never been so secure and fail-safe.
                 </p>
               </div>
 
@@ -271,7 +271,7 @@ const AboutUSSection = () => {
                   <span className='text-sm sm:text-base text-gray-500'>
                     <span className='font-bold text-2xl text-black dark:text-white'>Robustness</span>
                     <p className='text-black dark:text-white mt-2'>
-                    Active data redundancy protection, never again worry about failures you can't control.
+                      Active data redundancy protection, never again worry about failures you can't control.
                     </p>
                   </span>
                 </li>
