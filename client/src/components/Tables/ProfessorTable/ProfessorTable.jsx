@@ -64,6 +64,7 @@ const ProfessorTable = () => {
     async function getProfessors () {
       try {
         const professors = await professorService.getAllProfessors()
+        console.log(professors)
         setProfessors(professors)
         setIsLoading(false)
       } catch (error) {
@@ -260,6 +261,24 @@ const ProfessorTable = () => {
     }
   }
 
+  const onUpgradeRole = async (professor) => {
+    try {
+      const updatedProfessor = await professorService.updateProfessor({ roleId: 2, id: professor.id })
+      setProfessors(professors.map((prof) => (prof.id === updatedProfessor.id ? updatedProfessor : prof)))
+    } catch (error) {
+      setError(error.message)
+    }
+  }
+
+  const onDowngradeRole = async (professor) => {
+    try {
+      const updatedProfessor = await professorService.updateProfessor({ roleId: 1, id: professor.id })
+      setProfessors(professors.map((prof) => (prof.id === updatedProfessor.id ? updatedProfessor : prof)))
+    } catch (error) {
+      setError(error.message)
+    }
+  }
+
   return (
     <>
       {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
@@ -268,7 +287,7 @@ const ProfessorTable = () => {
           ? <TableRowLoading columns={professorColumns.length} />
           : (
             <>
-              <TableTemplate data={professors} columns={professorColumns} onDelete={onDelete} onEdit={handleEditProfessorButton} onChangePassword={handleChangePasswordButton} />
+              <TableTemplate data={professors} columns={professorColumns} onDelete={onDelete} onEdit={handleEditProfessorButton} onChangePassword={handleChangePasswordButton} onUpgrade={onUpgradeRole} onDowngrade={onDowngradeRole} />
               {// Only show the add professor button if the user is an admin
               isAdmin && (
                 <button
