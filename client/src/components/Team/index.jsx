@@ -6,7 +6,7 @@ const Team = () => {
     <section id='team' className='overflow-hidden z-0 relative py-17.5 sm:py-22.5 xl:py-27.5 bg-white dark:bg-boxdark-2 flex flex-col gap-[2.5rem] font-medium leading-relaxed font-satoshi text-black dark:text-white justify-center items-center'>
       <div className='z-1 mx-auto max-w-[55rem] px-4 text-center sm:px-8 xl:px-0'>
         <span className='text-2xl font-heading mb-5 inline-block text-title-6 font-medium text-primary'>Our Team</span>
-        <h2 className='text-4xl xl:text-5xl font-semibold text-black dark:text-white'>Ultimate Tailwind Dashboard Crafted for your favourite Tech Stack</h2>
+        <h2 className='text-4xl xl:text-5xl font-semibold text-black dark:text-white'>We are dedicated to technology, we are passionate about education</h2>
       </div>
       <div className='max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto'>
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
@@ -19,7 +19,7 @@ const Team = () => {
                   Ebele Egbuna
                 </h3>
                 <p className='text-xs uppercase text-black dark:text-white'>
-                  Support Consultant
+                  CEO
                 </p>
               </div>
             </div>
@@ -49,19 +49,19 @@ const Team = () => {
 
           <div className='flex flex-col rounded-xl p-4 md:p-6 border dark:border-form-strokedark border-stroke dark:bg-boxdark text-black black:text-white'>
             <div className='flex items-center gap-x-4'>
-              <img className='rounded-full size-20' src='https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=900&h=900&q=80' alt='Image Description' />
+              <img className='rounded-full size-20' src='https://images.unsplash.com/photo-1527082395-e939b847da0d?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=facearea&facepad=2&w=900&h=900&q=80' alt='Image Description' />
               <div className='grow'>
                 <h3 className='font-medium text-black dark:text-white'>
-                  Ebele Egbuna
+                  Jim Parsons
                 </h3>
                 <p className='text-xs uppercase text-black dark:text-white'>
-                  Support Consultant
+                  Project Manager
                 </p>
               </div>
             </div>
 
             <p className='mt-3 text-black dark:text-white'>
-              I am an ambitious workaholic, but apart from that, pretty simple person.
+            I always wanted to shout: Give me some html and I will conquer the world!
             </p>
 
             <div className='mt-3 space-x-1'>
@@ -85,19 +85,19 @@ const Team = () => {
 
           <div className='flex flex-col rounded-xl p-4 md:p-6 border dark:border-form-strokedark border-stroke dark:bg-boxdark text-black black:text-white'>
             <div className='flex items-center gap-x-4'>
-              <img className='rounded-full size-20' src='https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=900&h=900&q=80' alt='Image Description' />
+              <img className='rounded-full size-20' src='https://images.unsplash.com/photo-1606122017369-d782bbb78f32?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=facearea&facepad=2&w=900&h=900&q=80' alt='Image Description' />
               <div className='grow'>
                 <h3 className='font-medium text-black dark:text-white'>
-                  Ebele Egbuna
+                  Sally West
                 </h3>
                 <p className='text-xs uppercase text-black dark:text-white'>
-                  Support Consultant
+                  Fontend Developer
                 </p>
               </div>
             </div>
 
             <p className='mt-3 text-black dark:text-white'>
-              I am an ambitious workaholic, but apart from that, pretty simple person.
+            I love design. I love design. I love design. And I might add that I love design.
             </p>
 
             <div className='mt-3 space-x-1'>
@@ -121,19 +121,19 @@ const Team = () => {
 
           <div className='flex flex-col rounded-xl p-4 md:p-6 border dark:border-form-strokedark border-stroke dark:bg-boxdark text-black black:text-white'>
             <div className='flex items-center gap-x-4'>
-              <img className='rounded-full size-20' src='https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=900&h=900&q=80' alt='Image Description' />
+              <img className='rounded-full size-20' src='https://images.unsplash.com/photo-1619300026534-8e8a76941138?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=facearea&facepad=2&w=900&h=900&q=80' alt='Image Description' />
               <div className='grow'>
                 <h3 className='font-medium text-black dark:text-white'>
-                  Ebele Egbuna
+                  Emilio Summers
                 </h3>
                 <p className='text-xs uppercase text-black dark:text-white'>
-                  Support Consultant
+                  Backend Developer
                 </p>
               </div>
             </div>
 
             <p className='mt-3 text-black dark:text-white'>
-              I am an ambitious workaholic, but apart from that, pretty simple person.
+            When I was in college I just wanted to go home to tinker with my server.
             </p>
 
             <div className='mt-3 space-x-1'>
@@ -157,19 +157,19 @@ const Team = () => {
 
           <div className='flex flex-col rounded-xl p-4 md:p-6 border dark:border-form-strokedark border-stroke dark:bg-boxdark text-black black:text-white'>
             <div className='flex items-center gap-x-4'>
-              <img className='rounded-full size-20' src='https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=900&h=900&q=80' alt='Image Description' />
+              <img className='rounded-full size-20' src='https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=facearea&facepad=2&w=900&h=900&q=80' alt='Image Description' />
               <div className='grow'>
                 <h3 className='font-medium text-black dark:text-white'>
-                  Ebele Egbuna
+                  Julia Connor
                 </h3>
                 <p className='text-xs uppercase text-black dark:text-white'>
-                  Support Consultant
+                  Teacher Consultant
                 </p>
               </div>
             </div>
 
             <p className='mt-3 text-black dark:text-white'>
-              I am an ambitious workaholic, but apart from that, pretty simple person.
+            Bookworm who doesn't know if it's more fun to teach or to learn.
             </p>
 
             <div className='mt-3 space-x-1'>
