@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import CardDataStats from '../../components/CardDataStats'
-import DefaultLayout from '../../layout/DefaultLayout'
-import useAuth from '../../hooks/useAuth'
+import CardDataStats from '../../components/Cards/CardDataStats.jsx'
+import DefaultLayout from '../../layout/DefaultLayout.jsx'
+import useAuth from '../../hooks/useAuth.jsx'
 import professorService from '../../services/professorService.js'
 import formationService from '../../services/formationService.js'
 import moduleService from '../../services/moduleService.js'
@@ -13,8 +13,8 @@ import ErrorAlert from '../../components/Alerts/ErrorAlert.jsx'
 import GroupTable from '../../components/Tables/GroupTable/GroupTable.jsx'
 import ModuleTable from '../../components/Tables/ModuleTable/ModuleTable.jsx'
 
-const ECommerce = () => {
-  const { isAdmin, isUser, authId, senecaUser, name } = useAuth() // Get the user info
+const DashboardHome = () => {
+  const { isAdmin, isUser, senecaUser, name } = useAuth() // Get the user info
   const [error, setError] = useState(null) // Save the error message
   const [professors, setProfessors] = useState([]) // Save the professors
   const [formations, setFormations] = useState([]) // Save the formations
@@ -181,4 +181,4 @@ const ECommerce = () => {
   )
 }
 
-export default ECommerce
+export default DashboardHome

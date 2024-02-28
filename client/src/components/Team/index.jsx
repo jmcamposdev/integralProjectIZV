@@ -196,7 +196,7 @@ const Team = () => {
             </div>
           </div>
 
-          <a className='flex-col justify-center text-center hover:shadow-sm flex flex-col rounded-xl p-4 md:p-6 border dark:border-form-strokedark border-stroke dark:bg-boxdark2 text-black black:text-white' href='/'>
+          <a className='flex-col justify-center text-center hover:shadow-sm flex rounded-xl p-4 md:p-6 border dark:border-form-strokedark border-stroke dark:bg-boxdark2 text-black black:text-white' href='/'>
             <h3 className='text-lg text-gray-800 dark:text-white'>
               We are hiring!
             </h3>
