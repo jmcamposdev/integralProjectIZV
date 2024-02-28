@@ -250,7 +250,7 @@ const AboutUSSection = () => {
       <div className='z-2 max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto'>
         <div style={{ transform: 'scaleY(-1)' }} className='md:grid md:grid-cols-2 md:items-center md:gap-12 xl:gap-32'>
           <div style={{ transform: 'scaleY(-1)' }} className='order-2 md:order-none'>
-            <img className='rounded-xl' src='https://images.unsplash.com/photo-1580894732444-8ecded7900cd?q=80&w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=900&amp;h=900&amp;q=80' alt='Image Description' />
+            <img className='rounded-xl' src='https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=900&amp;h=900&amp;q=80' alt='Image Description' />
           </div>
 
           <div style={{ transform: 'scaleY(-1)' }} className='mt-5 sm:mt-10 lg:mt-0'>
