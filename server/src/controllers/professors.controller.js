@@ -133,8 +133,8 @@ export const updateProfessor = async (req, res) => {
       return res.status(400).json({ message: 'All fields are required and not empty' })
     }
 
-    // If is defined the senecaUser, validate that there's no other professor with the same senecaUser
-    if (req.body.senecaUser && await professorExists(req.body.senecaUser)) {
+    // If is defined the senecaUser, validate that there's no other professor with the same senecaUser or user
+    if (req.body.senecaUser && (await professorExists(req.body.senecaUser) || await User.exists(req.body.senecaUser))) {
       return res.status(400).json({ message: 'Already exists a professor with that senecaUser' })
     }
 
