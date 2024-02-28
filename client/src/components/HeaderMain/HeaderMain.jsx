@@ -89,16 +89,16 @@ const Header = () => {
 
             <ul id='ul' className='flex flex-col mt-4 font-medium  lg:space-x-8 lg:mt-0'>
               <li>
-                <a href='/' className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white' aria-current='page'>Home</a>
+                <a href={isLandingPage ? '#home' : '/#home'} className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white' aria-current='page'>Home</a>
               </li>
               <li>
-                <a href='/' className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white' aria-current='page'>About</a>
+                <a href={isLandingPage ? '#about' : '/#about'} className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white' aria-current='page'>About</a>
               </li>
               <li>
-                <a href='/' className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white' aria-current='page'>Team</a>
+                <a href={isLandingPage ? '#team' : '/#team'} className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white' aria-current='page'>Team</a>
               </li>
               <li>
-                <a href='/' className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white' aria-current='page'>Contact</a>
+                <a href={isLandingPage ? '#classes' : '/#classes'} className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white' aria-current='page'>Classes</a>
               </li>
               {
                 window.location.pathname === '/'
@@ -173,16 +173,16 @@ const Header = () => {
           <div className='hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1' id='mobile-menu-2'>
             <ul id='ul' className='hidden lg:flex flex-row mt-4 font-medium  lg:space-x-8 lg:mt-0'>
               <li>
-                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Home</a>
+                <a href={isLandingPage ? '#home' : '/#home'} className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Home</a>
               </li>
               <li>
-                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>About</a>
+                <a href={isLandingPage ? '#about' : '/#about'} className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>About</a>
               </li>
               <li>
-                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Team</a>
+                <a href={isLandingPage ? '#team' : '/#team'} className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Team</a>
               </li>
               <li>
-                <a href='/' className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Contact</a>
+                <a href={isLandingPage ? '#classes' : '/#classes'} className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Classes</a>
               </li>
               <li>
                 <ul className='items-center gap-2 2xsm:gap-4 lg:hidden w-fit block ml-auto'>
