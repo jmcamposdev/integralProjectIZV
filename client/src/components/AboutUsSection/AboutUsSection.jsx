@@ -12,15 +12,15 @@ const AboutUSSection = () => {
       <div className='z-2 max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto text-black dark:text-white'>
         <div className='z-1 mx-auto max-w-[55rem] px-4 text-center sm:px-8 xl:px-0 mb-20'>
           <span className='text-2xl font-heading mb-5 inline-block text-title-6 font-medium text-primary'>About Us</span>
-          <h2 className='text-4xl xl:text-5xl font-semibold text-black dark:text-white'>Ultimate Tailwind Dashboard Crafted for your favourite Tech Stack</h2>
+          <h2 className='text-4xl xl:text-5xl font-semibold text-black dark:text-white'>Zawee is a leading app for timetable management in schools of any size.</h2>
         </div>
         <div className=' z-2 grid md:grid-cols-2 gap-12'>
           <div className='lg:w-3/4'>
             <h2 className='text-gray-800 font-bold text-4xl dark:text-white'>
-              Collaborative tools to design better user experience
+            Automate the assignment of lessons to your staff
             </h2>
             <p className='mt-7 text-gray-800 dark:text-gray-400'>
-              We help businesses bring ideas to life in the digital world, by designing and implementing the technology tools that they need to win.
+            We will help you create, modify and assign lessons quickly and efficiently, stop worrying about the unexpected and quickly meet your school's needs.
             </p>
           </div>
           <div className='space-y-6 lg:space-y-10'>
@@ -30,10 +30,10 @@ const AboutUSSection = () => {
               </span>
               <div className='ms-5 sm:ms-8'>
                 <h3 className='text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200'>
-                  Industry-leading documentation
+                Integrated lesson management
                 </h3>
                 <p className='mt-1 text-gray-600 dark:text-gray-400'>
-                  Our documentation and extensive Client libraries contain everything a business needs to build a custom integration in a fraction of the time.
+                Our software will help you through the process from start to finish saving you time and improving your management.
                 </p>
               </div>
             </div>
@@ -46,10 +46,10 @@ const AboutUSSection = () => {
               </span>
               <div className='ms-5 sm:ms-8'>
                 <h3 className='text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200'>
-                  Developer community support
+                Keep communication turned on
                 </h3>
                 <p className='mt-1 text-gray-600 dark:text-gray-400'>
-                  We actively contribute to open-source projects—giving back to the community through development, patches, and sponsorships.
+                Let integrated management work its magic. Classroom hours are allocated more fairly and equitably, keeping your staff happy and motivated.
                 </p>
               </div>
             </div>
@@ -63,7 +63,7 @@ const AboutUSSection = () => {
                   Simple and affordable
                 </h3>
                 <p className='mt-1 text-gray-600 dark:text-gray-400'>
-                  From boarding passes to movie tickets, there's pretty much nothing you can't store with Preline.
+                A very flat difficulty curve that will make the change from your old management system almost instantaneous and very pleasant.
                 </p>
               </div>
             </div>
@@ -73,7 +73,7 @@ const AboutUSSection = () => {
           <img className=' max-h-[400px] w-full object-cover rounded-xl' src='https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' alt='Image Description' />
         </div>
         <div className='z-2 sm:w-1/2 xl:w-1/2 mx-auto text-center mb-6 mt-12'>
-          <h2 className='text-gray-800 font-bold text-4xl dark:text-white'>Developers at these companies and institutes love us</h2>
+          <h2 className='text-gray-800 font-bold text-4xl dark:text-white'>Developed with technologies that ensure you won't need anything else.</h2>
         </div>
 
         <div className='z-2 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3 lg:gap-6 items-center'>
@@ -161,12 +161,12 @@ const AboutUSSection = () => {
           <div className='mt-5 lg:mt-0'>
             <div className='space-y-6 sm:space-y-8'>
               <div className='space-y-2 md:space-y-4'>
-                <h4 className='mb-2.5 text-lg font-medium text-primary'>Your Ultimate Admin Template</h4>
+                <h4 className='mb-2.5 text-lg font-medium text-primary'>Created without limits</h4>
                 <h2 className='font-bold text-4xl text-gray-800 dark:text-gray-200'>
-                  We tackle the challenges start-ups face
+                By teachers for teachers
                 </h2>
                 <p className='text-gray-500'>
-                  Besides working with start-up enterprises as a partner for digitalization, we have built enterprise products for common pain points that we have encountered in various products and projects.
+                We have consulted in more than 50 educational centers and we have learned what the problems are. So we have developed the best solutions. We know firsthand how frustrating it is to waste time on management instead of focusing on educating students.
                 </p>
               </div>
 
@@ -176,7 +176,7 @@ const AboutUSSection = () => {
                     <svg className='flex-shrink-0 size-3.5' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><polyline points='20 6 9 17 4 12' /></svg>
                   </span>
 
-                  <h5 className='text-xl font-semibold text-black dark:text-white'>Dark/Light Mode Support</h5>
+                  <h5 className='text-xl font-semibold text-black dark:text-white'>Management of thousands of simultaneous requests</h5>
                 </li>
 
                 <li className='flex space-x-3 items-center'>
@@ -184,7 +184,7 @@ const AboutUSSection = () => {
                     <svg className='flex-shrink-0 size-3.5' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><polyline points='20 6 9 17 4 12' /></svg>
                   </span>
 
-                  <h5 className='text-xl font-semibold text-black dark:text-white'>Dark/Light Mode Support</h5>
+                  <h5 className='text-xl font-semibold text-black dark:text-white'>Multi-platform support</h5>
                 </li>
 
                 <li className='flex space-x-3 items-center'>
@@ -192,7 +192,7 @@ const AboutUSSection = () => {
                     <svg className='flex-shrink-0 size-3.5' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><polyline points='20 6 9 17 4 12' /></svg>
                   </span>
 
-                  <h5 className='text-xl font-semibold text-black dark:text-white'>Dark/Light Mode Support</h5>
+                  <h5 className='text-xl font-semibold text-black dark:text-white'>'Walk-in and work' solution without installations.</h5>
                 </li>
               </ul>
             </div>
@@ -256,12 +256,12 @@ const AboutUSSection = () => {
           <div style={{ transform: 'scaleY(-1)' }} className='mt-5 sm:mt-10 lg:mt-0'>
             <div className='space-y-6 sm:space-y-8'>
               <div className='space-y-2 md:space-y-4'>
-                <h4 className='mb-2.5 text-lg font-medium text-primary'>Your Ultimate Admin Template</h4>
+                <h4 className='mb-2.5 text-lg font-medium text-primary'>The keys to Zawee</h4>
                 <h2 className='font-bold text-4xl text-black dark:text-white'>
-                  We tackle the challenges start-ups face
+                The keys: robustness and versatility
                 </h2>
                 <p className='text-black dark:text-white'>
-                  Besides working with start-up enterprises as a partner for digitalization, we have built enterprise products for common pain points that we have encountered in various products and projects.
+                Your school's databases have never been so secure and fail-safe.
                 </p>
               </div>
 
@@ -269,18 +269,18 @@ const AboutUSSection = () => {
                 <li className='flex space-x-3'>
 
                   <span className='text-sm sm:text-base text-gray-500'>
-                    <span className='font-bold text-2xl text-black dark:text-white'>Easy designing fast</span>
+                    <span className='font-bold text-2xl text-black dark:text-white'>Robustness</span>
                     <p className='text-black dark:text-white mt-2'>
-                      Besides working with start-up enterprises as a partner for digitalization, we have built enterprise products for common pain points that we have encountered in various products and projects.
+                    Active data redundancy protection, never again worry about failures you can't control.
                     </p>
                   </span>
                 </li>
                 <li className='flex space-x-3'>
 
                   <span className='text-sm sm:text-base text-gray-800 dark:text-white'>
-                    <span className='font-bold text-2xl text-black dark:text-white'>Easy designing fast</span>
+                    <span className='font-bold text-2xl text-black dark:text-white'>Versatility</span>
                     <p className='text-black dark:text-white mt-2'>
-                      Besides working with start-up enterprises as a partner for digitalization, we have built enterprise products for common pain points that we have encountered in various products and projects.
+                      Forget about system crashes due to high traffic, our technology is prepared to handle thousands of simultaneous requests.
                     </p>
                   </span>
                 </li>
