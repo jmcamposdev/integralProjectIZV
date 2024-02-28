@@ -70,16 +70,8 @@ const Header = () => {
 
     buttonNav.classList.toggle('justify-center')
     buttonNav.classList.toggle('justify-between')
-    backNavPhone.classList.toggle('h-0')
-    backNavPhone.classList.toggle('h-[100dvh]')
-
-    if (!isScrolled && !isOpenNav && colorMode === 'light') { // If is not scrolled and is open nav
-      buttonNav.children.item(0).classList.toggle('!bg-stone-400')
-      buttonNav.children.item(2).classList.toggle('!bg-stone-400')
-    } else if (!isScrolled && isOpenNav && colorMode === 'light') { // if is not scrolled and is not open nav
-      buttonNav.children.item(0).classList.toggle('!bg-stone-400')
-      buttonNav.children.item(2).classList.toggle('!bg-stone-400')
-    }
+    backNavPhone.classList.toggle('left-[100%]')
+    backNavPhone.classList.toggle('left-0')
 
     if (document.body.style.overflow === 'hidden') {
       document.body.style.overflow = 'visible'
@@ -92,7 +84,7 @@ const Header = () => {
     <header className='fixed z-99 w-[100dvw]'>
 
       <nav id='nav' className={`${isScrolled ? 'py-4 bg-white dark:bg-boxdark' : 'py-8 bg-transparent'} border-gray-200 px-4 lg:px-6 transition-all relative`}>
-        <div id='back-nav-phone' className='absolute w-[100%] h-0  left-0 top-0 -z-1 bg-white dark:bg-boxdark transition-all overflow-hidden duration-1000'>
+        <div style={{ transitionTimingFunction: 'cubic-bezier(.22,.61,.36,1)' }} id='back-nav-phone' className='absolute h-[100dvh] w-[100dvw]  left-[100%] top-0 -z-1 bg-white dark:bg-boxdark transition-all overflow-hidden duration-1000'>
           <div className={`${isScrolled ? 'mt-[80px]' : 'mt-[112px]'} px-4 flex flex-col gap-[1rem]`}>
 
             <ul id='ul' className='flex flex-col mt-4 font-medium  lg:space-x-8 lg:mt-0'>
@@ -173,9 +165,9 @@ const Header = () => {
               <DarkModeSwitcher importedColorMode={colorMode} importedSetColorMode={setColorMode} />
             </ul>
             <button onClick={openHideNav} id='button-nav' data-collapse-toggle='mobile-menu-2' type='button' className='relative w-[40px] h-[36px] inline-flex justify-center flex-col p-1.5 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100' aria-controls='mobile-menu-2' aria-expanded='false'>
-              <div className={`absolute top-[15%] transition-all block origin-center w-[30px] h-[2px] dark:bg-white ${isScrolled ? 'bg-stone-400' : 'bg-white'}`} />
-              <div className={`transition-all w-[24px] h-[2px] dark:bg-white ml-auto ${isScrolled ? 'bg-stone-400' : 'bg-white'}`} />
-              <div className={`absolute bottom-[15%] transition-all block origin-center w-[30px] h-[2px] dark:bg-white ${isScrolled ? 'bg-stone-400' : 'bg-white'}`} />
+              <div className='absolute top-[15%] transition-all block origin-center w-[30px] h-[2px] ' style={{ backgroundColor: 'rgb(60 80 224 / 0.9)' }} />
+              <div className='transition-all w-[24px] h-[2px] dark:bg-white ml-auto ' style={{ backgroundColor: 'rgb(60 80 224 / 0.9)' }} />
+              <div className='absolute bottom-[15%] transition-all block origin-center w-[30px] h-[2px] ' style={{ backgroundColor: 'rgb(60 80 224 / 0.9)' }} />
             </button>
           </div>
           <div className='hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1' id='mobile-menu-2'>
