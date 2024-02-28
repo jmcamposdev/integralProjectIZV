@@ -1,6 +1,8 @@
 import '../../css/style.css'
 import '../../css/satoshi.css'
-
+import Teacher1 from '../../images/frontpage/teacher1.jpg'
+import Teacher2 from '../../images/frontpage/teacher2.jpg'
+import Group from '../../images/frontpage/group.avif'
 import LightMesh from '../../images/frontpage/mesh1light.svg'
 import LightMesh2 from '../../images/frontpage/mesh2light.svg'
 
@@ -70,7 +72,7 @@ const AboutUSSection = () => {
           </div>
         </div>
         <div className='z-2 mt-16 aspect-w-16 aspect-h-7'>
-          <img className=' max-h-[400px] w-full object-cover rounded-xl' src='https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' alt='Image Description' />
+          <img className=' max-h-[400px] w-full object-cover rounded-xl' src={Group} alt='Teacher explaining concepts to a group of students' />
         </div>
         <div className='z-2 sm:w-1/2 xl:w-1/2 mx-auto text-center mb-6 mt-12'>
           <h2 className='text-gray-800 font-bold text-4xl dark:text-white'>Developed with technologies that ensure you won't need anything else.</h2>
@@ -197,8 +199,8 @@ const AboutUSSection = () => {
               </ul>
             </div>
           </div>
-          <div className='mt-5 sm:mt-10 lg:mt-0'>
-            <img className='rounded-xl' src='https://images.unsplash.com/photo-1648737963503-1a26da876aca?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=900&amp;h=900&amp;q=80' alt='Image Description' />
+          <div className='mt-12 sm:mt-10 lg:mt-0'>
+            <img style={{ transform: 'scaleX(-1)' }} className='rounded-xl' src={Teacher1} alt='Teacher using the Zawee App on her computer' />
           </div>
         </div>
       </div>
@@ -250,10 +252,10 @@ const AboutUSSection = () => {
       <div className='z-2 max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto'>
         <div style={{ transform: 'scaleY(-1)' }} className='md:grid md:grid-cols-2 md:items-center md:gap-12 xl:gap-32'>
           <div style={{ transform: 'scaleY(-1)' }} className='order-2 md:order-none'>
-            <img className='rounded-xl' src='https://images.unsplash.com/photo-1580894732444-8ecded7900cd?q=80&w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=900&amp;h=900&amp;q=80' alt='Image Description' />
+            <img className='rounded-xl' src={Teacher2} alt='Picture of a Teacher explaining the use of the Zawee App' />
           </div>
 
-          <div style={{ transform: 'scaleY(-1)' }} className='mt-5 sm:mt-10 lg:mt-0'>
+          <div style={{ transform: 'scaleY(-1)' }} className='mt-12 sm:mt-10 lg:mt-0'>
             <div className='space-y-6 sm:space-y-8'>
               <div className='space-y-2 md:space-y-4'>
                 <h4 className='mb-2.5 text-lg font-medium text-primary'>The keys to Zawee</h4>
