@@ -4,23 +4,17 @@ import React, { useState, useEffect } from 'react'
 import DarkModeSwitcher from '../Header/DarkModeSwitcher'
 import LogoZaweeDark from '../../images/logo/logo-zawee-white.svg'
 import LogoZaweeWhite from '../../images/logo/logo-zawee-dark.svg'
-import useSignOut from 'react-auth-kit/hooks/useSignOut'
+
 import useAuth from '../../hooks/useAuth'
 import useColorMode from '../../hooks/useColorMode'
 
 const Header = () => {
   const isLandingPage = window.location.pathname === '/'
   const { isLogged } = useAuth()
-  const signOut = useSignOut()
   const [colorMode, setColorMode] = useColorMode()
   const [isScrolled, setIsScrolled] = useState(false)
   const [isOpenNav, setIsOpenNav] = useState(false)
   const [logo, setLogo] = useState(LogoZaweeWhite)
-
-  const handleSignOut = () => {
-    signOut()
-    window.location.reload()
-  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -145,7 +139,7 @@ const Header = () => {
                     isLogged
                       ? (
                         <a
-                        href='/dashboard'
+                          href='/dashboard'
                           className=' hidden lg:block ease-in-up rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp  md:px-9 lg:px-6 xl:px-9'
                         >
                           Dashboard
