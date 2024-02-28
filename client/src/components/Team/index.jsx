@@ -1,5 +1,10 @@
 import '../../css/style.css'
 import '../../css/satoshi.css'
+import Worker1 from '../../images/frontpage/team1.jpg'
+import Worker2 from '../../images/frontpage/team2.jpg'
+import Worker3 from '../../images/frontpage/team3.jpg'
+import Worker4 from '../../images/frontpage/team4.jpg'
+import Worker5 from '../../images/frontpage/team5.jpg'
 
 const Team = () => {
   return (
@@ -13,7 +18,7 @@ const Team = () => {
 
           <div className='flex flex-col rounded-xl p-4 md:p-6 border dark:border-form-strokedark border-stroke dark:bg-boxdark text-black black:text-white'>
             <div className='flex items-center gap-x-4'>
-              <img className='rounded-full size-20' src='https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=900&h=900&q=80' alt='Image Description' />
+              <img style={{ transform: 'scaleX(-1)' }} className='rounded-full size-20' src={Worker1} alt='Picture of the first Member of the Zawee Team' />
               <div className='grow'>
                 <h3 className='font-medium text-black dark:text-white'>
                   Ebele Egbuna
@@ -49,7 +54,7 @@ const Team = () => {
 
           <div className='flex flex-col rounded-xl p-4 md:p-6 border dark:border-form-strokedark border-stroke dark:bg-boxdark text-black black:text-white'>
             <div className='flex items-center gap-x-4'>
-              <img className='rounded-full size-20' src='https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=900&h=900&q=80' alt='Image Description' />
+              <img style={{ transform: 'scaleX(-1)' }} className='rounded-full size-20' src={Worker2} alt='Picture of the second Member of the Zawee Team' />
               <div className='grow'>
                 <h3 className='font-medium text-black dark:text-white'>
                   Ebele Egbuna
@@ -85,7 +90,7 @@ const Team = () => {
 
           <div className='flex flex-col rounded-xl p-4 md:p-6 border dark:border-form-strokedark border-stroke dark:bg-boxdark text-black black:text-white'>
             <div className='flex items-center gap-x-4'>
-              <img className='rounded-full size-20' src='https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=900&h=900&q=80' alt='Image Description' />
+              <img className='rounded-full size-20' src={Worker3} alt='Picture of the third Member of the Zawee Team' />
               <div className='grow'>
                 <h3 className='font-medium text-black dark:text-white'>
                   Ebele Egbuna
@@ -121,7 +126,7 @@ const Team = () => {
 
           <div className='flex flex-col rounded-xl p-4 md:p-6 border dark:border-form-strokedark border-stroke dark:bg-boxdark text-black black:text-white'>
             <div className='flex items-center gap-x-4'>
-              <img className='rounded-full size-20' src='https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=900&h=900&q=80' alt='Image Description' />
+              <img style={{ transform: 'scaleX(-1)' }} className='rounded-full size-20' src={Worker4} alt='Picture of the forth Member of the Zawee Team' />
               <div className='grow'>
                 <h3 className='font-medium text-black dark:text-white'>
                   Ebele Egbuna
@@ -157,7 +162,7 @@ const Team = () => {
 
           <div className='flex flex-col rounded-xl p-4 md:p-6 border dark:border-form-strokedark border-stroke dark:bg-boxdark text-black black:text-white'>
             <div className='flex items-center gap-x-4'>
-              <img className='rounded-full size-20' src='https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=900&h=900&q=80' alt='Image Description' />
+              <img style={{ transform: 'scaleX(-1)' }} className='rounded-full size-20' src={Worker5} alt='Picture of the fifth Member of the Zawee Team' />
               <div className='grow'>
                 <h3 className='font-medium text-black dark:text-white'>
                   Ebele Egbuna
