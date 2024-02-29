@@ -5,15 +5,15 @@ import LogoZaweeWhite from '../../images/logo/logo-zawee-dark.svg'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
 import Header from '../../components/HeaderMain/HeaderMain.jsx'
 import Footer from '../../components/Footer/index.jsx'
-import ErrorAlert from '../../components/Alerts/ErrorAlert'
+import useAlertToast from '../../hooks/useToast.jsx'
 
 const SignIn = () => {
   // UseStates
+  const { toast } = useAlertToast()
   const [inputs, setInputs] = useState({
     senecaUser: '',
     password: ''
   })
-  const [error, setError] = useState('')
   const navigate = useNavigate()
 
   /**
@@ -46,7 +46,7 @@ const SignIn = () => {
       // If the response is not ok, throw an error
       if (!response.ok) {
         const errorData = await response.json()
-        setError(errorData.message || 'Error en la petición')
+        toast.showError(errorData.message || 'Error en la petición')
         return
       }
 
@@ -61,10 +61,12 @@ const SignIn = () => {
         },
         userState: { senecaUser: inputs.senecaUser, name: inputs.name, role: data.role }
       })
+      // Alert the user that the sign in was successful
+      toast.showSuccess('Sign in successful')
       // Redirect the user to the Dashboard
       navigate('/dashboard')
     } catch (error) {
-      setError(error.message)
+      toast.showError(error.message)
     }
   }
 
@@ -211,7 +213,6 @@ const SignIn = () => {
 
           <div className='w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2'>
             <div className='w-full p-4 sm:p-12.5 xl:p-17.5'>
-              {error && (<ErrorAlert message={error} onClose={() => setError(null)} />)}
               <span className='mb-1.5 block font-medium'>Start for free</span>
               <h2 className='mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2'>
                 Sign In to Zawee
