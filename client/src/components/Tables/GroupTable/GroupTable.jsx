@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import useAuth from '../../../hooks/useAuth'
 import groupService from '../../../services/groupService'
-import ErrorAlert from '../../Alerts/ErrorAlert'
 import ConfirmModal from '../../Modals/ConfirmModal'
 import FormModal from '../../Modals/FormModal'
 import TableTemplate from '../TableTemplate'
 import groupColumns from './groupColumns'
+import useAlertToast from '../../../hooks/useToast'
 
 const GroupTable = ({ formations, allGroups }) => {
+  const { toast } = useAlertToast() // Show alert messages
   const { isAdmin } = useAuth() // Get the user role
-  const [error, setError] = useState(null) // Save the error message
   const [groups, setGroups] = useState([]) // Save the groups
   const [groupIdToDelete, setGroupIdToDelete] = useState(null) // Save the groups id to delete
   const [viewDeleteModal, setViewDeleteModal] = useState(false) // Show or hide the delete modal
@@ -92,7 +92,7 @@ const GroupTable = ({ formations, allGroups }) => {
         setGroups(groups)
       } catch (error) {
         // If there's an error, save the error message in the state
-        setError(error.message)
+        toast.showError(error.message)
       }
     }
 
@@ -142,9 +142,11 @@ const GroupTable = ({ formations, allGroups }) => {
       setGroups(groups.filter(group => group.id !== groupIdToDelete))
       // Reset the groupIdToDelete
       setGroupIdToDelete(null)
+      // Show a success message
+      toast.showSuccess('Group deleted successfully')
     } catch (error) {
       // If there's an error, save the error message in the state
-      setError(error.message)
+      toast.showError(error.message)
     }
   }
 
@@ -181,9 +183,11 @@ const GroupTable = ({ formations, allGroups }) => {
       const group = await groupService.createGroup(groupInputs)
       // Add the group to the state
       setGroups([...groups, group])
+      // Show a success message
+      toast.showSuccess('Group created successfully')
     } catch (error) {
       // If there's an error, save the error message in the state
-      setError(error.message)
+      toast.showError(error.message)
     }
 
     // Close the create modal
@@ -203,6 +207,9 @@ const GroupTable = ({ formations, allGroups }) => {
       delete groupInputs.course
     }
 
+    // Regenerate the denomination with the new values
+    groupInputs.denomination = `${groupInputs.course}${formations.find((formation) => formation.id === groupInputs.formationId)?.acronym}${groupInputs.letter}`
+
     try {
       // Create the group in the database
       const updatedGroup = await groupService.updateGroup(groupInputs)
@@ -211,9 +218,11 @@ const GroupTable = ({ formations, allGroups }) => {
       // Add the group to the state
       setGroups(groups.map(group => (group.id === updatedGroup.id ? updatedGroup : group)))
       resetGroupInputs()
+      // Show a success message
+      toast.showSuccess('Group updated successfully')
     } catch (error) {
       // If there's an error, save the error message in the state
-      setError(error.message)
+      toast.showError(error.message)
     }
 
     // Close the create modal
@@ -238,14 +247,12 @@ const GroupTable = ({ formations, allGroups }) => {
       setViewUpdateModal(true) // Show the update modal
       setGroupInputs(group) // Set the groupInputs with the group to update
     } catch (error) {
-      setError(error.message)
+      toast.showError(error.message)
     }
   }
 
   return (
     <>
-      {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
-
       <TableTemplate data={groups} columns={groupColumns(formations)} onDelete={setGroupIdToDelete} onEdit={handleUpdateClick} />
       {// Only show the add groups button if the user is an admin
           isAdmin && (
