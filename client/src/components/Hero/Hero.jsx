@@ -1,16 +1,6 @@
-import useAuth from '../../hooks/useAuth'
 import HeroImg from '../../images/frontpage/heroImg.jpg'
-import useSignOut from 'react-auth-kit/hooks/useSignOut'
 
 const Hero = () => {
-  const { isLogged } = useAuth()
-  const signOut = useSignOut()
-
-  const handleSignOut = () => {
-    signOut()
-    window.location.reload()
-  }
-
   return (
     <section id='home' className='flex items-center bg-cover min-h-screen relative z-10 overflow-hidden dark:bg-boxdark dark:drop-shadow-none'>
       <div className='absolute w-[100%] h-[100%] top-0 left-0 -z-1 brightness-75 bg-center bg-no-repeat bg-cover' style={{ backgroundImage: `url(${HeroImg})` }} />
