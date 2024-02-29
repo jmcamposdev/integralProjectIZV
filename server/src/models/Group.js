@@ -67,7 +67,6 @@ export const groupFieldsValidation = async (schoolYear, course, denomination, is
 }
 
 export const groupValidateSomeFields = (params) => {
-  console.log(params)
   for (const key in params) {
     // If is the id, continue
     if (key === 'id') {
