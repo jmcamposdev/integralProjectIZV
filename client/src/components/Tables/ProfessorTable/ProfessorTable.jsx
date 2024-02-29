@@ -64,7 +64,6 @@ const ProfessorTable = () => {
     async function getProfessors () {
       try {
         const professors = await professorService.getAllProfessors()
-        console.log(professors)
         setProfessors(professors)
         setIsLoading(false)
       } catch (error) {
@@ -168,6 +167,21 @@ const ProfessorTable = () => {
    */
   const handleCreateProfessor = async (event) => {
     event.preventDefault()
+
+    let areValidInputs = true
+    for (const [key, value] of Object.entries(createInputs)) {
+      if (key === 'id') continue
+
+      if (value.trim() === '') {
+        areValidInputs = false
+        break
+      }
+    }
+
+    if (!areValidInputs) {
+      toast.showError('All fields are required.')
+      return
+    }
 
     // Validate that the password and confirmPassword are the same
     if (createInputs.password !== createInputs.confirmPassword || createInputs.password.trim() === '' || createInputs.confirmPassword.trim() === '') {
