@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 import Breadcrumb from '../../../components/Breadcrumbs/Breadcrumb'
 import DefaultLayout from '../../../layout/DefaultLayout'
 import formationService from '../../../services/formationService'
-import ErrorAlert from '../../../components/Alerts/ErrorAlert'
 import TableRowLoading from '../../../components/Loading/TableRowLoading'
 import ModuleTable from '../../../components/Tables/ModuleTable/ModuleTable'
+import useAlertToast from '../../../hooks/useToast'
 
 const ModuleIndex = () => {
-  const [error, setError] = useState(null) // Save the error message
+  const { toast } = useAlertToast() // Show alert messages
   const [isLoading, setIsLoading] = useState(true) // Save the loading state
   const [formations, setFormations] = useState([]) // Save the formations
 
@@ -27,7 +27,7 @@ const ModuleIndex = () => {
         setIsLoading(false)
       } catch (error) {
         // If there's an error, set the error message
-        setError(error.message)
+        toast.showError(error.message)
       }
     }
 
@@ -36,7 +36,6 @@ const ModuleIndex = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName='Modules' />
-      {error && <ErrorAlert message={error} />}
       {
       isLoading
         ? (
