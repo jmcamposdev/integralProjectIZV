@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import useAuth from '../../../hooks/useAuth'
 import moduleService from '../../../services/moduleService'
-import ErrorAlert from '../../Alerts/ErrorAlert'
 import ConfirmModal from '../../Modals/ConfirmModal'
 import FormModal from '../../Modals/FormModal'
 import TableTemplate from '../TableTemplate'
 import moduleColumns from './moduleColumns'
+import useAlertToast from '../../../hooks/useToast'
 
 const ModuleTable = ({ formations, allModules }) => {
+  const { toast } = useAlertToast()
   const { isAdmin } = useAuth()
-  const [error, setError] = useState(null) // Save the error message
   const [modules, setModules] = useState([]) // Save the modules
   const [moduleIdToDelete, setModuleIdToDelete] = useState(null) // Save the modules id to delete
   const [viewDeleteModal, setViewDeleteModal] = useState(false) // Show or hide the delete modal
@@ -94,7 +94,7 @@ const ModuleTable = ({ formations, allModules }) => {
         setModules(modules)
       } catch (error) {
         // If there's an error, save the error message in the state
-        setError(error.message)
+        toast.showError(error.message)
       }
     }
 
@@ -138,9 +138,11 @@ const ModuleTable = ({ formations, allModules }) => {
       setModules(modules.filter((module) => module.id !== moduleIdToDelete))
       // Hide the delete modal
       setModuleIdToDelete(null)
+      // Show a success message
+      toast.showSuccess('Module deleted successfully')
     } catch (error) {
       // If there's an error, save the error message in the state
-      setError(error.message)
+      toast.showError(error.message)
     }
   }
 
@@ -176,9 +178,11 @@ const ModuleTable = ({ formations, allModules }) => {
       setModules([...modules, savedModule])
       // Hide the create modal
       setViewCreateModal(false)
+      // Show a success message
+      toast.showSuccess('Module created successfully')
     } catch (error) {
       // If there's an error, save the error message in the state
-      setError(error.message)
+      toast.showError(error.message)
     }
 
     // Hide the modal
@@ -198,9 +202,11 @@ const ModuleTable = ({ formations, allModules }) => {
       const updatedModule = await moduleService.updateModule(modulesInputs)
       // Save the module in the state
       setModules(modules.map((currentModule) => (currentModule.id === updatedModule.id ? updatedModule : currentModule)))
+      // Show a success message
+      toast.showSuccess('Module updated successfully')
     } catch (error) {
       // If there's an error, save the error message in the state
-      setError(error.message)
+      toast.showError(error.message)
     }
     // Hide the update modal
     setViewCreateModal(false)
@@ -227,14 +233,12 @@ const ModuleTable = ({ formations, allModules }) => {
       setModulesInputs(module) // Set the formationInputs to the formation to update
     } catch (error) {
       // If there's an error, save the error message in the state
-      setError(error.message)
+      toast.showError(error.message)
     }
   }
 
   return (
     <>
-      {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
-
       <TableTemplate data={modules} columns={moduleColumns(formations)} onDelete={setModuleIdToDelete} onEdit={handleUpdateClick} />
       {// Only show the add modules button if the user is an admin
           isAdmin && (

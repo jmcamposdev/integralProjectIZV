@@ -5,12 +5,12 @@ import lessonService from '../../../services/lessonService'
 import moduleService from '../../../services/moduleService'
 import professorService from '../../../services/professorService'
 import groupService from '../../../services/groupService'
-import ErrorAlert from '../../../components/Alerts/ErrorAlert'
 import TableRowLoading from '../../../components/Loading/TableRowLoading'
 import LessonTable from '../../../components/Tables/LessonTable/LessonTable'
+import useAlertToast from '../../../hooks/useToast'
 
 const LessonIndex = () => {
-  const [error, setError] = useState(null) // Save the error message
+  const { toast } = useAlertToast() // Show alert messages
   const [isLoading, setIsLoading] = useState(true) // Save the loading state
   const [professors, setProfessors] = useState([]) // Save the professors
   const [modules, setModules] = useState([]) // Save the modules
@@ -26,7 +26,7 @@ const LessonIndex = () => {
         setProfessors(professors)
       } catch (error) {
         // If there's an error, set the error message
-        setError(error.message)
+        toast.showError(error.message)
       }
     }
 
@@ -38,7 +38,7 @@ const LessonIndex = () => {
         setModules(modules)
       } catch (error) {
         // If there's an error, set the error message
-        setError(error.message)
+        toast.showError(error.message)
       }
     }
 
@@ -50,7 +50,7 @@ const LessonIndex = () => {
         setGroups(groups)
       } catch (error) {
         // If there's an error, set the error message
-        setError(error.message)
+        toast.showError(error.message)
       }
     }
 
@@ -62,7 +62,7 @@ const LessonIndex = () => {
         setLessons(lessons)
       } catch (error) {
         // If there's an error, set the error message
-        setError(error.message)
+        toast.showError(error.message)
       }
     }
 
@@ -80,7 +80,6 @@ const LessonIndex = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName='Lessons' />
-      {error && <ErrorAlert message={error} />}
       {
       isLoading
         ? (

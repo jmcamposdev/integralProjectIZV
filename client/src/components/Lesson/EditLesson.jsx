@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import ErrorAlert from '../Alerts/ErrorAlert'
 import HoursCounter from './HoursCounter'
 import lessonService from '../../services/lessonService'
 import CircularProgressBar from '../ProgressBars/CircularProgressBar'
+import useAlertToast from '../../hooks/useToast'
 
 const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professors }) => {
+  const { toast } = useAlertToast() // Show alert messages
   // Filter the lessons that belong to the current group and module
   const [lessons, setLessons] = useState(allLessons.filter((currentLesson) => currentLesson.groupId === currentGroup.id && currentLesson.moduleId === currentModule.id))
   // Filter the professors that have the same specialty as the module
@@ -15,8 +16,6 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
   const [currentHour, setCurrentHour] = useState(lessons.reduce((acc, lesson) => acc + lesson.hours, 0))
   // State to store the error message
   const maxHour = currentModule.hours
-  // State to store the error message
-  const [error, setError] = useState(null)
 
   /**
    * Check if the professor is already assigned to another lesson and update the professor of the lesson
@@ -29,7 +28,7 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
     const professorAlreadyAssigned = lessons.some((lesson, i) => i !== index && lesson.professorId === selectedProfessorId)
     // If the professor is already assigned to another lesson, show an error message
     if (professorAlreadyAssigned) {
-      setError('The professor is already assigned to another lesson')
+      toast.showError('The professor is already assigned to another lesson')
       return
     }
 
@@ -90,13 +89,13 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
     const lastLesson = lessons[lessons.length - 1] // Get the last lesson
     // If the last lesson doesn't have a professor or hours, show an error message
     if (lastLesson && (!lastLesson.professorId || !lastLesson.hours)) {
-      setError('Please fill the last lesson before adding a new one')
+      toast.showError('Please fill the last lesson before adding a new one')
       return
     }
 
     // If all hours are already assigned, don't add a new lesson
     if (currentHour === maxHour) {
-      setError('All hours are already assigned')
+      toast.showError('All hours are already assigned')
       return
     }
 
@@ -124,13 +123,13 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
     // Validate that all lessons have a professor and hours
     const invalidLessons = lessons.filter((lesson) => !lesson.professorId || !lesson.hours)
     if (invalidLessons.length > 0) {
-      setError('Please fill all the lessons before submitting')
+      toast.showError('All lessons must have a professor and hours')
       return
     }
 
     // Validate that the total hours assigned are equal to the module hours
     if (currentHour !== maxHour) {
-      setError('The total hours assigned must be equal to the module hours')
+      toast.showError('The total hours assigned must be equal to the module hours')
       return
     }
 
@@ -148,7 +147,7 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
         try {
           await lessonService.updateLesson(lesson)
         } catch (error) {
-          setError('Error updating lessons')
+          toast.showError('Error updating lessons')
         }
       })
     }
@@ -160,7 +159,7 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
         try {
           await lessonService.createLesson(lesson)
         } catch (error) {
-          setError('Error creating lessons')
+          toast.showError('Error creating lessons')
         }
       })
     }
@@ -176,8 +175,6 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
         <span className='icon-[lets-icons--close-round-light]' style={{ fontSize: '40px' }} />
       </button>
       {/* End Close Button */}
-
-      {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
 
       {/* Start of Lesson Info */}
       <div className='flex items-center gap-10 mb-12'>

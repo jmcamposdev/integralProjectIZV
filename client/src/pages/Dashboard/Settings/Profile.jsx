@@ -2,15 +2,15 @@ import { useState } from 'react'
 import Breadcrumb from '../../../components/Breadcrumbs/Breadcrumb'
 import useAuth from '../../../hooks/useAuth'
 import DefaultLayout from '../../../layout/DefaultLayout'
-import ErrorAlert from '../../../components/Alerts/ErrorAlert'
 import authService from '../../../services/authService'
 import userService from '../../../services/userService'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
+import useAlertToast from '../../../hooks/useToast'
 
 const Profile = () => {
+  const { toast } = useAlertToast()
   const { authId, name, firstSurname, lastSurname, senecaUser } = useAuth()
   const signIn = useSignIn()
-  const [error, setError] = useState(null)
   const [user, setUser] = useState({
     id: authId,
     name,
@@ -85,7 +85,7 @@ const Profile = () => {
 
       resetUserInputs()
     } catch (error) {
-      setError(error.message)
+      toast.showError(error.message)
     }
   }
 
@@ -95,7 +95,7 @@ const Profile = () => {
 
     // Check if passwords match
     if (passwords.password !== passwords.confirmPassword) {
-      setError('Passwords do not match')
+      toast.showError('Passwords do not match')
       return
     }
 
@@ -110,7 +110,7 @@ const Profile = () => {
       // Reset password inputs
       resetPasswordInputs()
     } catch (error) {
-      setError(error.message)
+      toast.showError(error.message)
     }
   }
 
@@ -118,10 +118,6 @@ const Profile = () => {
     <DefaultLayout>
       <div className='mx-auto max-w-270'>
         <Breadcrumb pageName='Profile' />
-
-        {/* ERROR MESSAGE */}
-        {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
-
         <div className='grid grid-cols-5 gap-8'>
           <div className='col-span-5 xl:col-span-3'>
             <div className='rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark'>

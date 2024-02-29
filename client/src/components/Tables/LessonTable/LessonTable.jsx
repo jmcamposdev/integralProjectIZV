@@ -1,13 +1,13 @@
 import { useState } from 'react'
 import useAuth from '../../../hooks/useAuth'
-import ErrorAlert from '../../Alerts/ErrorAlert'
 import EditLesson from '../../Lesson/EditLesson'
 import TableTemplate from '../TableTemplate'
 import lessonColumns from './lessonColumns'
+import useAlertToast from '../../../hooks/useToast'
 
 const LessonTable = ({ lessons, professors, modules, groups }) => {
+  const { toast } = useAlertToast()
   const { isAdmin } = useAuth()
-  const [error, setError] = useState(null) // Save the error message
   const [lessonToEdit, setLessonToEdit] = useState(null) // Save the lesson to edit
   const [availableModules, setAvailableModules] = useState([]) // Save the available modules
   const [createLessonInput, setCreateLessonInput] = useState({
@@ -30,7 +30,7 @@ const LessonTable = ({ lessons, professors, modules, groups }) => {
       const availableModules = modules.filter((currentModule) => currentModule.course === group.course && currentModule.formationId === group.formationId)
       // If there are no available modules, set the error message
       if (availableModules.length <= 0) {
-        setError('No modules available for this group. Please add a module to the group course.')
+        toast.showError('No modules available for this group yet. Please add a module with the same course and formation.')
         setCreateLessonInput({ ...createLessonInput, group: null })
         return
       }
@@ -43,7 +43,7 @@ const LessonTable = ({ lessons, professors, modules, groups }) => {
     if (e.target.name === 'moduleId') {
       const module = modules.find((module) => module.id === Number(e.target.value))
       if (!module) {
-        setError('No module selected')
+        toast.showError('No module selected')
         setCreateLessonInput({ ...createLessonInput, module: null })
         return
       }
@@ -51,7 +51,7 @@ const LessonTable = ({ lessons, professors, modules, groups }) => {
       // Get the professors that are available for the module with the same specialty
       const filteredProfessors = professors.filter((professor) => professor.specialty === module.specialty)
       if (filteredProfessors.length <= 0) {
-        setError('No professors available for this module. Please add a professor with the same specialty.')
+        toast.showError('No professors available for this module yet. Please add a professor with the same specialty.')
         setCreateLessonInput({ ...createLessonInput, module: null })
         return
       }
@@ -73,7 +73,6 @@ const LessonTable = ({ lessons, professors, modules, groups }) => {
 
   return (
     <>
-      {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
       {
         lessonToEdit
           ? (

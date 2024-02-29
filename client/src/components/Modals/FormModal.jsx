@@ -2,7 +2,7 @@ const FormModal = ({ isOpen, onClose, onSubmit, title, submitText, formFields })
   return (
     <>
       {/* <!-- ===== Start of Add Professor Modal ===== --> */}
-      <div id='crud-modal' tabIndex='-1' aria-hidden='true' className={`${!isOpen && 'hidden'} fixed left-0 top-0 z-999999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5`}>
+      <div id='crud-modal' tabIndex='-1' aria-hidden='true' className={`${!isOpen && 'hidden'} fixed left-0 top-0 z-9999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5`}>
         <div className='bg-white dark:bg-boxdark rounded-lg shadow-md max-w-md w-full'>
           <div className='flex items-center justify-between p-4 md:p-5  rounded-t border-b border-stroke dark:border-strokedark'>
             <h3 className='text-lg font-semibold text-black dark:text-white'>
