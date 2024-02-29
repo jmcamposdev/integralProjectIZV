@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
 import useAuth from '../../../hooks/useAuth'
 import formationService from '../../../services/formationService'
-import ErrorAlert from '../../Alerts/ErrorAlert'
 import ConfirmModal from '../../Modals/ConfirmModal'
 import FormModal from '../../Modals/FormModal'
 import TableRowLoading from '../../Loading/TableRowLoading'
 import TableTemplate from '../TableTemplate'
 import formationColumns from './formationColumns'
+import useAlertToast from '../../../hooks/useToast'
 
 const FormationTable = () => {
+  const { toast } = useAlertToast() // Show alert messages
   const { isAdmin } = useAuth() // Check if the user is an admin
   const [isLoading, setIsLoading] = useState(true) // Check if the data is loading
-  const [error, setError] = useState(null) // Save the error message
   const [formations, setFormations] = useState([]) // Save the formations
   const [formationIdToDelete, setFormationIdToDelete] = useState(null) // Save the formation id to delete
   const [viewDeleteModal, setViewDeleteModal] = useState(false) // Show or hide the delete modal
@@ -61,7 +61,7 @@ const FormationTable = () => {
         setIsLoading(false)
       } catch (error) {
         // If there's an error, set the error message
-        setError(error.message)
+        toast.showError(error.message)
       }
     }
 
@@ -103,9 +103,11 @@ const FormationTable = () => {
       await formationService.deleteFormation(formationIdToDelete)
       // Update the state to remove the deleted formation from the list
       setFormations(formations.filter((formation) => formation.id !== formationIdToDelete))
+      // Show a success message
+      toast.showSuccess('Formation deleted successfully')
     } catch (error) {
       // If there's an error, set the error message
-      setError(error.message)
+      toast.showError(error.message)
     }
     // Hide the modal active the useEffect to hide the delete modal
     setFormationIdToDelete(null)
@@ -144,8 +146,11 @@ const FormationTable = () => {
     try {
       const newFormation = await formationService.createFormation(formationInputs)
       setFormations([...formations, newFormation])
+      // Show a success message
+      toast.showSuccess('Formation created successfully')
     } catch (error) {
-      setError(error.message)
+      // If there's an error, set the error message
+      toast.showError(error.message)
     }
 
     // Hide the modal
@@ -166,9 +171,11 @@ const FormationTable = () => {
       const updatedFormation = await formationService.updateFormation(formationInputs)
       // Update the state to replace the old formation with the updated formation
       setFormations(formations.map((formation) => (formation.id === updatedFormation.id ? updatedFormation : formation)))
+      // Show a success message
+      toast.showSuccess('Formation updated successfully')
     } catch (error) {
       // If there's an error, set the error message
-      setError(error.message)
+      toast.showError(error.message)
     }
 
     // Hide the modal
@@ -187,8 +194,6 @@ const FormationTable = () => {
 
   return (
     <>
-      {error && <ErrorAlert message={error} onClose={() => setError(null)} />} {/* Show the error message if
-      there's an error */}
       {
         isLoading
           ? <TableRowLoading columns={formationColumns.length} />
