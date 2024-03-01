@@ -85,8 +85,8 @@ const LessonTable = ({ lessons, professors, modules, groups }) => {
                   isAdmin && (
                     <form className='flex gap-5 justify-end mt-8' onSubmit={handleFormSubmit}>
                       {/* <!-- Select to select the Group --> */}
-                      <div className='relative z-20 bg-transparent dark:bg-form-input'>
-                        <select className='relative z-20 w-64 h-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary ' name='groupId' id='groupId' onChange={handleLessonInputChange}>
+                      <div className='relative z-20 bg-gray dark:bg-form-input duration-300 ease-linear'>
+                        <select className='relative z-20 w-64 h-full appearance-none rounded border border-stroke bg-gray py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary duration-300 ease-linear' name='groupId' id='groupId' onChange={handleLessonInputChange}>
                           <option value=''>Select Group</option>
                           {groups.map((group) => (
                             <option key={group.id} value={group.id}>{group.denomination}</option>
@@ -95,8 +95,8 @@ const LessonTable = ({ lessons, professors, modules, groups }) => {
                         <i className='absolute top-1/2 right-4 z-30 -translate-y-1/2 icon-[ep--arrow-down]' style={{ fontSize: '22px' }} />
                       </div>
                       {/* <!-- Select to Modules only show the modules with the same course --> */}
-                      <div className='relative z-20 bg-transparent dark:bg-form-input'>
-                        <select className='relative z-20 w-64 h-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary ' name='moduleId' id='moduleId' onChange={handleLessonInputChange} disabled={availableModules.length <= 0}>
+                      <div className='relative z-20 bg-gray dark:bg-form-input duration-300 ease-linear'>
+                        <select className='relative z-20 w-64 h-full appearance-none rounded border border-stroke bg-gray py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary duration-300 ease-linear' name='moduleId' id='moduleId' onChange={handleLessonInputChange} disabled={availableModules.length <= 0}>
                           <option value=''>Select Module</option>
                           {availableModules.map((module) => (
                             <option key={module.id} value={module.id}>{module.acronym}</option>

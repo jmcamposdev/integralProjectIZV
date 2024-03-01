@@ -22,7 +22,7 @@ const CircularProgressBar = ({ current, max }) => {
         />
       </svg>
       <span className='absolute text-3xl'>
-        <span className='font-bold text-black dark:text-white'>{current}</span>
+        <span className='font-bold text-black dark:text-white duration-300 ease-linear'>{current}</span>
         <span className='text-sm font-medium'>/{max}</span>
       </span>
     </div>

@@ -37,10 +37,10 @@ const DropdownUser = () => {
   return (
     <div className='relative'>
       <span className='hidden text-right lg:block'>
-        <span className='block text-sm font-medium text-black dark:text-white'>
+        <span className='block text-sm font-medium text-black dark:text-white duration-300 ease-linear'>
           {name}
         </span>
-        <span className='block text-xs'>{isAdmin ? 'Administrator' : isUser ? 'Professor' : 'Unknown'}</span>
+        <span className='block text-xs duration-300 ease-linear'>{isAdmin ? 'Administrator' : isUser ? 'Professor' : 'Unknown'}</span>
       </span>
 
     </div>
