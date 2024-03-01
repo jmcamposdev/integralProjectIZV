@@ -84,6 +84,9 @@ const Profile = () => {
       await refreshTokens(updatedUser)
 
       resetUserInputs()
+
+      // Show success message
+      toast.showSuccess('Profile updated successfully')
     } catch (error) {
       toast.showError(error.message)
     }
@@ -109,6 +112,8 @@ const Profile = () => {
       await refreshTokens(updatedUser)
       // Reset password inputs
       resetPasswordInputs()
+      // Show success message
+      toast.showSuccess('Password updated successfully')
     } catch (error) {
       toast.showError(error.message)
     }
