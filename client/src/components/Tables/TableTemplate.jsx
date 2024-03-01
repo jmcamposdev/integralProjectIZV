@@ -6,7 +6,7 @@ import {
   getSortedRowModel,
   getFilteredRowModel
 } from '@tanstack/react-table'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useAuth from '../../hooks/useAuth'
 
 const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword, onUpgrade, onDowngrade }) => {
@@ -88,6 +88,7 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword, onUp
 
   const [sorting, setSorting] = useState([]) // This will be used to store the sorting state
   const [globalFilter, setGlobalFilter] = useState('') // This will be used to store the global filter state
+  const [showData, setShowData] = useState(false) // This will be used to show the data
 
   // Create the table using the useReactTable hook
   const table = useReactTable({
@@ -104,6 +105,11 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword, onUp
     onSortingChange: setSorting, // Set the sorting state
     onGlobalFilterChange: setGlobalFilter // Set the global filter state
   })
+
+  useEffect(() => {
+    // Set the show data true if the data is not empty
+    setShowData(data.length > 0 && table.getRowModel().rows.length > 0)
+  }, [data, table.getRowModel().rows])
 
   return (
     <section className='data-table-common rounded-sm border border-stroke bg-white py-4 shadow-default dark:border-strokedark dark:bg-boxdark overflow-x-auto'>
@@ -172,7 +178,14 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword, onUp
           }
         </thead>
         <tbody>
-          {table.getRowModel().rows.map(row => (
+          {!showData && (
+            <tr role='row' className='border-b border-stroke dark:border-strokedark'>
+              <td colSpan={columns.length} className='pl-8 py-5 pr-2 text-center'>
+                No data found
+              </td>
+            </tr>
+          )}
+          {showData && table.getRowModel().rows.map(row => (
             <tr role='row' key={row.id} className='border-b border-stroke dark:border-strokedark hover:bg-blue-200 hover:bg-opacity-10'>
               {row.getVisibleCells().map(cell => (
                 <td
