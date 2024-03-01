@@ -303,21 +303,6 @@ const ModuleTable = ({ formations, allModules }) => {
             },
             {
               colSpan: 2,
-              label: 'Specialty',
-              type: 'select',
-              name: 'specialty',
-              value: modulesInputs.specialty,
-              handleInputsChange: handleModuleInputs,
-              options: [
-                { value: '', label: 'Select Specialty' },
-                { value: 'FP', label: 'FP' },
-                { value: 'Secondary', label: 'Secondary' }
-              ],
-              disabled: hasOtherModules || hasLessons,
-              disabledMessage: hasLessons ? 'You can\t update the specialty of a module with lessons.' : hasOtherModules ? 'Get the specialty from the other modules with the same formation.' : ''
-            },
-            {
-              colSpan: 2,
               label: 'Formation',
               type: 'select',
               name: 'formationId',
@@ -330,6 +315,21 @@ const ModuleTable = ({ formations, allModules }) => {
               required: true,
               disabled: hasLessons,
               disabledMessage: 'You can\t update the formation of a module with lessons.'
+            },
+            {
+              colSpan: 2,
+              label: 'Specialty',
+              type: 'select',
+              name: 'specialty',
+              value: modulesInputs.specialty,
+              handleInputsChange: handleModuleInputs,
+              options: [
+                { value: '', label: 'Select Specialty' },
+                { value: 'FP', label: 'FP' },
+                { value: 'Secondary', label: 'Secondary' }
+              ],
+              disabled: hasOtherModules || hasLessons,
+              disabledMessage: hasLessons ? 'You can\t update the specialty of a module with lessons.' : hasOtherModules ? 'Get the specialty from the other modules with the same formation.' : ''
             }
           ]}
         />
