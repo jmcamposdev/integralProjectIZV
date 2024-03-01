@@ -8,8 +8,11 @@ import groupService from '../../../services/groupService'
 import TableRowLoading from '../../../components/Loading/TableRowLoading'
 import LessonTable from '../../../components/Tables/LessonTable/LessonTable'
 import useAlertToast from '../../../hooks/useToast'
+import useAuth from '../../../hooks/useAuth'
+import { NavLink } from 'react-router-dom'
 
 const LessonIndex = () => {
+  const { isAdmin } = useAuth() // Check if the user is an admin
   const { toast } = useAlertToast() // Show alert messages
   const [isLoading, setIsLoading] = useState(true) // Save the loading state
   const [professors, setProfessors] = useState([]) // Save the professors
@@ -81,26 +84,36 @@ const LessonIndex = () => {
     <DefaultLayout>
       <Breadcrumb pageName='Lessons' />
       {
+      // If the loading state is true, show the loading component
       isLoading
         ? (
           <TableRowLoading columns={2} rows={5} />
           )
-        : professors.lengh === 0 || modules.length === 0 || groups.length === 0
-          ? (
-            <div className='text-center'>
-              <p className='text-2xl font-semibold'>To create lessons you need to have at least one Professor, one Module and one Group</p>
-              <p className='text-gray-500 mt-5'>If you have not created any of these, you can create one by clicking the button below</p>
-              <div className='flex gap-3 justify-center'>
-                <button type='button' className='mt-5 bg-primary text-white py-2 px-4 rounded-md' onClick={() => { window.location.href = '/dashboard/professors' }}>Create Professor</button>
-                <button type='button' className='mt-5 bg-primary text-white py-2 px-4 rounded-md' onClick={() => { window.location.href = '/dashboard/modules' }}>Create Module</button>
-                <button type='button' className='mt-5 bg-primary text-white py-2 px-4 rounded-md' onClick={() => { window.location.href = '/dashboard/groups' }}>Create Group</button>
+        // If the professors, modules or groups array is empty and the user is an admin, show the message below
+        : (professors.lengh === 0 || modules.length === 0 || groups.length === 0) && isAdmin
+            ? (
+              <div className='text-center'>
+                <p className='text-2xl font-semibold'>To create lessons you need to have at least one Professor, one Module and one Group</p>
+                <p className='text-gray-500 mt-5'>If you have not created any of these, you can create one by clicking the button below</p>
+                <div className='flex gap-3 justify-center'>
+                  <NavLink to='/dashboard/professors' className='inline-block mt-5 bg-primary text-white py-2 px-4 rounded-md'>Create Professor</NavLink>
+                  <NavLink to='/dashboard/modules' className='inline-block mt-5 bg-primary text-white py-2 px-4 rounded-md'>Create Module</NavLink>
+                  <NavLink to='/dashboard/groups' className='inline-block mt-5 bg-primary text-white py-2 px-4 rounded-md'>Create Group</NavLink>
+                </div>
               </div>
-            </div>
-            )
-          : (
-            <LessonTable lessons={lessons} professors={professors} modules={modules} groups={groups} />
-            )
-
+              )
+            // If the professors, modules or groups array is empty and the user is not an admin, show the message below
+            : (professors.lengh === 0 || modules.length === 0 || groups.length === 0) && !isAdmin
+                ? (
+                  <div className='text-center'>
+                    <p className='text-2xl font-semibold'>No Lessons Available</p>
+                    <p className='text-gray-500 mt-5'>Please, wait until the Administrator creates a new lessons</p>
+                  </div>
+                  )
+                // If the lessons array is not empty, show the lessons in a table
+                : (
+                  <LessonTable lessons={lessons} professors={professors} modules={modules} groups={groups} />
+                  )
       }
     </DefaultLayout>
   )
