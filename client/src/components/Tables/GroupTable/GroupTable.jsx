@@ -279,6 +279,8 @@ const GroupTable = ({ formations, allGroups }) => {
               label: 'School Year',
               type: 'text',
               name: 'schoolYear',
+              pattern: '^[0-9]{4}/[0-9]{4}$',
+              title: 'The school year must be in the format: 2024/2025',
               value: groupInputs.schoolYear,
               handleInputsChange: handleGroupInputs,
               required: true
