@@ -6,7 +6,7 @@ import {
   getSortedRowModel,
   getFilteredRowModel
 } from '@tanstack/react-table'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useAuth from '../../hooks/useAuth'
 
 const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword, onUpgrade, onDowngrade }) => {
@@ -88,6 +88,7 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword, onUp
 
   const [sorting, setSorting] = useState([]) // This will be used to store the sorting state
   const [globalFilter, setGlobalFilter] = useState('') // This will be used to store the global filter state
+  const [showData, setShowData] = useState(false) // This will be used to show the data
 
   // Create the table using the useReactTable hook
   const table = useReactTable({
@@ -105,16 +106,21 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword, onUp
     onGlobalFilterChange: setGlobalFilter // Set the global filter state
   })
 
+  useEffect(() => {
+    // Set the show data true if the data is not empty
+    setShowData(data.length > 0 && table.getRowModel().rows.length > 0)
+  }, [data, table.getRowModel().rows])
+
   return (
-    <section className='data-table-common rounded-sm border border-stroke bg-white py-4 shadow-default dark:border-strokedark dark:bg-boxdark overflow-x-auto'>
+    <section className='data-table-common rounded-sm border border-stroke bg-white py-4 shadow-default dark:border-strokedark dark:bg-boxdark overflow-x-auto duration-300 ease-linear'>
       {/* Start of Search and Entries per page */}
-      <div className='flex justify-between border-b border-stroke px-8 pb-4 dark:border-strokedark min-w-[700px]'>
+      <div className='flex justify-between border-b border-stroke px-8 pb-4 dark:border-strokedark min-w-[700px] duration-300 ease-linear'>
         <div className='w-100'>
           <input
             type='text'
             value={globalFilter}
             onChange={e => setGlobalFilter(e.target.value)}
-            className='w-full rounded-md border border-stroke bg-transparent px-5 py-2.5 outline-none focus:border-primary dark:border-strokedark dark:bg-meta-4 dark:focus:border-primary'
+            className='w-full rounded-md border border-stroke bg-white px-5 py-2.5 outline-none focus:border-primary dark:border-strokedark dark:bg-meta-4 dark:focus:border-primary duration-300 ease-linear'
             placeholder='Search...'
           />
         </div>
@@ -132,7 +138,7 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword, onUp
               </option>
             ))}
           </select>
-          <p className='pl-2 text-black dark:text-white'>Entries Per Page</p>
+          <p className='pl-2 text-black dark:text-white duration-300 ease-linear'>Entries Per Page</p>
         </div>
       </div>
       {/* End of Search and Entries per page */}
@@ -142,7 +148,7 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword, onUp
         <thead>
           {
             table.getHeaderGroups().map(headerGroup => (
-              <tr role='row' key={headerGroup.id} className='border-b border-stroke dark:border-strokedark'>
+              <tr role='row' key={headerGroup.id} className='border-b border-stroke dark:border-strokedark duration-300 ease-linear'>
                 {
                   headerGroup.headers.map(header => (
                     <th
@@ -172,8 +178,15 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword, onUp
           }
         </thead>
         <tbody>
-          {table.getRowModel().rows.map(row => (
-            <tr role='row' key={row.id} className='border-b border-stroke dark:border-strokedark hover:bg-blue-200 hover:bg-opacity-10'>
+          {!showData && (
+            <tr role='row' className='border-b border-stroke dark:border-strokedark duration-300 ease-linear'>
+              <td colSpan={columns.length} className='pl-8 py-5 pr-2 text-center'>
+                No data found
+              </td>
+            </tr>
+          )}
+          {showData && table.getRowModel().rows.map(row => (
+            <tr role='row' key={row.id} className='border-b border-stroke dark:border-strokedark hover:bg-blue-200 hover:bg-opacity-10 duration-300 ease-linear'>
               {row.getVisibleCells().map(cell => (
                 <td
                   className='pl-8 py-5 pr-2'
@@ -189,7 +202,7 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword, onUp
       {/* End Table */}
 
       {/* Pagination Section */}
-      <div className='flex justify-between border-t border-stroke px-8 pt-5 dark:border-strokedark min-w-[700px]'>
+      <div className='flex justify-between border-t border-stroke px-8 pt-5 dark:border-strokedark min-w-[700px] duration-300 ease-linear'>
         <p className='font-medium'>
           Showing {table.getState().pagination.pageIndex + 1} 0f {table.getPageCount()} pages
         </p>

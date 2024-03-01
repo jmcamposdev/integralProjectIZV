@@ -168,6 +168,7 @@ const ProfessorTable = () => {
   const handleCreateProfessor = async (event) => {
     event.preventDefault()
 
+    // Validate that all inputs are not empty
     let areValidInputs = true
     for (const [key, value] of Object.entries(createInputs)) {
       if (key === 'id') continue

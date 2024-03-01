@@ -32,6 +32,12 @@ const SignIn = () => {
     // Prevent the default form submission
     e.preventDefault()
 
+    // Check if the inputs are empty
+    if (inputs.senecaUser.trim() === '' || inputs.password.trim() === '') {
+      toast.showError('Please fill in all fields')
+      return
+    }
+
     // Call the signIn function
     try {
       // Make the request to the server
@@ -231,6 +237,7 @@ const SignIn = () => {
                       onChange={handledInputChange}
                       placeholder='Enter your senecaUser'
                       className='w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                      required
                     />
 
                     <span className='absolute right-4 top-4'>
@@ -265,6 +272,7 @@ const SignIn = () => {
                       onChange={handledInputChange}
                       placeholder='Password'
                       className='w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
+                      required
                     />
 
                     <span className='absolute right-4 top-4'>

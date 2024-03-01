@@ -179,9 +179,9 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
       {/* Start of Lesson Info */}
       <div className='flex items-center gap-10 mb-12'>
         <div>
-          <h4 className='mb-3 text-xl font-semibold text-black dark:text-white'>Editing Lesson</h4>
-          <h5 className='text-lg font-medium text-gray-500'><span className='text-black dark:text-white'>Group:</span> {currentGroup.denomination}</h5>
-          <h5 className='text-lg font-medium text-gray-500'><span className='text-black dark:text-white'>Module:</span> {currentModule.denomination}</h5>
+          <h4 className='mb-3 text-xl font-semibold text-black dark:text-white duration-300 ease-linear'>Editing Lesson</h4>
+          <h5 className='text-lg font-medium text-gray-500'><span className='text-black dark:text-white duration-300 ease-linear'>Group:</span> {currentGroup.denomination}</h5>
+          <h5 className='text-lg font-medium text-gray-500'><span className='text-black dark:text-white duration-300 ease-linear'>Module:</span> {currentModule.denomination}</h5>
         </div>
         <CircularProgressBar current={currentHour} max={maxHour} />
       </div>
@@ -193,16 +193,16 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
           <>
             {lessons.map((lesson, index) => (
               <div key={index} className='grow-0 shrink-0 basis-1/3'>
-                <div className='relative rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-6 m-5'>
+                <div className='relative rounded-sm border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-6 m-5 duration-300 ease-linear'>
                   <button className='absolute top-3 right-3 fill-current duration-300 ease-in-out hover:text-red-500' onClick={() => handleLessonDelete(index)}>
                     <span className='icon-[lets-icons--close-round-light]' style={{ fontSize: '25px' }} />
                   </button>
                   <div className='lesson mb-4 relative'>
                     <h5 className='text-lg font-medium text-gray-500 mb-3'>Lesson {index + 1}</h5>
                     {/* Mostrar detalles de la lección y permitir la modificación */}
-                    <div className='relative z-20 bg-transparent dark:bg-form-input'>
+                    <div className='relative z-20 bg-transparent dark:bg-form-input duration-300 ease-linear'>
                       <select
-                        className='relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary '
+                        className='relative z-20 w-full appearance-none rounded border border-stroke bg-transparent py-3 px-5 outline-none focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary duration-300 ease-linear'
                         value={lesson.professorId || ''}
                         onChange={(e) => handleProfessorChange(index, Number(e.target.value))}
                       >

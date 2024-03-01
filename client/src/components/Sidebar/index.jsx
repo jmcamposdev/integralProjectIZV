@@ -61,11 +61,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
 
   return (
     <>
-      <div className='flex justify-start items-center w-72.5 h-[80px] fixed left-0 top-0 bg-white dark:bg-boxdark z-50 px-4 py-4 md:px-6 2xl:px-11 gap-2 2xsm:gap-4'>
-        <a href='/' className='dark:hidden'>
+      <div className='flex justify-start items-center w-72.5 h-[80px] fixed left-0 top-0 bg-white dark:bg-boxdark z-50 px-4 py-4 md:px-6 2xl:px-11 gap-2 2xsm:gap-4 duration-300 ease-linear'>
+        <a href='/' className='dark:hidden duration-300 ease-linear'>
           <img className='h-[42px]  mr-3 ' alt='Logo of our webpage' src={LogoWhite} />
         </a>
-        <a href='/' className='dark:block hidden'>
+        <a href='/' className='dark:block hidden duration-300 ease-linear'>
           <img className='h-[42px]  mr-3 ' alt='Logo of our webpage' src={LogoDark} />
         </a>
 
@@ -96,10 +96,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 <li>
                   <NavLink
                     to='/dashboard'
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
-                    pathname.includes('calendar') &&
-                    'bg-gray dark:bg-meta-4 text-bodydark3'
-                  }`}
+                    className='group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4'
                   >
                     <svg
                       className='fill-current'
@@ -132,13 +129,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
                 {/* <!-- Menu Item Dashboard --> */}
 
                 {/* <!-- Menu Item Professor --> */}
-                <li>
+                <li className='duration-300 ease-in-out'>
                   <NavLink
                     to='/dashboard/professors'
-                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark2 duration-300 ease-in-out hover:bg-gray dark:hover:bg-meta-4 ${
-                    pathname.includes('professors') &&
-                    'bg-gray dark:bg-meta-4 text-bodydark3'
-                  }`}
+                    className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark2 hover:bg-gray dark:hover:bg-meta-4 ${
+                      pathname.includes('professors') &&
+                      'bg-gray dark:bg-meta-4 text-bodydark3'
+                    } duration-300 ease-in-out `}
                   >
                     <i className='icon-[lucide--user]' style={{ fontSize: '18px' }} />
                     Professor
