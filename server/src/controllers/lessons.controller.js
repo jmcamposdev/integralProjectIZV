@@ -225,6 +225,8 @@ export const generateLessons = async (req, res) => {
 
   // Create the lessons
   Lesson.bulkCreate(lessons)
-    .then(() => res.json({ message: 'Lessons generated successfully' })) // Send a message
+    .then((response) => {
+      res.json(response)
+    }) // Send a message
     .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
 }
