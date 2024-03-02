@@ -169,7 +169,7 @@ const DashboardHome = () => {
                   <p className='text-lg font-medium text-center'>You don't have any lessons yet.</p>
                   )
                 : (
-                  <LessonTable lessons={lessons} professors={professors} modules={modules} groups={groups} />
+                  <LessonTable receivedLessons={lessons} professors={professors} modules={modules} groups={groups} />
                   )}
             </>
             )}
