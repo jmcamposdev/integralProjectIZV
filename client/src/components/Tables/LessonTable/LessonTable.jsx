@@ -4,10 +4,12 @@ import EditLesson from '../../Lesson/EditLesson'
 import TableTemplate from '../TableTemplate'
 import lessonColumns from './lessonColumns'
 import useAlertToast from '../../../hooks/useToast'
+import lessonService from '../../../services/lessonService'
 
-const LessonTable = ({ lessons, professors, modules, groups }) => {
+const LessonTable = ({ receivedLessons, professors, modules, groups }) => {
   const { toast } = useAlertToast()
   const { isAdmin } = useAuth()
+  const [lessons, setLessons] = useState(receivedLessons || [])
   const [lessonToEdit, setLessonToEdit] = useState(null) // Save the lesson to edit
   const [availableModules, setAvailableModules] = useState([]) // Save the available modules
   const [createLessonInput, setCreateLessonInput] = useState({
@@ -71,6 +73,16 @@ const LessonTable = ({ lessons, professors, modules, groups }) => {
     setLessonToEdit(createLessonInput)
   }
 
+  const handleGenerateLessonsButton = async () => {
+    try {
+      const generatedLessons = await lessonService.generateLessons()
+      setLessons(generatedLessons)
+      toast.showSuccess('Lessons generated successfully')
+    } catch (error) {
+      toast.showError(error.message)
+    }
+  }
+
   return (
     <>
       {
@@ -83,33 +95,42 @@ const LessonTable = ({ lessons, professors, modules, groups }) => {
               <TableTemplate data={lessons} columns={lessonColumns(groups, modules, professors)} onEdit={handleEditLesson} />
               {// Only show the add lessons button if the user is an admin
                   isAdmin && (
-                    <form className='flex gap-5 justify-end mt-8' onSubmit={handleFormSubmit}>
-                      {/* <!-- Select to select the Group --> */}
-                      <div className='relative z-20 bg-gray dark:bg-form-input duration-300 ease-linear'>
-                        <select className='relative z-20 w-64 h-full appearance-none rounded border border-stroke bg-gray py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary duration-300 ease-linear' name='groupId' id='groupId' onChange={handleLessonInputChange}>
-                          <option value=''>Select Group</option>
-                          {groups.map((group) => (
-                            <option key={group.id} value={group.id}>{group.denomination}</option>
-                          ))}
-                        </select>
-                        <i className='absolute top-1/2 right-4 z-30 -translate-y-1/2 icon-[ep--arrow-down]' style={{ fontSize: '22px' }} />
-                      </div>
-                      {/* <!-- Select to Modules only show the modules with the same course --> */}
-                      <div className='relative z-20 bg-gray dark:bg-form-input duration-300 ease-linear'>
-                        <select className='relative z-20 w-64 h-full appearance-none rounded border border-stroke bg-gray py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary duration-300 ease-linear' name='moduleId' id='moduleId' onChange={handleLessonInputChange} disabled={availableModules.length <= 0}>
-                          <option value=''>Select Module</option>
-                          {availableModules.map((module) => (
-                            <option key={module.id} value={module.id}>{module.acronym}</option>
-                          ))}
-                        </select>
-                        <i className='absolute top-1/2 right-4 z-30 -translate-y-1/2 icon-[ep--arrow-down]' style={{ fontSize: '22px' }} />
-                      </div>
-                      <div className='flex justify-end '>
-                        <button type='submit' className={`inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 duration-300 ease-in-out ${createLessonInput.group === null || createLessonInput.module === null ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={createLessonInput.group === null || createLessonInput.module === null}>
-                          Create Lesson
+                    <div className='flex gap-5 justify-end mt-8 flex-col md:flex-row'>
+                      {lessons.length === 0 && (
+                        <button className='inline-flex items-center justify-center rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 duration-300 ease-in-out mr-auto' onClick={handleGenerateLessonsButton}>
+                          Generate Lesson
                         </button>
-                      </div>
-                    </form>
+                      )}
+
+                      <form className='flex gap-5 justify-end flex-col md:flex-row' onSubmit={handleFormSubmit}>
+                        {/* <!-- Select to select the Group --> */}
+                        <div className='relative z-20 bg-gray dark:bg-form-input duration-300 ease-linear'>
+                          <select className='relative z-20 w-full md:w-50 h-full appearance-none rounded border border-stroke bg-gray py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary duration-300 ease-linear ' name='groupId' id='groupId' onChange={handleLessonInputChange}>
+                            <option value=''>Select Group</option>
+                            {groups.map((group) => (
+                              <option key={group.id} value={group.id}>{group.denomination}</option>
+                            ))}
+                          </select>
+                          <i className='absolute top-1/2 right-4 z-30 -translate-y-1/2 icon-[ep--arrow-down]' style={{ fontSize: '22px' }} />
+                        </div>
+                        {/* <!-- Select to Modules only show the modules with the same course --> */}
+                        <div className='relative z-20 bg-gray dark:bg-form-input duration-300 ease-linear'>
+                          <select className='relative z-20 w-full md:w-50 h-full appearance-none rounded border border-stroke bg-gray py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary duration-300 ease-linear' name='moduleId' id='moduleId' onChange={handleLessonInputChange} disabled={availableModules.length <= 0}>
+                            <option value=''>Select Module</option>
+                            {availableModules.map((module) => (
+                              <option key={module.id} value={module.id}>{module.acronym}</option>
+                            ))}
+                          </select>
+                          <i className='absolute top-1/2 right-4 z-30 -translate-y-1/2 icon-[ep--arrow-down]' style={{ fontSize: '22px' }} />
+                        </div>
+                        <div className='flex justify-end '>
+                          <button type='submit' className={`inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 duration-300 ease-in-out ${createLessonInput.group === null || createLessonInput.module === null ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={createLessonInput.group === null || createLessonInput.module === null}>
+                            Create Lesson
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+
                   )
                 }
               {/* <!-- ===== End of Lesson Table ===== --> */}
