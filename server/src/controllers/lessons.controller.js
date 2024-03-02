@@ -187,3 +187,44 @@ export const getCurrentYearLessons = async (req, res) => {
 
   res.json(lessons)
 }
+
+/**
+ * Generate lessons for all Groups and Modules and the Professor to Null
+ * @param {Object} req The request object from Express
+ * @param {Object} res The response object from Express
+ */
+export const generateLessons = async (req, res) => {
+  // Get all groups from the current year
+  const groups = await Group.findAll()
+
+  if (groups.length === 0) {
+    return res.status(404).json({ message: 'Groups not found' })
+  }
+
+  // Get all modules from the current year
+  const modules = await Module.findAll()
+
+  if (modules.length === 0) {
+    return res.status(404).json({ message: 'Modules not found' })
+  }
+
+  // Generate lessons for all Groups and Modules and the Professor to Null
+  const lessons = []
+  groups.forEach(group => {
+    // Find all modules that have the same course as the group and the same formationId
+    const groupModules = modules.filter(module => module.course === group.course && module.formationId === group.formationId)
+    groupModules.forEach(module => {
+      lessons.push({
+        groupId: group.id,
+        moduleId: module.id,
+        professorId: null,
+        hours: 0
+      })
+    })
+  })
+
+  // Create the lessons
+  Lesson.bulkCreate(lessons)
+    .then(() => res.json({ message: 'Lessons generated successfully' })) // Send a message
+    .catch(err => res.status(500).json({ message: err.message })) // If there's an error, send it
+}
