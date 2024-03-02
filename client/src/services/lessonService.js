@@ -48,6 +48,16 @@ const lessonService = {
       console.error('Error deleting lesson:', error.message)
       throw error
     }
+  },
+
+  generateLessons: async () => {
+    try {
+      const lessons = await api.post('lessons-generate')
+      return lessons
+    } catch (error) {
+      console.error('Error generating lessons:', error.message)
+      throw error
+    }
   }
 }
 

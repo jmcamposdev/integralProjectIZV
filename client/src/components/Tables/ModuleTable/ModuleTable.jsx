@@ -64,6 +64,16 @@ const ModuleTable = ({ formations, allModules }) => {
             specialty: otherModules[0].specialty
           })
           return
+        } else {
+          // Set the hasOtherModules state to false
+          setHasOtherModules(false)
+          // Set the specialty to an empty string
+          setModulesInputs({
+            ...modulesInputs,
+            [name]: value.trim() === '' ? '' : parseInt(value),
+            specialty: ''
+          })
+          return
         }
       }
 

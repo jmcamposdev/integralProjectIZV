@@ -103,7 +103,7 @@ const LessonIndex = () => {
               </div>
               )
             // If the professors, modules or groups array is empty and the user is not an admin, show the message below
-            : (professors.lengh === 0 || modules.length === 0 || groups.length === 0) && !isAdmin
+            : (professors.length === 0 || modules.length === 0 || groups.length === 0) && !isAdmin
                 ? (
                   <div className='text-center'>
                     <p className='text-2xl font-semibold'>No Lessons Available</p>
@@ -112,7 +112,7 @@ const LessonIndex = () => {
                   )
                 // If the lessons array is not empty, show the lessons in a table
                 : (
-                  <LessonTable lessons={lessons} professors={professors} modules={modules} groups={groups} />
+                  <LessonTable receivedLessons={lessons} professors={professors} modules={modules} groups={groups} />
                   )
       }
     </DefaultLayout>
