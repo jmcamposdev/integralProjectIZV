@@ -41,7 +41,7 @@ const SignIn = () => {
     // Call the signIn function
     try {
       // Make the request to the server
-      const response = await fetch('http://localhost:3001/api/v1/auth/signin', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/auth/signin`, {
         method: 'POST', // The request method
         headers: { // The request headers with the content type
           'Content-Type': 'application/json'
