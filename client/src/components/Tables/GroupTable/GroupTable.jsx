@@ -307,6 +307,8 @@ const GroupTable = ({ formations, allGroups }) => {
             {
               label: 'Course',
               type: 'number',
+              min: 1,
+              max: 5,
               name: 'course',
               value: groupInputs.course,
               handleInputsChange: handleGroupInputs,
