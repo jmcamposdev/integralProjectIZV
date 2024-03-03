@@ -201,14 +201,14 @@ const GroupTable = ({ formations, allGroups }) => {
   const handleUpdateGroup = async (event) => {
     event.preventDefault()
 
+    // Regenerate the denomination with the new values
+    groupInputs.denomination = `${groupInputs.course}${formations.find((formation) => formation.id === groupInputs.formationId)?.acronym}${groupInputs.letter}`
+
     // Remove the formationId and course if the group has lessons
     if (hasLessons) {
       delete groupInputs.formationId
       delete groupInputs.course
     }
-
-    // Regenerate the denomination with the new values
-    groupInputs.denomination = `${groupInputs.course}${formations.find((formation) => formation.id === groupInputs.formationId)?.acronym}${groupInputs.letter}`
 
     try {
       console.log('Before update', groupInputs)
