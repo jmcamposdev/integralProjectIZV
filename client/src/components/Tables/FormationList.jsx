@@ -270,7 +270,7 @@ const FormationList = () => {
       {/* <!-- ===== Start of Create|Update Formation Modal ===== --> */}
       {isAdmin && (
         <FormModal
-          isOpen={viewCreateModal} onClose={() => setViewCreateModal(false)} onSubmit={viewUpdateModal ? handleUpdateFormation : handleCreateFormation} title={viewUpdateModal ? 'Update Formation' : 'Create Formation'} submitText={viewUpdateModal ? 'Update Formation' : 'Add new Professor'} formFields={[
+          isOpen={viewCreateModal} onClose={() => setViewCreateModal(false)} onSubmit={viewUpdateModal ? handleUpdateFormation : handleCreateFormation} title={viewUpdateModal ? 'Update Formation' : 'Create Formation'} submitText={viewUpdateModal ? 'Update Formation' : 'Add new Formation'} formFields={[
             {
               colSpan: 2,
               label: 'Denomination',
