@@ -211,8 +211,10 @@ const GroupTable = ({ formations, allGroups }) => {
     groupInputs.denomination = `${groupInputs.course}${formations.find((formation) => formation.id === groupInputs.formationId)?.acronym}${groupInputs.letter}`
 
     try {
+      console.log('Before update', groupInputs)
       // Create the group in the database
       const updatedGroup = await groupService.updateGroup(groupInputs)
+      console.log(updatedGroup)
       // Set the letter to the updated group
       updatedGroup.letter = updatedGroup.denomination.slice(-1)
       // Add the group to the state
@@ -245,7 +247,10 @@ const GroupTable = ({ formations, allGroups }) => {
 
       setViewCreateModal(true) // Show the create modal
       setViewUpdateModal(true) // Show the update modal
-      setGroupInputs(group) // Set the groupInputs with the group to update
+      const groupCopy = { ...group } // Create a copy of the group
+      // Add the letter to the groupCopy
+      groupCopy.letter = groupCopy.denomination.slice(-1)
+      setGroupInputs(groupCopy) // Set the groupInputs with the group to update
     } catch (error) {
       toast.showError(error.message)
     }
