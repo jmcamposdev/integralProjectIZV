@@ -71,11 +71,15 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
 
   const handleDeleteAllLessons = async () => {
     const lessonsToDelete = lessons.map((lesson) => lesson.id)
-    if (lessonsToDelete.length > 0) {
-      lessonsToDelete.forEach(async (lessonId) => {
-        lessonService.deleteLesson(lessonId)
-      })
+
+    for (const lessonId of lessonsToDelete) {
+      try {
+        await lessonService.deleteLesson(lessonId)
+      } catch (error) {
+        toast.showError('Error deleting lessons')
+      }
     }
+
     window.location.reload()
   }
 
@@ -134,34 +138,30 @@ const EditLesson = ({ currentGroup, currentModule, onClose, allLessons, professo
     }
 
     // First, delete the lessons that were removed
-    if (lessonsToDel.length > 0) {
-      lessonsToDel.forEach(async (lessonId) => {
+    for (const lessonId of lessonsToDel) {
+      try {
         await lessonService.deleteLesson(lessonId)
-      })
+      } catch (error) {
+        toast.showError('Error deleting lessons')
+      }
     }
 
     // Then, update the lessons that were modified
-    const lessonsToUpdate = lessons.filter((lesson) => lesson.id)
-    if (lessonsToUpdate.length > 0) {
-      lessonsToUpdate.forEach(async (lesson) => {
-        try {
-          await lessonService.updateLesson(lesson)
-        } catch (error) {
-          toast.showError('Error updating lessons')
-        }
-      })
+    for (const lesson of lessons.filter((lesson) => lesson.id)) {
+      try {
+        await lessonService.updateLesson(lesson)
+      } catch (error) {
+        toast.showError('Error updating lessons')
+      }
     }
 
     // Finally, create the new lessons
-    const newLessons = lessons.filter((lesson) => !lesson.id)
-    if (newLessons.length > 0) {
-      newLessons.forEach(async (lesson) => {
-        try {
-          await lessonService.createLesson(lesson)
-        } catch (error) {
-          toast.showError('Error creating lessons')
-        }
-      })
+    for (const lesson of lessons.filter((lesson) => !lesson.id)) {
+      try {
+        await lessonService.createLesson(lesson)
+      } catch (error) {
+        toast.showError('Error creating lessons')
+      }
     }
 
     // Refresh the page
