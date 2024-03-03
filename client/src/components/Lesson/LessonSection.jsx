@@ -169,7 +169,7 @@ const LessonSection = () => {
                       index === moduleLessons.length - 1 ? 'rounded-b-md' : ''
                     }`}
                         >
-                          <td className='pl-8 py-5 pr-2'>{lesson.professor ? `${lesson.professor.firstSurname} ${lesson.professor.lastSurname}, ${lesson.professor.name}` : 'No Professor yet..'}</td>
+                          <td className='pl-8 py-5 pr-2'>{lesson.professor ? `${lesson.professor.firstSurname} ${lesson.professor.lastSurname}, ${lesson.professor.name}` : 'No Professor assigned'}</td>
                           <td className='pl-8 py-5 pr-2'>{lesson.hours}h <span className='text-xs font-normal text-slate-700 dark:text-slate-300'>/week</span></td>
                         </tr>
                       ))}
