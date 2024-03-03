@@ -1,3 +1,4 @@
+import { Professor } from '../models/Professor.js'
 import { User } from '../models/User.js'
 
 /**
@@ -66,6 +67,7 @@ export const createUser = async (req, res) => {
  */
 export const updateUser = async (req, res) => {
   try {
+    console.log(req.body)
     // Destructuring the id from the request parameters
     const { senecaUser } = req.params
     // Validate the fields to be not null or empty
@@ -85,6 +87,8 @@ export const updateUser = async (req, res) => {
 
     // Get the user
     const user = await User.findOne({ where: { senecaUser } })
+    // Find the professor in the database
+    const professor = await Professor.findOne({ where: { senecaUser } })
     // If the user doesn't exist, send a 404 status code and a message
     if (!user) {
       return res.status(404).json({ message: 'User not found' })
@@ -97,6 +101,14 @@ export const updateUser = async (req, res) => {
     // Update the user in the database
     user.set(req.body)
     await user.save()
+
+    // Update the professor in the database
+    if (professor) {
+      console.log('Profesor', professor)
+      professor.set(req.body)
+      await professor.save()
+    }
+
     // Delete the password from the user object
     delete user.dataValues.password
     // Send the updated user in the response

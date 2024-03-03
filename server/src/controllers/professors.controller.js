@@ -12,8 +12,15 @@ import { ROLES } from '../models/Role.js'
  */
 export const getProfessors = async (req, res) => {
   try {
-    // Get all professors from database
+    // Get all professors from database and add isAdmin field if in the User table the role is ADMIN
     const professors = await Professor.findAll()
+    const users = await User.findAll()
+    professors.forEach(professor => {
+      const user = users.find(user => user.senecaUser === professor.senecaUser)
+      if (user) {
+        professor.dataValues.isAdmin = user.roleId === ROLES.ADMIN
+      }
+    })
     // Send the professors in the response as JSON
     res.json(professors)
   } catch (err) {
@@ -133,8 +140,8 @@ export const updateProfessor = async (req, res) => {
       return res.status(400).json({ message: 'All fields are required and not empty' })
     }
 
-    // If is defined the senecaUser, validate that there's no other professor with the same senecaUser
-    if (req.body.senecaUser && await professorExists(req.body.senecaUser)) {
+    // If is defined the senecaUser, validate that there's no other professor with the same senecaUser or user
+    if (req.body.senecaUser && (await professorExists(req.body.senecaUser) || await User.exists(req.body.senecaUser))) {
       return res.status(400).json({ message: 'Already exists a professor with that senecaUser' })
     }
 
@@ -163,6 +170,9 @@ export const updateProfessor = async (req, res) => {
     // Remove the password and confirmPassword from the response
     delete professor.dataValues.password
     delete professor.dataValues.confirmPassword
+
+    // Set isAdmin field if the user is ADMIN
+    professor.dataValues.isAdmin = user.roleId === ROLES.ADMIN
 
     // Send the updated professor in the response
     res.json(professor)

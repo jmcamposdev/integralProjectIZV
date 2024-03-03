@@ -74,7 +74,7 @@ export const groupValidateSomeFields = (params) => {
     }
 
     // If the parameter is course must be a number positive and greater than 0
-    if (key === 'course') {
+    if (key === 'course' || key === 'formationId') {
       if (isNaN(params[key]) || params[key] <= 0) {
         return false
       }

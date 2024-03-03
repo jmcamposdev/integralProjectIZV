@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import Loader from './common/Loader'
 import PageTitle from './components/PageTitle'
@@ -17,6 +19,7 @@ import LessonIndex from './pages/Dashboard/Lesson/LessonIndex'
 
 function App () {
   const [loading, setLoading] = useState(true)
+  const [isDarkMode, setIsDarkMode] = useState(false)
   const { pathname } = useLocation()
 
   useEffect(() => {
@@ -26,6 +29,22 @@ function App () {
   useEffect(() => {
     setTimeout(() => setLoading(false), 1000)
   }, [])
+
+  // Add event listener de body class change to know if the dark mode is activated
+  useEffect(() => {
+    const body = document.querySelector('body')
+
+    body.addEventListener('change', () => {
+      setIsDarkMode(body.classList.contains('dark'))
+    })
+
+    return () => {
+      body.removeEventListener('change', () => {
+        setIsDarkMode(body.classList.contains('dark'))
+      })
+    }
+  }
+  , [])
 
   return loading
     ? (
@@ -57,6 +76,20 @@ function App () {
           </Route>
           {/* END ONLY ADMIN */}
         </Routes>
+        <ToastContainer
+          position='bottom-right'
+          autoClose={5000}
+          limit={5}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme={isDarkMode ? 'dark' : 'light'}
+          stacked
+        />
       </>
       )
 }

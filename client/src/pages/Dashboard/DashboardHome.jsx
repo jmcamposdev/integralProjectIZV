@@ -9,13 +9,13 @@ import groupService from '../../services/groupService.js'
 import LessonTable from '../../components/Tables/LessonTable/LessonTable.jsx'
 import lessonService from '../../services/lessonService.js'
 import TableRowLoading from '../../components/Loading/TableRowLoading.jsx'
-import ErrorAlert from '../../components/Alerts/ErrorAlert.jsx'
 import GroupTable from '../../components/Tables/GroupTable/GroupTable.jsx'
 import ModuleTable from '../../components/Tables/ModuleTable/ModuleTable.jsx'
+import useAlertToast from '../../hooks/useToast.jsx'
 
 const DashboardHome = () => {
+  const { toast } = useAlertToast()
   const { isAdmin, isUser, senecaUser, name } = useAuth() // Get the user info
-  const [error, setError] = useState(null) // Save the error message
   const [professors, setProfessors] = useState([]) // Save the professors
   const [formations, setFormations] = useState([]) // Save the formations
   const [modules, setModules] = useState([]) // Save the modules
@@ -77,7 +77,7 @@ const DashboardHome = () => {
       } catch (error) {
         // If there's an error, set the error message
         console.error('Error getting data:', error.message)
-        setError(error.message)
+        toast.showError(error.message)
       }
     }
     // Call the function to get all the data
@@ -85,8 +85,6 @@ const DashboardHome = () => {
   }, [])
   return (
     <DefaultLayout>
-      {error && <ErrorAlert message={error} />} {/* Show an error alert if there's an error */}
-
       {/* Show a welcome message with the user's name and role */}
       <div className='flex flex-col items-center justify-center mt-5 mb-10'>
         <h1 className='text-4xl font-bold mb-5'>Welcome, {`${name}`}</h1>
@@ -171,7 +169,7 @@ const DashboardHome = () => {
                   <p className='text-lg font-medium text-center'>You don't have any lessons yet.</p>
                   )
                 : (
-                  <LessonTable lessons={lessons} professors={professors} modules={modules} groups={groups} />
+                  <LessonTable receivedLessons={lessons} professors={professors} modules={modules} groups={groups} />
                   )}
             </>
             )}

@@ -2,15 +2,15 @@ import { useState } from 'react'
 import Breadcrumb from '../../../components/Breadcrumbs/Breadcrumb'
 import useAuth from '../../../hooks/useAuth'
 import DefaultLayout from '../../../layout/DefaultLayout'
-import ErrorAlert from '../../../components/Alerts/ErrorAlert'
 import authService from '../../../services/authService'
 import userService from '../../../services/userService'
 import useSignIn from 'react-auth-kit/hooks/useSignIn'
+import useAlertToast from '../../../hooks/useToast'
 
 const Profile = () => {
+  const { toast } = useAlertToast()
   const { authId, name, firstSurname, lastSurname, senecaUser } = useAuth()
   const signIn = useSignIn()
-  const [error, setError] = useState(null)
   const [user, setUser] = useState({
     id: authId,
     name,
@@ -84,8 +84,11 @@ const Profile = () => {
       await refreshTokens(updatedUser)
 
       resetUserInputs()
+
+      // Show success message
+      toast.showSuccess('Profile updated successfully')
     } catch (error) {
-      setError(error.message)
+      toast.showError(error.message)
     }
   }
 
@@ -95,7 +98,7 @@ const Profile = () => {
 
     // Check if passwords match
     if (passwords.password !== passwords.confirmPassword) {
-      setError('Passwords do not match')
+      toast.showError('Passwords do not match')
       return
     }
 
@@ -109,8 +112,10 @@ const Profile = () => {
       await refreshTokens(updatedUser)
       // Reset password inputs
       resetPasswordInputs()
+      // Show success message
+      toast.showSuccess('Password updated successfully')
     } catch (error) {
-      setError(error.message)
+      toast.showError(error.message)
     }
   }
 
@@ -118,15 +123,11 @@ const Profile = () => {
     <DefaultLayout>
       <div className='mx-auto max-w-270'>
         <Breadcrumb pageName='Profile' />
-
-        {/* ERROR MESSAGE */}
-        {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
-
         <div className='grid grid-cols-5 gap-8'>
           <div className='col-span-5 xl:col-span-3'>
-            <div className='rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark'>
-              <div className='border-b border-stroke py-4 px-7 dark:border-strokedark'>
-                <h3 className='font-medium text-black dark:text-white'>
+            <div className='rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark duration-300 ease-linear'>
+              <div className='border-b border-stroke py-4 px-7 dark:border-strokedark duration-300 ease-linear'>
+                <h3 className='font-medium text-black dark:text-white duration-300 ease-linear'>
                   Personal Information
                 </h3>
               </div>
@@ -136,13 +137,13 @@ const Profile = () => {
                   {/* SENECA INPUT */}
                   <div className='mb-5.5'>
                     <label
-                      className='mb-3 block text-sm font-medium text-black dark:text-white'
+                      className='mb-3 block text-sm font-medium text-black dark:text-white duration-300 ease-linear'
                       htmlFor='senecaUser'
                     >
                       Seneca User
                     </label>
                     <input
-                      className='w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary'
+                      className='w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary duration-300 ease-linear'
                       type='text'
                       name='senecaUser'
                       id='senecaUser'
@@ -156,13 +157,13 @@ const Profile = () => {
                   {/* NAME INPUT */}
                   <div className='mb-5.5'>
                     <label
-                      className='mb-3 block text-sm font-medium text-black dark:text-white'
+                      className='mb-3 block text-sm font-medium text-black dark:text-white duration-300 ease-linear'
                       htmlFor='name'
                     >
                       Name
                     </label>
                     <input
-                      className='w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary'
+                      className='w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary duration-300 ease-linear'
                       type='text'
                       name='name'
                       id='name'
@@ -176,10 +177,10 @@ const Profile = () => {
                   {/* SURNAMES INPUTS */}
                   <div className='mb-5.5 flex flex-col gap-5.5 sm:flex-row'>
                     <div className='w-full sm:w-1/2'>
-                      <label className='mb-3 block text-sm font-medium text-black dark:text-white' htmlFor='firstSurname'> First Surname </label>
+                      <label className='mb-3 block text-sm font-medium text-black dark:text-white duration-300 ease-linear' htmlFor='firstSurname'> First Surname </label>
                       <div className='relative'>
                         <input
-                          className='w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary'
+                          className='w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary duration-300 ease-linear'
                           type='text'
                           name='firstSurname'
                           id='firstSurname'
@@ -191,13 +192,13 @@ const Profile = () => {
                     </div>
                     <div className='w-full sm:w-1/2'>
                       <label
-                        className='mb-3 block text-sm font-medium text-black dark:text-white'
+                        className='mb-3 block text-sm font-medium text-black dark:text-white duration-300 ease-linear'
                         htmlFor='lastSurname'
                       >
                         Last Surname
                       </label>
                       <input
-                        className='w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary'
+                        className='w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary duration-300 ease-linear'
                         type='text'
                         name='lastSurname'
                         id='lastSurname'
@@ -223,18 +224,18 @@ const Profile = () => {
             </div>
           </div>
           <div className='col-span-5 xl:col-span-2'>
-            <div className='rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark'>
-              <div className='border-b border-stroke py-4 px-7 dark:border-strokedark'>
-                <h3 className='font-medium text-black dark:text-white'>
+            <div className='rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark duration-300 ease-linear'>
+              <div className='border-b border-stroke py-4 px-7 dark:border-strokedark duration-300 ease-linear'>
+                <h3 className='font-medium text-black dark:text-white duration-300 ease-linear'>
                   Change Password
                 </h3>
               </div>
               <div className='p-7'>
                 <form onSubmit={handleUpdatePassword}>
                   <div className='mb-5.5'>
-                    <label className='mb-3 block text-sm font-medium text-black dark:text-white' htmlFor='senecaUser'>New Password</label>
+                    <label className='mb-3 block text-sm font-medium text-black dark:text-white duration-300 ease-linear' htmlFor='senecaUser'>New Password</label>
                     <input
-                      className='w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary' type='password'
+                      className='w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary duration-300 ease-linear' type='password'
                       name='password'
                       id='password'
                       placeholder='Your New Password'
@@ -244,9 +245,9 @@ const Profile = () => {
                   </div>
 
                   <div className='mb-5.5'>
-                    <label className='mb-3 block text-sm font-medium text-black dark:text-white' htmlFor='senecaUser'>Confirm Password</label>
+                    <label className='mb-3 block text-sm font-medium text-black dark:text-white duration-300 ease-linear' htmlFor='senecaUser'>Confirm Password</label>
                     <input
-                      className='w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary' type='password'
+                      className='w-full rounded border border-stroke bg-gray py-3 px-4.5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary duration-300 ease-linear' type='password'
                       name='confirmPassword'
                       id='confirmPassword'
                       placeholder='Confirm New Password'

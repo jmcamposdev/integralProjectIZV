@@ -146,7 +146,7 @@ const AboutUSSection = () => {
             </svg>
           </div>
 
-          <div className='p-4 md:p-7 bg-gray-100 rounded-lg dark:text-white relative group'>
+          <div className='p-4 md:p-7 bg-gray-100 rounded-lg dark:text-white relative group sm:col-span-1 col-span-2'>
             <div className='absolute w-[100%] -bottom-5 flex left-0'>
               <span style={{ clipPath: 'polygon(100% 0%, 0% 0%, 100% 100%)' }} className='group-hover:opacity-100 opacity-0 transition duration-300 group-hover:delay-0  ease-in-out absolute top-[-4px] left-1/2 block h-2 w-2 -translate-x-1/2 rotate-[315deg] bg-black dark:bg-white' />
               <span className='group-hover:opacity-100 opacity-0 transition duration-300 delay-50 group-hover:delay-0 ease-in-out rounded-md bg-black px-3.5 py-1.5 text-custom-sm text-white group-hover:block dark:bg-white dark:text-black text-center mx-auto'>Node Js</span>

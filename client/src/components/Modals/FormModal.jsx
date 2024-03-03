@@ -2,7 +2,7 @@ const FormModal = ({ isOpen, onClose, onSubmit, title, submitText, formFields })
   return (
     <>
       {/* <!-- ===== Start of Add Professor Modal ===== --> */}
-      <div id='crud-modal' tabIndex='-1' aria-hidden='true' className={`${!isOpen && 'hidden'} fixed left-0 top-0 z-999999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5`}>
+      <div id='crud-modal' tabIndex='-1' aria-hidden='true' className={`${!isOpen && 'hidden'} fixed left-0 top-0 z-9999 flex h-full min-h-screen w-full items-center justify-center bg-black/90 px-4 py-5`}>
         <div className='bg-white dark:bg-boxdark rounded-lg shadow-md max-w-md w-full'>
           <div className='flex items-center justify-between p-4 md:p-5  rounded-t border-b border-stroke dark:border-strokedark'>
             <h3 className='text-lg font-semibold text-black dark:text-white'>
@@ -55,6 +55,8 @@ const FormModal = ({ isOpen, onClose, onSubmit, title, submitText, formFields })
                           name={field.name}
                           id={field.id}
                           value={field.value}
+                          title={field.title}
+                          pattern={field.pattern}
                           placeholder={`Enter ${field.label}`}
                           autoComplete={field.autoComplete}
                           className='w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white disabled:text-bodydark disabled:dark:text-bodydark dark:focus:border-primary dark:disabled:bg-black'

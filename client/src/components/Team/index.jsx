@@ -11,7 +11,7 @@ const Team = () => {
     <section id='team' className='overflow-hidden z-0 relative py-17.5 sm:py-22.5 xl:py-27.5 bg-white dark:bg-boxdark-2 flex flex-col gap-[2.5rem] font-medium leading-relaxed font-satoshi text-black dark:text-white justify-center items-center'>
       <div className='z-1 mx-auto max-w-[55rem] px-4 text-center sm:px-8 xl:px-0'>
         <span className='text-2xl font-heading mb-5 inline-block text-title-6 font-medium text-primary'>Our Team</span>
-        <h2 className='text-4xl xl:text-5xl font-semibold text-black dark:text-white'>Ultimate Tailwind Dashboard Crafted for your favourite Tech Stack</h2>
+        <h2 className='text-4xl xl:text-5xl font-semibold text-black dark:text-white'>We are dedicated to technology, we are passionate about education</h2>
       </div>
       <div className='max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto'>
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>

@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react'
 import professorService from '../../../services/professorService'
 import ConfirmModal from '../../Modals/ConfirmModal'
-import ErrorAlert from '../../Alerts/ErrorAlert'
 import useAuth from '../../../hooks/useAuth'
 import FormModal from '../../Modals/FormModal'
 import TableRowLoading from '../../Loading/TableRowLoading'
 import TableTemplate from '../TableTemplate'
 import professorColumns from '../ProfessorTable/professorColumns'
+import useAlertToast from '../../../hooks/useToast'
 
 const ProfessorTable = () => {
+  const { toast } = useAlertToast()
   const { isAdmin } = useAuth()
   const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState(null) // Save the error message if there is one
   const [professors, setProfessors] = useState([]) // Save all professors from the database
   const [professorIdToDelete, setProfessorIdToDelete] = useState(null) // Save the professor Id to delete
   const [hasLessons, setHasLessons] = useState(false)
@@ -101,19 +101,31 @@ const ProfessorTable = () => {
    */
   const handleDeleteProfessor = async () => {
     try {
+      // Delete the professor from the database
       await professorService.deleteProfessor(professorIdToDelete)
+      // Remove the professor from the state
       setProfessors(professors.filter((professor) => professor.id !== professorIdToDelete))
+      // Alert the user that the professor was deleted
+      toast.showSuccess('Professor deleted successfully.')
     } catch (error) {
-      setError(error.message)
+      // Show an error message if the professor couldn't be deleted
+      toast.showError(error.message)
     }
+
+    // If the professor was deleted, hide the delete modal
     handleCloseDeleteModal()
   }
 
+  /**
+   * This is used to show the delete modal when the delete button is clicked
+   * When the professorIdToDelete changes, the useEffect will show the delete modal
+   * @param {Number} id The professor id to delete
+   */
   const onDelete = async (id) => {
     // Check if the professor has lessons
     const hasLessons = await professorService.getProfessorLessons(id)
     if (hasLessons.length > 0) {
-      setError('You can\'t delete a professor with assigned lessons.')
+      toast.showError('You can\'t delete a professor with assigned lessons.')
       return
     }
     setProfessorIdToDelete(id)
@@ -156,15 +168,40 @@ const ProfessorTable = () => {
   const handleCreateProfessor = async (event) => {
     event.preventDefault()
 
+    // Validate that all inputs are not empty
+    let areValidInputs = true
+    for (const [key, value] of Object.entries(createInputs)) {
+      if (key === 'id') continue
+
+      if (value.trim() === '') {
+        areValidInputs = false
+        break
+      }
+    }
+
+    if (!areValidInputs) {
+      toast.showError('All fields are required.')
+      return
+    }
+
+    // Validate that the password and confirmPassword are the same
+    if (createInputs.password !== createInputs.confirmPassword || createInputs.password.trim() === '' || createInputs.confirmPassword.trim() === '') {
+      // setViewCreateModal(false)
+      toast.showError('The passwords do not match.')
+      return
+    }
+
     try {
       const professor = await professorService.createProfessor(createInputs)
       // Add the password and confirmPassword to the professor object
       professor.password = ''
       professor.confirmPassword = ''
+      // Add the new professor to the state
       setProfessors([...professors, professor])
+      // Alert the user that the professor was created
+      toast.showSuccess('Professor created successfully.')
     } catch (error) {
-      setError(error.message)
-      console.error('Error creating professor:', error.message)
+      toast.showError(error.message)
     }
 
     // Close the create modal the useEffect will reset the inputs
@@ -190,7 +227,7 @@ const ProfessorTable = () => {
       setViewCreateModal(true) // Show the create modal
       setViewUpdateModal(true) // Set the viewUpdateModal to true
     } catch (error) {
-      setError(error.message)
+      toast.showError(error.message)
     }
   }
 
@@ -218,8 +255,10 @@ const ProfessorTable = () => {
       // Update the state with the new professor
       setProfessors(professors.map((prof) => (prof.id === professor.id ? professor : prof)))
       resetCreateInputs() // Reset the inputs
+      // Alert the user that the professor was updated
+      toast.showSuccess('Professor updated successfully.')
     } catch (error) {
-      setError(error.message)
+      toast.showError(error.message)
     }
 
     // Close the create modal the useEffect will reset the inputs
@@ -238,14 +277,14 @@ const ProfessorTable = () => {
 
     // Check if the password or confirmPassword are empty
     if (password.trim() === '' || confirmPassword.trim() === '') {
-      setError('The password and confirmPassword can\'t be empty.')
+      toast.showError('The password and confirmPassword can\'t be empty.')
       setViewChangePasswordModal(false) // Close the change password modal
       return
     }
 
     // Check if the password and confirmPassword are the same
     if (password !== confirmPassword) {
-      setError('The passwords do not match.')
+      toast.showError('The passwords do not match.')
       setViewChangePasswordModal(false) // Close the change password modal
       return
     }
@@ -255,20 +294,47 @@ const ProfessorTable = () => {
       await professorService.changeProfessorPassword(createInputs.senecaUser, password)
       // Close the change password modal
       setViewChangePasswordModal(false)
+      // Alert the user that the password was updated
+      toast.showSuccess('Password updated successfully.')
     } catch (error) {
-      setError(error.message)
+      toast.showError(error.message)
+    }
+  }
+
+  const onUpgradeRole = async (professor) => {
+    try {
+      // Update the professor role to admin
+      const updatedProfessor = await professorService.updateProfessor({ roleId: 2, id: professor.id })
+      // Update the state with the new professor
+      setProfessors(professors.map((prof) => (prof.id === updatedProfessor.id ? updatedProfessor : prof)))
+      // Alert the user that the professor role was updated
+      toast.showSuccess(`Professor ${updatedProfessor.name} ${updatedProfessor.firstSurname} ${updatedProfessor.lastSurname} role updated to admin.`)
+    } catch (error) {
+      toast.showError(error.message)
+    }
+  }
+
+  const onDowngradeRole = async (professor) => {
+    try {
+      // Update the professor role to user
+      const updatedProfessor = await professorService.updateProfessor({ roleId: 1, id: professor.id })
+      // Update the state with the new professor
+      setProfessors(professors.map((prof) => (prof.id === updatedProfessor.id ? updatedProfessor : prof)))
+      // Alert the user that the professor role was updated
+      toast.showSuccess(`Professor ${updatedProfessor.name} ${updatedProfessor.firstSurname} ${updatedProfessor.lastSurname} role updated to user.`)
+    } catch (error) {
+      toast.showError(error.message)
     }
   }
 
   return (
     <>
-      {error && <ErrorAlert message={error} onClose={() => setError(null)} />}
       {
         isLoading
           ? <TableRowLoading columns={professorColumns.length} />
           : (
             <>
-              <TableTemplate data={professors} columns={professorColumns} onDelete={onDelete} onEdit={handleEditProfessorButton} onChangePassword={handleChangePasswordButton} />
+              <TableTemplate data={professors} columns={professorColumns} onDelete={onDelete} onEdit={handleEditProfessorButton} onChangePassword={handleChangePasswordButton} onUpgrade={onUpgradeRole} onDowngrade={onDowngradeRole} />
               {// Only show the add professor button if the user is an admin
               isAdmin && (
                 <button
