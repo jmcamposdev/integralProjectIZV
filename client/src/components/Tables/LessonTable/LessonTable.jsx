@@ -96,7 +96,7 @@ const LessonTable = ({ receivedLessons, professors, modules, groups }) => {
               {// Only show the add lessons button if the user is an admin
                   isAdmin && (
                     <div className='flex gap-5 justify-end mt-8 flex-col md:flex-row'>
-                      {lessons.length === 0 && (
+                      {lessons.length === 0 && professors.length > 0 && modules.length > 0 && groups.length > 0 && (
                         <button className='inline-flex items-center justify-center rounded-md bg-meta-3 py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 duration-300 ease-in-out mr-auto' onClick={handleGenerateLessonsButton}>
                           Generate Lesson
                         </button>
