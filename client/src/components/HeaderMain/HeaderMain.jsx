@@ -48,12 +48,17 @@ const Header = () => {
     }
   }, [isScrolled, colorMode, isOpenNav])
 
+  // Function to show the nav menu on phone resolution
   const openHideNav = () => {
+    // The container of the nav, used to move it ans show the nav
     const backNavPhone = document.getElementById('back-nav-phone')
+    // The button to open the nav, used to set an animation with its children elements
     const buttonNav = document.getElementById('button-nav')
 
     setIsOpenNav(!isOpenNav)
 
+    // Toggling classes to trandform the childen of the button to
+    // have a nice animation when clicked
     buttonNav.children.item(0).classList.toggle('rotate-45')
     buttonNav.children.item(0).classList.toggle('top-[15%]')
     buttonNav.children.item(0).classList.toggle('top-[50%]')
@@ -62,11 +67,16 @@ const Header = () => {
     buttonNav.children.item(2).classList.toggle('top-[15%]')
     buttonNav.children.item(2).classList.toggle('top-[50%]')
 
+    // To add more detail to the animation of the button
     buttonNav.classList.toggle('justify-center')
     buttonNav.classList.toggle('justify-between')
+
+    // Showing the container of the nav menu, if its hidden on the side it moves to 0
     backNavPhone.classList.toggle('left-[100%]')
     backNavPhone.classList.toggle('left-0')
 
+    // To avoid the scrolling when the nav is open i set the overflow
+    // property of the body element to hidden
     if (document.body.style.overflow === 'hidden') {
       document.body.style.overflow = 'visible'
     } else {
