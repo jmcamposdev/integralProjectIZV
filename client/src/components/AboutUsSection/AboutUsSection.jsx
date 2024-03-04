@@ -163,7 +163,7 @@ const AboutUSSection = () => {
           <div className='mt-5 lg:mt-0'>
             <div className='space-y-6 sm:space-y-8'>
               <div className='space-y-2 md:space-y-4'>
-                <h4 className='mb-2.5 text-lg font-medium text-primary'>Created without limits</h4>
+                <span className='mb-2.5 text-lg font-medium text-primary'>Created without limits</span>
                 <h2 className='font-bold text-4xl text-gray-800 dark:text-gray-200'>
                   By teachers for teachers
                 </h2>
@@ -178,7 +178,7 @@ const AboutUSSection = () => {
                     <svg className='flex-shrink-0 size-3.5' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><polyline points='20 6 9 17 4 12' /></svg>
                   </span>
 
-                  <h5 className='text-xl font-semibold text-black dark:text-white'>Management of thousands of simultaneous requests</h5>
+                  <h3 className='text-xl font-semibold text-black dark:text-white'>Management of thousands of simultaneous requests</h3>
                 </li>
 
                 <li className='flex space-x-3 items-center'>
@@ -186,7 +186,7 @@ const AboutUSSection = () => {
                     <svg className='flex-shrink-0 size-3.5' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><polyline points='20 6 9 17 4 12' /></svg>
                   </span>
 
-                  <h5 className='text-xl font-semibold text-black dark:text-white'>Multi-platform support</h5>
+                  <h3 className='text-xl font-semibold text-black dark:text-white'>Multi-platform support</h3>
                 </li>
 
                 <li className='flex space-x-3 items-center'>
@@ -194,7 +194,7 @@ const AboutUSSection = () => {
                     <svg className='flex-shrink-0 size-3.5' xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='currentColor' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><polyline points='20 6 9 17 4 12' /></svg>
                   </span>
 
-                  <h5 className='text-xl font-semibold text-black dark:text-white'>'Walk-in and work' solution without installations.</h5>
+                  <h3 className='text-xl font-semibold text-black dark:text-white'>'Walk-in and work' solution without installations.</h3>
                 </li>
               </ul>
             </div>
@@ -258,7 +258,7 @@ const AboutUSSection = () => {
           <div style={{ transform: 'scaleY(-1)' }} className='mt-12 sm:mt-10 lg:mt-0'>
             <div className='space-y-6 sm:space-y-8'>
               <div className='space-y-2 md:space-y-4'>
-                <h4 className='mb-2.5 text-lg font-medium text-primary'>The keys to Zawee</h4>
+                <span className='mb-2.5 text-lg font-medium text-primary'>The keys to Zawee</span>
                 <h2 className='font-bold text-4xl text-black dark:text-white'>
                   The keys: robustness and versatility
                 </h2>

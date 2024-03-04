@@ -62,10 +62,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
   return (
     <>
       <div className='flex justify-start items-center w-72.5 h-[80px] fixed left-0 top-0 bg-white dark:bg-boxdark z-50 px-4 py-4 md:px-6 2xl:px-11 gap-2 2xsm:gap-4 duration-300 ease-linear'>
-        <a href='/' className='dark:hidden duration-300 ease-linear'>
+        <a href='/' className='dark:hidden duration-300 ease-linear'  aria-label='Logo'>
           <img className='h-[42px]  mr-3 ' alt='Logo of our webpage' src={LogoWhite} />
         </a>
-        <a href='/' className='dark:block hidden duration-300 ease-linear'>
+        <a href='/' className='dark:block hidden duration-300 ease-linear'  aria-label='Logo'>
           <img className='h-[42px]  mr-3 ' alt='Logo of our webpage' src={LogoDark} />
         </a>
 

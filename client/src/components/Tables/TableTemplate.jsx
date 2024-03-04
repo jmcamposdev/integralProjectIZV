@@ -62,7 +62,7 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword, onUp
             <>
               {row.cell.row.original.isAdmin && onDowngrade && (
                 <button
-                  className='flex justify-center items-center w-8 h-8 rounded-md bg-emerald-800 hover:bg-opacity-70' title='Downgrade to User'
+                  className='flex justify-center items-center w-8 h-8 rounded-md bg-[#1d1d1d] hover:bg-opacity-70' title='Downgrade to User'
                   onClick={() => onDowngrade(row.cell.row.original)}
                 >
                   <i className='icon-[material-symbols-light--arrow-downward-alt-rounded] fill-current duration-300 ease-in-out text-white' style={{ fontSize: '22px' }} />
@@ -71,10 +71,10 @@ const TableTemplate = ({ data, columns, onDelete, onEdit, onChangePassword, onUp
 
               {!row.cell.row.original.isAdmin && onUpgrade && (
                 <button
-                  className='flex justify-center items-center w-8 h-8 rounded-md bg-cyan-600 hover:bg-opacity-70' title='Upgrade to Admin'
+                  className='flex justify-center items-center w-8 h-8 rounded-md bg-[#f5ce42] hover:bg-opacity-70' title='Upgrade to Admin'
                   onClick={() => onUpgrade(row.cell.row.original)}
                 >
-                  <i className='icon-[material-symbols-light--arrow-upward-alt-rounded] fill-current duration-300 ease-in-out text-white' style={{ fontSize: '22px' }} />
+                  <i className='icon-[material-symbols-light--arrow-upward-alt-rounded] fill-current duration-300 ease-in-out text-black' style={{ fontSize: '22px' }} />
                 </button>
               )}
             </>

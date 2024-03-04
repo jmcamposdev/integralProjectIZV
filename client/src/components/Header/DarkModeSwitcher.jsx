@@ -21,6 +21,7 @@ const DarkModeSwitcher = ({ importedColorMode, importedSetColorMode }) => {
             }
           }}
           className='dur absolute top-0 z-50 m-0 h-full w-full cursor-pointer opacity-0'
+          aria-label='Toggle Dark Mode'
         />
         <span
           className={`absolute top-1/2 left-[3px] flex h-6 w-6 -translate-y-1/2 translate-x-0 items-center justify-center rounded-full bg-white shadow-switcher duration-75 ease-linear ${

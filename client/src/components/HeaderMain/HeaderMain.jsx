@@ -83,16 +83,16 @@ const Header = () => {
 
             <ul id='ul' className='flex flex-col mt-4 font-medium  lg:space-x-8 lg:mt-0'>
               <li>
-                <a href={isLandingPage ? '#home' : '/#home'} className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white duration-300 ease-in-out' aria-current='page'>Home</a>
+                <a href={isLandingPage ? '#home' : '/#home'} className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white duration-300 ease-in-out' aria-current='page' aria-label='Home'>Home</a>
               </li>
               <li>
-                <a href={isLandingPage ? '#about' : '/#about'} className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white duration-300 ease-in-out' aria-current='page'>About</a>
+                <a href={isLandingPage ? '#about' : '/#about'} className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white duration-300 ease-in-out' aria-current='page' aria-label='About'>About</a>
               </li>
               <li>
-                <a href={isLandingPage ? '#team' : '/#team'} className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white duration-300 ease-in-out' aria-current='page'>Team</a>
+                <a href={isLandingPage ? '#team' : '/#team'} className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white duration-300 ease-in-out' aria-current='page' aria-label='Team'>Team</a>
               </li>
               <li>
-                <a href={isLandingPage ? '#classes' : '/#classes'} className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white duration-300 ease-in-out' aria-current='page'>Classes</a>
+                <a href={isLandingPage ? '#classes' : '/#classes'} className='block py-8 pr-8 pl-3  lg:p-0  text-3xl hover:text-blue-600 dark:hover:text-blue-600 sm:py-6  text-black dark:text-white duration-300 ease-in-out' aria-current='page' aria-label='Classes'>Classes</a>
               </li>
               {
                 window.location.pathname === '/'
@@ -103,6 +103,7 @@ const Header = () => {
                             <a
                               href='/dashboard'
                               className='w-fit text-3xl block ease-in-up rounded-md bg-primary py-3 px-8 font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9'
+                              aria-label='Dashboard'
                             >
                               Dashboard
                             </a>
@@ -113,6 +114,7 @@ const Header = () => {
                             <a
                               href='/login'
                               className='w-fit text-3xl block ease-in-up rounded-md bg-primary py-3 px-8 font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp md:block md:px-9 lg:px-6 xl:px-9'
+                              aria-label='Login'
                             >
                               Sign In
                             </a>
@@ -126,7 +128,7 @@ const Header = () => {
           </div>
         </div>
         <div className='flex flex-wrap justify-between items-center mx-auto max-w-screen-xl'>
-          <a href='/' className='flex items-center'>
+          <a href='/' className='flex items-center'  aria-label='Home'>
             <img
               src={logo}
               className='h-[42px]  mr-3' alt='Zawee Logo'
@@ -141,6 +143,7 @@ const Header = () => {
                         <a
                           href='/dashboard'
                           className='hidden lg:block ease-in-up rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp  md:px-9 lg:px-6 xl:px-9'
+                          aria-label='Dashboard'
                         >
                           Dashboard
                         </a>
@@ -149,6 +152,7 @@ const Header = () => {
                         <a
                           href='/login'
                           className=' hidden lg:block ease-in-up rounded-md bg-primary py-3 px-8 text-base font-bold text-white transition duration-300 hover:bg-opacity-90 hover:shadow-signUp  md:px-9 lg:px-6 xl:px-9'
+                          aria-label='Login'
                         >
                           Sign In
                         </a>
@@ -167,16 +171,16 @@ const Header = () => {
           <div className='hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1' id='mobile-menu-2'>
             <ul id='ul' className='hidden lg:flex flex-row mt-4 font-medium  lg:space-x-8 lg:mt-0'>
               <li>
-                <a href={isLandingPage ? '#home' : '/#home'} className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6 duration-300 ease-in-out  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Home</a>
+                <a href={isLandingPage ? '#home' : '/#home'} className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6 duration-300 ease-in-out  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'  aria-label='Home'>Home</a>
               </li>
               <li>
-                <a href={isLandingPage ? '#about' : '/#about'} className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6 duration-300 ease-in-out  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>About</a>
+                <a href={isLandingPage ? '#about' : '/#about'} className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6 duration-300 ease-in-out  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page' aria-label='About'>About</a>
               </li>
               <li>
-                <a href={isLandingPage ? '#team' : '/#team'} className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6 duration-300 ease-in-out ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Team</a>
+                <a href={isLandingPage ? '#team' : '/#team'} className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6 duration-300 ease-in-out ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page' aria-label='Team'>Team</a>
               </li>
               <li>
-                <a href={isLandingPage ? '#classes' : '/#classes'} className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6 duration-300 ease-in-out  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page'>Classes</a>
+                <a href={isLandingPage ? '#classes' : '/#classes'} className={`block py-2 pr-4 pl-3  lg:p-0  font-medium  hover:text-blue-600 dark:hover:text-blue-600 sm:py-6 duration-300 ease-in-out  ${isScrolled || !isLandingPage ? 'text-black dark:text-white' : 'text-white'}`} aria-current='page' aria-label='Classes'>Classes</a>
               </li>
               <li>
                 <ul className='items-center gap-2 2xsm:gap-4 lg:hidden w-fit block ml-auto'>
