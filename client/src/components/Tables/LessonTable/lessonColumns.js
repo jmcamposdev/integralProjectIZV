@@ -10,7 +10,7 @@ const lessonColumns = (groups, modules, professors) => {
     },
     {
       header: 'Professor',
-      accessorFn: (row) => professors.find((professor) => professor.id === row.professorId)?.name || 'No professor'
+      accessorFn: (row) => professors.find((professor) => professor.id === row.professorId)?.name || 'No Professor assigned'
     },
     {
       header: 'Hours',
