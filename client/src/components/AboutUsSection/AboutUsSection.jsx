@@ -168,7 +168,7 @@ const AboutUSSection = () => {
                   By teachers for teachers
                 </h2>
                 <p className='text-gray-500'>
-                  We have consulted in more than 50 educational centers and we have learned what the problems are. So we have developed the best solutions. We know firsthand how frustrating it is to waste time on management instead of focusing on educating students.
+                  We have consulted in more than 50 <b>educational</b> centers and we have learned what the problems are. So we have developed the best solutions. We know firsthand how frustrating it is to waste time on <b>management</b> instead of focusing on educating students.
                 </p>
               </div>
 
@@ -263,7 +263,7 @@ const AboutUSSection = () => {
                   The keys: robustness and versatility
                 </h2>
                 <p className='text-black dark:text-white'>
-                  Your school's databases have never been so secure and fail-safe.
+                  Innovative application designed to <b>manage</b> the intricate database of an educational institute. With its <b>primary</b> attributes being robustness and versatility, this software serves as a vital tool for efficiently handling diverse sets of data, ensuring <b>seamless</b> operations.
                 </p>
               </div>
 
