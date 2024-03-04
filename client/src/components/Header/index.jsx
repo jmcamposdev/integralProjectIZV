@@ -12,7 +12,7 @@ const Header = (props) => {
 
           {/* <!-- Hamburger Toggle BTN --> */}
 
-          <a href='/' className='flex items-center gap-2 2xsm:gap-4'>
+          <a href='/' className='flex items-center gap-2 2xsm:gap-4'  aria-label='Hamburguer'>
             <div className='w-[35.6px] h-[35.6px]' />
             <img src={LogoWhite} className='sm:h-[42px] dark:hidden  mr-3  h-9' alt='Zawee Logo' />
             <img src={LogoDark} className='sm:h-[42px] dark:block hidden  mr-3 h-9' alt='Zawee Logo' />
