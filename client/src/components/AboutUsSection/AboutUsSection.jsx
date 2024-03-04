@@ -273,7 +273,7 @@ const AboutUSSection = () => {
                   <span className='text-sm sm:text-base text-gray-500'>
                     <span className='font-bold text-2xl text-black dark:text-white'>Robustness</span>
                     <p className='text-black dark:text-white mt-2'>
-                      Active data redundancy protection, never again worry about failures you can't control.
+                      Active data redundancy protection, never again <b>worry</b> about failures you can't control.
                     </p>
                   </span>
                 </li>
@@ -282,7 +282,7 @@ const AboutUSSection = () => {
                   <span className='text-sm sm:text-base text-gray-800 dark:text-white'>
                     <span className='font-bold text-2xl text-black dark:text-white'>Versatility</span>
                     <p className='text-black dark:text-white mt-2'>
-                      Forget about system crashes due to high traffic, our technology is prepared to handle thousands of simultaneous requests.
+                      Forget about system crashes due to high traffic, our technology is prepared to handle <b>thousandss</b> of simultaneous requests.
                     </p>
                   </span>
                 </li>
