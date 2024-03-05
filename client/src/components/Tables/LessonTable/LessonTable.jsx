@@ -125,7 +125,7 @@ const LessonTable = ({ receivedLessons, professors, modules, groups }) => {
                         </div>
                         <div className='flex justify-end '>
                           <button type='submit' className={`inline-flex items-center justify-center rounded-md bg-primary py-4 px-10 text-center font-medium text-white hover:bg-opacity-90 lg:px-8 xl:px-10 duration-300 ease-in-out ${createLessonInput.group === null || createLessonInput.module === null ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={createLessonInput.group === null || createLessonInput.module === null}>
-                            Create Lesson
+                            Manage Lesson
                           </button>
                         </div>
                       </form>
