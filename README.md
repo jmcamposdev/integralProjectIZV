@@ -1,14 +1,17 @@
-# Work inter-modules
+
+# Work inter-modules (Zawee)
 
 <p align="center">
-  
-https://github.com/jmcamposdev/integralProjectIZV/assets/108521775/590526cc-5b6a-40e2-9aa6-101ee9f41be3
+
+  <img src="https://github.com/jmcamposdev/integralProjectIZV/assets/108521775/692d20e0-24ec-4f20-a497-bb7d24b5ea30" width="300px" />
+
+  https://github.com/jmcamposdev/integralProjectIZV/assets/108521775/7b52f263-2408-49f0-9352-1c03699547da
 
 </p>
 
 
 ## Project Link 🌐
-Access to the website here -> [Integral Project IZV](https://zawee.jmcampos.dev)
+Access to the website here -> [Zawee](https://zawee.jmcampos.dev)
 
 ## Table of Contents
 * [General Info](#general-info)
