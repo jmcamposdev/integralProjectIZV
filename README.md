@@ -6,7 +6,7 @@
 
 
 ## Project Link 🌐
-Access to the website here -> put the URL
+Access to the website here -> [Integral Project IZV](https://zawee.jmcampos.dev)
 
 ## Table of Contents
 * [General Info](#general-info)
@@ -25,7 +25,7 @@ The project consists of the **Lesson Assignment to Professors of the Department*
 * Unregistered User: Can consult the group structure of the current course.
 
 ### Entity Relationship Diagram
-![Integral Project IZV Diagram](https://github.com/jmcamposdev/integralProjectIZV/assets/108521775/ed6a807e-af6e-4958-8a23-ecc9de39678a)
+![Integral Project IZV Diagram](https://github.com/jmcamposdev/integralProjectIZV/assets/108521775/d994cb94-a544-4aef-823d-b2aea052a847)
 
 ## Technologies
 
@@ -66,7 +66,6 @@ Project is created with:
       <img width="50" src="https://user-images.githubusercontent.com/25181517/192108374-8da61ba1-99ec-41d7-80b8-fb2f7c0a4948.png" alt="GitHub" title="GitHub"/>
       <img width="50" src="https://user-images.githubusercontent.com/25181517/121401671-49102800-c959-11eb-9f6f-74d49a5e1774.png" alt="npm" title="npm"/>
       <img width="50" src="https://user-images.githubusercontent.com/25181517/192109061-e138ca71-337c-4019-8d42-4792fdaa7128.png" alt="Postman" title="Postman"/>
-      <img width="50" src="https://user-images.githubusercontent.com/25181517/117207330-263ba280-adf4-11eb-9b97-0ac5b40bc3be.png" alt="Docker" title="Docker"/>
     </td>
   </tr>
 </table>
@@ -94,7 +93,7 @@ $ cd client && npm i
 $ cd ../server && npm i
 
 # Run the app
-$ npm start
+$ npm run dev // On the Client and Server
 ```
 
 ## Project Structure
@@ -141,7 +140,7 @@ Welcome to the Integral Project RESTful API. This API provides access to the man
 
 ### Base URL 
 The API can be accessed through the following base URL:
-[https://dominio.com/api/v1](https://dominio.com/api/v1)
+[https://api.zawee.jmcampos.dev](https://api.zawee.jmcampos.dev)
 
 ### Authentication
 
@@ -150,37 +149,37 @@ To access certain resources, authentication is required. Be sure to include the 
 ### Endpoints
 
 #### Auth 
-- `POST /auth/signup`: Register a new user. Returns a `JSON` object with the new user's data. Requires a `JSON` object with the user's data.
 - `POST /auth/signin`: Sign in a user. Returns a `JSON` object with the user's data and a token. Requires a `JSON` object with the user's data.
 
 #### User
 - `GET /users`: Get all users. Returns a `JSON` array of all users. `x-access-token` header required.
 - `GET /users/:id`: Get a user by ID. Returns a `JSON` object with the user's data. `x-access-token` header required.
 - `POST /users`: Create a new user. Returns a `JSON` object with the new user's data. Requires a `JSON` object with the user's data. `x-access-token` header required.
-- `PUT /users/:id`: Update a user by ID. Returns a `JSON` object with the updated user's data. Requires a `JSON` object with the user's data. `x-access-token` header required.
+- `PUT /users/:senecaUser`: Update a user by ID. Returns a `JSON` object with the updated user's data. Requires a `JSON` object with the user's data. `x-access-token` header required.
 - `DELETE /users/:id`: Delete a user by ID. Returns a `JSON` object with the deleted user's data. `x-access-token` header required.
 
 
 #### Professor
 - `GET /professors`: Get all professors. Returns a `JSON` array of all professors.
 - `GET /professors/:id`: Get a professor by ID. Returns a `JSON` object with the professor's data.
+- `GET /professors/:id/lessons`: Get all lessons assigned to a professor by ID. Returns a `JSON` array of all lessons. 
 - `POST /professors`: Create a new professor. Returns a `JSON` object with the new professor's data. Requires a `JSON` object with the professor's data. `x-access-token` header required.
 - `PUT /professors/:id`: Update a professor by ID. Returns a `JSON` object with the updated professor's data. Requires a `JSON` object with the professor's data. `x-access-token` header required.
 - `DELETE /professors/:id`: Delete a professor by ID. Returns a `JSON` object with the deleted professor's data. `x-access-token` header required.
-- `GET /professors/:id/lessons`: Get all lessons assigned to a professor by ID. Returns a `JSON` array of all lessons. 
 
 #### Formation
 - `GET /formations`: Get all formations. Returns a `JSON` array of all formations.
 - `GET /formations/:id`: Get a formation by ID. Returns a `JSON` object with the formation's data.
+- `GET /formations/:id/groups`: Get all groups of a formation by ID. Returns a `JSON` array of all groups.
+- `GET /formations/:id/modules`: Get all modules of a formation by ID. Returns a `JSON` array of all modules.
 - `POST /formations`: Create a new formation. Returns a `JSON` object with the new formation's data. Requires a `JSON` object with the formation's data. `x-access-token` header required.
 - `PUT /formations/:id`: Update a formation by ID. Returns a `JSON` object with the updated formation's data. Requires a `JSON` object with the formation's data. `x-access-token` header required.
 - `DELETE /formations/:id`: Delete a formation by ID. Returns a `JSON` object with the deleted formation's data. `x-access-token` header required.
-- `GET /formations/:id/groups`: Get all groups of a formation by ID. Returns a `JSON` array of all groups.
-- `GET /formations/:id/modules`: Get all modules of a formation by ID. Returns a `JSON` array of all modules.
 
 #### Module
 - `GET /modules`: Get all modules. Returns a `JSON` array of all modules.
 - `GET /modules/:id`: Get a module by ID. Returns a `JSON` object with the module's data.
+- `GET /modules/:id/lessons`: Get all lessons of a module by ID.  Returns a `JSON` array of all lessons.
 - `POST /modules`: Create a new module. Returns a `JSON` object with the new module's data. Requires a `JSON` object with the module's data. `x-access-token` header required.
 - `PUT /modules/:id`: Update a module by ID. Returns a `JSON` object with the updated module's data. Requires a `JSON` object with the module's data. `x-access-token` header required.
 - `DELETE /modules/:id`: Delete a module by ID. Returns a `JSON` object with the deleted module's data. `x-access-token` header required.
@@ -188,6 +187,7 @@ To access certain resources, authentication is required. Be sure to include the 
 #### Group
 - `GET /groups`: Get all groups. Returns a `JSON` array of all groups.
 - `GET /groups/:id`: Get a group by ID. Returns a `JSON` object with the group's data.
+- `GET /groups/:id/lessons`: Get all lessons of a group by ID.  Returns a `JSON` array of all lessons.
 - `POST /groups`: Create a new group. Returns a `JSON` object with the new group's data. Requires a `JSON` object with the group's data. `x-access-token` header required.
 - `PUT /groups/:id`: Update a group by ID. Returns a `JSON` object with the updated group's data. Requires a `JSON` object with the group's data. `x-access-token` header required.
 - `DELETE /groups/:id`: Delete a group by ID. Returns a `JSON` object with the deleted group's data. `x-access-token` header required.
@@ -195,7 +195,9 @@ To access certain resources, authentication is required. Be sure to include the 
 #### Lesson
 - `GET /lessons`: Get all lessons. Returns a `JSON` array of all lessons.
 - `GET /lessons/:id`: Get a lesson by ID. Returns a `JSON` object with the lesson's data.
+- `GET /lessons-current-year`: Get all lessons of the current year e.g. 2024/2025
 - `POST /lessons`: Create a new lesson. Returns a `JSON` object with the new lesson's data. Requires a `JSON` object with the lesson's data. `x-access-token` header required.
+- `POST /lessons-generate`: Automatically generates as many lessons as possible with the available groups and modules by assigning the teacher to null.
 - `PUT /lessons/:id`: Update a lesson by ID. Returns a `JSON` object with the updated lesson's data. Requires a `JSON` object with the lesson's data. `x-access-token` header required.
 - `DELETE /lessons/:id`: Delete a lesson by ID. Returns a `JSON` object with the deleted lesson's data. `x-access-token` header required.
 
@@ -276,6 +278,8 @@ Carlos Hernandez Palma - [carloshpdev](https://github.com/carloshpdev)
 Luque Vegas, David - [Daviiid999](https://github.com/Daviiid999)
 
 Capdevila Rodríguez, Víctor - [vilacprd](https://github.com/vilacprd)
+
+Rodríguez Jareño, Manuel - [Manabimassu](https://github.com/Manabimassu)
 
 ## Acknowledgments
 We appreciate the collaboration of IES Zaidín-Vergeles in this project.
