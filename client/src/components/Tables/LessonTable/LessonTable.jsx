@@ -39,7 +39,7 @@ const LessonTable = ({ receivedLessons, professors, modules, groups }) => {
       // Save the available modules
       setAvailableModules(availableModules)
       // Set the group to the input
-      setCreateLessonInput({ ...createLessonInput, group })
+      setCreateLessonInput({ ...createLessonInput, group, module: null })
     }
 
     if (e.target.name === 'moduleId') {
@@ -105,8 +105,8 @@ const LessonTable = ({ receivedLessons, professors, modules, groups }) => {
                       <form className='flex gap-5 justify-end flex-col md:flex-row' onSubmit={handleFormSubmit}>
                         {/* <!-- Select to select the Group --> */}
                         <div className='relative z-20 bg-gray dark:bg-form-input duration-300 ease-linear'>
-                          <select className='relative z-20 w-full md:w-50 h-full appearance-none rounded border border-stroke bg-gray py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary duration-300 ease-linear ' name='groupId' id='groupId' onChange={handleLessonInputChange}>
-                            <option value='' disabled selected>Select Group</option>
+                          <select className='relative z-20 w-full md:w-50 h-full appearance-none rounded border border-stroke bg-gray py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary duration-300 ease-linear ' name='groupId' id='groupId' onChange={handleLessonInputChange} value={createLessonInput.group?.id || ''}>
+                            <option value='' disabled>Select Group</option>
                             {groups.map((group) => (
                               <option key={group.id} value={group.id}>{group.denomination}</option>
                             ))}
@@ -115,8 +115,8 @@ const LessonTable = ({ receivedLessons, professors, modules, groups }) => {
                         </div>
                         {/* <!-- Select to Modules only show the modules with the same course --> */}
                         <div className='relative z-20 bg-gray dark:bg-form-input duration-300 ease-linear'>
-                          <select className='relative z-20 w-full md:w-50 h-full appearance-none rounded border border-stroke bg-gray py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary duration-300 ease-linear' name='moduleId' id='moduleId' onChange={handleLessonInputChange} disabled={availableModules.length <= 0}>
-                            <option value='' disabled selected>Select Module</option>
+                          <select className='relative z-20 w-full md:w-50 h-full appearance-none rounded border border-stroke bg-gray py-3 px-5 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary duration-300 ease-linear' name='moduleId' id='moduleId' onChange={handleLessonInputChange} disabled={availableModules.length <= 0} value={createLessonInput.module?.id || ''}>
+                            <option value='' disabled>Select Module</option>
                             {availableModules.map((module) => (
                               <option key={module.id} value={module.id}>{module.acronym}</option>
                             ))}
